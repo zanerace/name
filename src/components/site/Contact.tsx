@@ -1,7 +1,7 @@
 const links = [
-  { label: "Behance", href: "https://www.behance.net/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/" },
-  { label: "YouTube", href: "https://www.youtube.com/" },
+  { label: "Behance", href: "https://www.behance.net/racekipping" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/race-kipping-2008a0299/" },
+  { label: "YouTube", href: "https://www.youtube.com/@racekipping" },
 ];
 
 export function Contact() {
@@ -29,10 +29,10 @@ export function Contact() {
               </dt>
               <dd>
                 <a
-                  href="mailto:race@racekipping.com"
+                  href="mailto:info@racekipping.com"
                   className="font-display text-2xl md:text-3xl link-underline"
                 >
-                  race@racekipping.com
+                  info@racekipping.com
                 </a>
               </dd>
             </div>
@@ -41,8 +41,8 @@ export function Contact() {
                 Phone
               </dt>
               <dd>
-                <a href="tel:+13145550199" className="font-display text-2xl md:text-3xl link-underline">
-                  +1 (314) 555 — 0199
+                <a href="tel:+16187998495" className="font-display text-2xl md:text-3xl link-underline">
+                  +1 (618) 799 8495
                 </a>
               </dd>
             </div>
