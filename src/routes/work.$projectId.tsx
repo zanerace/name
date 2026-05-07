@@ -3,6 +3,22 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { getWorkProjectById } from "@/components/site/work-data";
 import { gsap, prefersReducedMotion, registerMotion } from "@/lib/motion";
 
+const VIDEO_SOURCES: readonly { src: string; type: string }[] = [
+  { src: "/reel/reel.webm", type: 'video/webm; codecs="av01.0.08M.08"' },
+  { src: "/reel/motion-reel.webm", type: 'video/webm; codecs="av01.0.08M.08"' },
+  { src: "/reel/reel.mp4", type: 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"' },
+  { src: "/reel/motion-reel.mp4", type: 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"' },
+  { src: "/reel/poster.mp4", type: "video/mp4" },
+  { src: "/reel/reel-h264.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
+  { src: "/reel/motion-reel-h264.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
+  { src: "/reel/motion-reel.mov", type: "video/quicktime" },
+];
+
+const GRADUAL_SANS_VIDEO_SOURCES: readonly { src: string; type: string }[] = [
+  { src: "/work/gradual-sans.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
+  { src: "/work/gradual-sans.mp4.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
+];
+
 export const Route = createFileRoute("/work/$projectId")({
   component: WorkProjectPage,
 });
@@ -95,6 +111,32 @@ function WorkProjectPage() {
             />
           </div>
         </section>
+
+        {project.id === "lunacast" && (
+          <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
+            <div className="aspect-[16/9] overflow-hidden border border-border bg-foreground">
+              <video className="block w-full h-full object-cover" autoPlay muted loop playsInline preload="auto">
+                {VIDEO_SOURCES.map(({ src, type }) => (
+                  <source key={src} src={src} type={type} />
+                ))}
+                Your browser does not support embedded video.
+              </video>
+            </div>
+          </section>
+        )}
+
+        {project.id === "gradual-sans" && (
+          <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
+            <div className="aspect-[16/9] overflow-hidden border border-border bg-foreground">
+              <video className="block w-full h-full object-cover" autoPlay muted loop playsInline preload="auto">
+                {GRADUAL_SANS_VIDEO_SOURCES.map(({ src, type }) => (
+                  <source key={src} src={src} type={type} />
+                ))}
+                Your browser does not support embedded video.
+              </video>
+            </div>
+          </section>
+        )}
 
         <section className="grid grid-cols-12 gap-8 mb-10">
           <div className="col-span-12 md:col-span-7">

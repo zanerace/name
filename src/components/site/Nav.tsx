@@ -99,21 +99,21 @@ export function Nav() {
         scrolled ? "nav-plate is-scrolled" : "nav-plate"
       }`}
     >
-      <nav className="mx-auto max-w-[1440px] w-full py-4 md:py-0 px-6 md:px-12 md:h-[72px] flex items-center justify-between box-border">
+      <nav className="mx-auto max-w-[1440px] w-full py-4 md:py-0 px-6 md:px-12 md:h-[74px] flex items-center justify-between box-border">
         <a
           href="#top"
           onClick={(e) => handleNavClick(e, "#top")}
           className="text-foreground shrink-0 transition-colors duration-200 ease-out md:hover:text-accent nav-brand"
         >
-          <span className="md:hidden font-sans text-[12px] uppercase tracking-[0.16em] font-medium nav-brand-chip">
+          <span className="md:hidden font-sans text-[13px] uppercase tracking-[0.14em] font-medium nav-brand-chip">
             RK
           </span>
-          <span className="hidden md:inline font-ui text-[12px] uppercase nav-brand-chip">
+          <span className="hidden md:inline font-ui text-[13px] uppercase nav-brand-chip">
             Race Kipping
           </span>
         </a>
 
-        <ul className="hidden min-[600px]:flex font-ui items-center gap-5 lg:gap-7 text-[13px] uppercase text-muted-foreground shrink-0">
+        <ul className="hidden min-[600px]:flex font-ui items-center gap-5 lg:gap-7 text-[15px] uppercase text-muted-foreground shrink-0">
           {items.map((it) => (
             <li key={it.href} className="relative group">
               <a
@@ -134,7 +134,7 @@ export function Nav() {
                           <Link
                             to="/work/$projectId"
                             params={{ projectId: project.id }}
-                            className="block font-display text-[15px] leading-tight text-foreground/90 hover:text-accent transition-colors"
+                            className="block font-display text-[16px] leading-tight text-foreground/90 hover:text-accent transition-colors"
                           >
                             {project.title}
                           </Link>
@@ -242,7 +242,7 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 z-[90] bg-background flex flex-col overflow-x-hidden"
     >
       <div className="flex items-center justify-between py-4 px-6 box-border">
-        <span className="font-sans text-[11px] uppercase tracking-[0.2em] font-medium text-foreground">
+        <span className="font-sans text-[12px] uppercase tracking-[0.18em] font-medium text-foreground">
           RK
         </span>
         <button
@@ -289,7 +289,7 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
                     to="/work/$projectId"
                     params={{ projectId: project.id }}
                     onClick={() => close()}
-                    className="font-display text-[17px] text-muted-foreground link-underline"
+                    className="font-display text-[18px] text-muted-foreground link-underline"
                   >
                     {project.title}
                   </Link>

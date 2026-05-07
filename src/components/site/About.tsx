@@ -127,10 +127,10 @@ export function About() {
       <section
         ref={sectionRef}
         id="about"
-        className="pt-16 md:pt-[112px] pb-16 md:pb-[88px] w-full max-w-full overflow-x-hidden"
+        className="pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-          <header className="section-header mb-[40px] md:mb-[64px]">
+          <header className="section-header mb-10 md:mb-14">
             <div className="section-kicker gsap-fade-up">
               <span className="section-num">03</span>
               <span className="section-line" />
@@ -156,15 +156,27 @@ export function About() {
               </p>
             </div>
 
-            <aside className="about-side md:col-start-8 md:col-span-5 mt-10 md:mt-0 frame-panel p-7 md:p-9 about-panel min-w-0">
-              <p className="gsap-fade-up-sm meta-inline mb-6">
+            <aside className="about-side md:col-start-8 md:col-span-5 mt-10 md:mt-0 frame-panel p-9 md:p-11 about-panel min-w-0">
+              <div className="gsap-fade-up-sm mb-9">
+                <div className="overflow-hidden border border-border frame-panel aspect-[4/5] md:aspect-[7/8] max-w-[440px]">
+                  <img
+                    src="/about-portrait.png"
+                    alt="Portrait of Race Kipping"
+                    width={820}
+                    height={1024}
+                    loading="lazy"
+                    className="block w-full h-full object-cover object-[center_28%]"
+                  />
+                </div>
+              </div>
+              <p className="gsap-fade-up-sm meta-inline mb-8">
                 Capabilities
               </p>
-              <ul className="gsap-fade-up-sm grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4">
+              <ul className="gsap-fade-up-sm grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
                 {capabilities.map((c) => (
                   <li key={c} className="flex items-start gap-2.5 min-w-0">
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-[color:var(--secondary)] mt-[0.58em]" />
-                    <span className="font-ui text-[1.1rem] leading-[1.5] text-foreground break-words">{c}</span>
+                    <span className="font-ui text-[1.15rem] leading-[1.55] text-foreground break-words">{c}</span>
                   </li>
                 ))}
               </ul>

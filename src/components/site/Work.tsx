@@ -128,10 +128,10 @@ export function Work() {
     <section
       ref={root}
       id="work"
-      className="work-wash pt-16 md:pt-[112px] pb-16 md:pb-[88px] w-full max-w-full overflow-x-hidden"
+      className="work-wash pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
     >
       <div className="mx-auto max-w-[1440px] w-full max-w-full px-6 md:px-12 box-border">
-        <header className="section-header flex items-start justify-between mb-[56px] md:mb-24">
+        <header className="section-header flex items-start justify-between mb-12 md:mb-20">
           <div>
             <div className="section-kicker gsap-fade-up">
               <span className="section-num">01</span>
@@ -147,7 +147,7 @@ export function Work() {
 
         <div
           ref={gridRef}
-          className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-[48px] md:gap-y-[64px] w-full min-w-0"
+          className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-8 md:gap-x-10 gap-y-10 md:gap-y-14 w-full min-w-0"
         >
           {workProjects.map((p, index) => (
             <article
@@ -158,7 +158,7 @@ export function Work() {
                 ref={(el) => {
                   if (el) cardsRef.current[index] = el;
                 }}
-                className={`work-card-surface frame-panel p-5 md:p-6 ${
+                className={`work-card-surface frame-panel p-5 md:p-7 ${index === 0 ? "work-theme-featured" : ""} ${
                   p.id === "gradual-sans"
                     ? "work-theme-gradual"
                     : p.id === "climate-change"
@@ -175,7 +175,7 @@ export function Work() {
                   className="work-image-link block w-full p-0 m-0 border-0 bg-transparent text-left max-w-full"
                 >
                   <div
-                    className="overflow-hidden border border-border max-w-full aspect-[16/10]"
+                    className="overflow-hidden border border-border max-w-full aspect-[16/10] md:aspect-[16/9.2]"
                   >
                     <img
                       src={p.coverImage}
@@ -196,13 +196,16 @@ export function Work() {
                   </div>
                 </Link>
 
-                <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-                  <span className="font-ui text-[12px] uppercase text-accent meta-chip">{p.num}</span>
-                  <span className="font-ui text-[12px] uppercase text-muted-foreground whitespace-nowrap meta-chip">
+                <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2.5">
+                  <span className="font-ui text-[14px] uppercase text-accent meta-chip">{p.num}</span>
+                  <span className="font-ui text-[14px] uppercase text-muted-foreground whitespace-nowrap meta-chip">
                     {p.tag} <span className="text-accent">—</span> {p.year}
                   </span>
                 </div>
-                <h3 className="work-title work-title-optic font-display text-[28px] md:text-[34px] mt-3 text-foreground max-w-[24ch]">
+                {p.id === "lunacast" && (
+                  <p className="meta-inline mt-3 text-accent">Featured Motion Highlight</p>
+                )}
+                <h3 className="work-title work-title-optic font-display text-[30px] md:text-[35px] mt-3.5 text-foreground max-w-[24ch]">
                   {p.titleLines ? (
                     <>
                       <span className="block">{p.titleLines[0]}</span>
@@ -212,7 +215,7 @@ export function Work() {
                     p.title
                   )}
                 </h3>
-                <p className="section-body text-[18px] md:text-[19px] mt-3 max-w-[52ch]">
+                <p className="section-body text-[19px] md:text-[20px] mt-3.5 max-w-[52ch]">
                   {p.desc}
                 </p>
               </div>

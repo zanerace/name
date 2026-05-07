@@ -59,29 +59,25 @@ export function Contact() {
   }, []);
 
   return (
-    <section ref={root} id="contact" className="py-20 md:py-[132px] w-full max-w-full overflow-x-hidden">
+    <section ref={root} id="contact" className="py-[var(--section-space-y-mobile)] md:py-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden">
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-        <div aria-hidden className="rule-draw section-rule mb-16 md:mb-24" />
+        <div aria-hidden className="rule-draw section-rule mb-14 md:mb-20" />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-10 gap-y-10 md:gap-y-14 min-w-0">
           <header className="section-header md:col-span-5 min-w-0">
-            <div className="section-kicker gsap-fade-up">
-              <span className="section-num">04</span>
-              <span className="section-line" />
-            </div>
             <h2 className="gsap-fade-up font-display h-section">
               Currently taking on{" "}
               <span className="font-serif-i text-accent">new work.</span>
             </h2>
           </header>
 
-          <div className="md:col-start-7 md:col-span-6 frame-panel p-7 md:p-9 min-w-0">
+          <div className="md:col-start-7 md:col-span-6 frame-panel p-8 md:p-10 min-w-0">
             <dl className="space-y-8">
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="meta-inline mb-3">Email</dt>
                 <dd className="min-w-0">
                   <a
                     href="mailto:info@racekipping.com"
-                    className="font-display text-[34px] md:text-[38px] link-underline break-all md:break-normal"
+                    className="font-display text-[35px] md:text-[40px] link-underline break-all md:break-normal transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                   >
                     info@racekipping.com
                   </a>
@@ -92,7 +88,7 @@ export function Contact() {
                 <dd className="min-w-0">
                   <a
                     href="tel:+16187998495"
-                    className="font-display text-[34px] md:text-[38px] link-underline break-words"
+                    className="font-display text-[35px] md:text-[40px] link-underline break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                   >
                     +1 (618) 799 8495
                   </a>
@@ -107,7 +103,7 @@ export function Contact() {
                       href={l.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                    className="font-display text-[28px] md:text-[30px] link-underline inline-flex items-center gap-2 break-words"
+                    className="font-display text-[29px] md:text-[31px] link-underline inline-flex items-center gap-2 break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                     >
                       {l.label}
                       <span aria-hidden="true" className="text-accent">

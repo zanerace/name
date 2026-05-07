@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
+import { getWorkProjectById } from "./work-data";
 
 const POSTER = "/reel/poster.png";
 
@@ -46,6 +47,7 @@ const MuteIcon = () => (
 );
 
 export function MotionReel() {
+  const lunaCast = getWorkProjectById("lunacast");
   const root = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -157,22 +159,22 @@ export function MotionReel() {
       <section
         ref={sectionRef}
         id="motion"
-        className="section-dark pt-[84px] md:pt-[140px] pb-[84px] md:pb-[128px] w-full max-w-full overflow-x-hidden"
+        className="section-dark pt-[var(--section-space-y-mobile)] md:pt-[128px] pb-[var(--section-space-y-mobile)] md:pb-[122px] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border min-w-0">
-          <header className="section-header flex items-start justify-between mb-[40px] md:mb-[64px]">
+          <header className="section-header flex items-start justify-between mb-10 md:mb-14">
             <div>
               <div className="section-kicker gsap-fade-up">
                 <span className="section-num">02</span>
                 <span className="section-line" />
               </div>
-              <h2 className="gsap-fade-up font-display h-section">Motion Reel</h2>
+              <h2 className="gsap-fade-up font-display h-section">Featured Motion</h2>
               <p className="gsap-fade-up section-body mt-3 max-w-[52ch]">
-                A dark-room loop of selected motion work—identity systems, UI rhythm, and editorial timing.
+                {lunaCast?.desc}
               </p>
             </div>
             <p className="gsap-fade-up meta-inline hidden md:block">
-              00:00 — Loop
+              Motion Showcase — LunaCast, 2024
             </p>
           </header>
         </div>
@@ -180,8 +182,8 @@ export function MotionReel() {
         <div className="reel-video mx-auto w-full max-w-full px-6 md:px-12 box-border min-w-0">
           <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden border border-border frame-panel">
             <div className="pointer-events-none absolute top-4 left-4 z-10 frame-panel px-3 py-2">
-              <p className="font-ui text-[10px] uppercase text-muted-foreground">
-                Reel / 2024–2026
+              <p className="font-ui text-[12px] md:text-[13px] uppercase text-muted-foreground">
+                Featured Motion / LunaCast
               </p>
             </div>
             <video
@@ -216,8 +218,8 @@ export function MotionReel() {
               {isMuted ? <MuteIcon /> : <VolumeIcon />}
             </button>
           </div>
-          <p className="font-serif-i text-[18px] md:text-[20px] text-muted-foreground mt-6 md:mt-8">
-            Selected motion work, 2024–2026.
+          <p className="reel-caption font-serif-i text-[18px] md:text-[20px] mt-6 md:mt-8">
+            LunaCast application prototype, 2024.
           </p>
         </div>
       </section>
