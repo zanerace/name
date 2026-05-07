@@ -79,7 +79,7 @@ export function Nav() {
         <a
           href="#top"
           onClick={(e) => handleNavClick(e, "#top")}
-          className="text-foreground shrink-0 transition-colors duration-200 ease-out md:hover:text-accent"
+          className="text-foreground shrink-0 transition-colors duration-200 ease-out md:hover:text-accent nav-brand"
         >
           <span className="md:hidden font-sans text-[11px] uppercase tracking-[0.2em] font-medium meta-chip">
             RK

@@ -1,5 +1,7 @@
+import { useLayoutEffect, useRef } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { getWorkProjectById } from "@/components/site/work-data";
+import { gsap, prefersReducedMotion, registerMotion } from "@/lib/motion";
 
 export const Route = createFileRoute("/work/$projectId")({
   component: WorkProjectPage,
@@ -8,6 +10,8 @@ export const Route = createFileRoute("/work/$projectId")({
 function WorkProjectPage() {
   const { projectId } = Route.useParams();
   const project = getWorkProjectById(projectId);
+  const rootRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   if (!project) {
     return (
@@ -23,8 +27,44 @@ function WorkProjectPage() {
     );
   }
 
+  useLayoutEffect(() => {
+    registerMotion();
+    if (prefersReducedMotion()) return;
+    const scope = rootRef.current;
+    if (!scope || !titleRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const root = scope;
+      const title = titleRef.current;
+      const hero = root.querySelector<HTMLElement>("[data-work-hero]");
+      const text = root.querySelector<HTMLElement>("[data-work-body]");
+
+      gsap.set([title, hero, text].filter(Boolean) as HTMLElement[], {
+        opacity: 0,
+        y: 18,
+        force3D: true,
+      });
+
+      gsap
+        .timeline()
+        .to(title, { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", force3D: true })
+        .to(
+          hero,
+          { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", force3D: true },
+          "-=0.35"
+        )
+        .to(
+          text,
+          { opacity: 1, y: 0, duration: 0.75, ease: "power2.out", force3D: true },
+          "-=0.45"
+        );
+    }, scope);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <main className="min-h-screen bg-background px-6 md:px-12 py-24 md:py-28">
+    <main ref={rootRef} className="min-h-screen bg-background px-6 md:px-12 py-24 md:py-28">
       <article className="mx-auto max-w-[1200px]">
         <div className="mb-8 md:mb-10">
           <Link to="/" className="meta-chip font-ui text-[10px] uppercase">
@@ -39,11 +79,11 @@ function WorkProjectPage() {
               {project.tag} — {project.year}
             </span>
           </div>
-          <h1 className="font-display h-section mb-4">{project.title}</h1>
+          <h1 ref={titleRef} className="font-display h-section mb-4">{project.title}</h1>
           <p className="font-serif text-lg md:text-2xl leading-[1.42] text-foreground max-w-[38ch]">{project.desc}</p>
         </header>
 
-        <section className="frame-panel p-4 md:p-6 mb-10 md:mb-12">
+        <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
           <div className="aspect-[16/9] overflow-hidden border border-border">
             <img
               src={project.coverImage}
@@ -51,13 +91,70 @@ function WorkProjectPage() {
               className="block w-full h-full object-cover"
               width={1600}
               height={900}
+              data-work-hero
             />
           </div>
         </section>
 
-        <section className="grid grid-cols-12 gap-8">
-          <div className="col-span-12 md:col-span-8">
-            <p className="font-serif text-base md:text-xl leading-[1.56] text-foreground">{project.body}</p>
+        <section className="grid grid-cols-12 gap-8 mb-10">
+          <div className="col-span-12 md:col-span-7">
+            <p data-work-body className="font-serif text-base md:text-xl leading-[1.56] text-foreground">
+              {project.body}
+            </p>
+          </div>
+          <div className="col-span-12 md:col-span-5">
+            <div className="frame-panel p-4 md:p-6">
+              <p className="font-ui text-[10px] uppercase text-muted-foreground mb-4">Case metadata</p>
+              <dl className="space-y-3">
+                <div className="flex items-baseline justify-between gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Role</dt>
+                    <dd className="font-display text-[16px] text-foreground">Media Designer</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Year</dt>
+                    <dd className="font-display text-[16px] text-foreground">{project.year}</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Client</dt>
+                    <dd className="font-display text-[16px] text-foreground">Selected work</dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Discipline</dt>
+                    <dd className="font-display text-[16px] text-foreground">{project.tag}</dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Deliverables</dt>
+                    <dd className="font-display text-[16px] text-foreground">Identity + motion assets</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid grid-cols-12 gap-6 md:gap-8 mb-14">
+          <div className="col-span-12 md:col-span-7 frame-panel p-0 overflow-hidden border border-border">
+            <div className="aspect-[4/3] overflow-hidden">
+              <img
+                src={project.coverImage}
+                alt={project.alt}
+                className="block w-full h-full object-cover"
+                style={{ objectPosition: "left center" }}
+                width={1400}
+                height={1050}
+              />
+            </div>
+          </div>
+          <div className="col-span-12 md:col-span-5 frame-panel p-0 overflow-hidden border border-border">
+            <div className="aspect-[16/9] overflow-hidden">
+              <img
+                src={project.coverImage}
+                alt={project.alt}
+                className="block w-full h-full object-cover"
+                style={{ objectPosition: "right top" }}
+                width={1200}
+                height={675}
+              />
+            </div>
           </div>
         </section>
       </article>

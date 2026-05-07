@@ -3,6 +3,7 @@ import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Marquee } from "@/components/site/Marquee";
 import { Work } from "@/components/site/Work";
+import { BreatherBand } from "@/components/site/BreatherBand";
 import { MotionReel } from "@/components/site/MotionReel";
 import { About } from "@/components/site/About";
 import { Contact } from "@/components/site/Contact";
@@ -34,6 +35,7 @@ function Index() {
       <Hero />
       <Marquee />
       <Work />
+      <BreatherBand />
       <MotionReel />
       <About />
       <Contact />

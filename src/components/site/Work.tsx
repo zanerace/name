@@ -135,8 +135,10 @@ export function Work() {
           <div>
               <h2 className="gsap-fade-up font-display h-section">Selected Work</h2>
               <p className="gsap-fade-up font-ui text-[10px] uppercase text-muted-foreground mt-4">2024 — 2026</p>
+            <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-4 max-w-[52ch]">
+              A curated selection across identity, motion, and sound—built for real production contexts.
+            </p>
           </div>
-            <p className="gsap-fade-up font-serif-i text-accent hidden md:block">Projects</p>
         </header>
 
         <div
@@ -157,7 +159,15 @@ export function Work() {
                   aria-label={`Open ${p.title} project page`}
                   className="work-image-link block w-full p-0 m-0 border-0 bg-transparent text-left max-w-full"
                 >
-                  <div className="aspect-[16/10] overflow-hidden border border-border max-w-full">
+                  <div
+                    className={`overflow-hidden border border-border max-w-full ${
+                      p.id === "lunacast"
+                        ? "aspect-[4/3]"
+                        : p.id === "rwanda"
+                          ? "aspect-[5/4]"
+                          : "aspect-[16/10]"
+                    }`}
+                  >
                     <img
                       src={p.coverImage}
                       alt={p.alt}
@@ -165,6 +175,14 @@ export function Work() {
                       height={800}
                       loading="lazy"
                       className="work-image block w-full h-full object-cover"
+                      style={{
+                        objectPosition:
+                          p.id === "lunacast"
+                            ? "center 15%"
+                            : p.id === "rwanda"
+                              ? "right center"
+                              : "center center",
+                      }}
                     />
                   </div>
                 </Link>

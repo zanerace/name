@@ -29,17 +29,17 @@ export function Contact() {
         },
       });
       if (ruleEl) {
-        tl.to(ruleEl, { scaleX: 1, duration: 1, ease: "power2.inOut" });
+        tl.to(ruleEl, { scaleX: 1, duration: 1.15, ease: "power2.inOut" });
       }
       tl.to(
         headerEls,
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", stagger: 0.08 },
-        "-=0.55"
+        { y: 0, opacity: 1, duration: 0.85, ease: "power3.out", stagger: 0.08 },
+        "-=0.6"
       );
       tl.to(
         detailEls,
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" },
-        "-=0.4"
+        { y: 0, opacity: 1, duration: 0.65, stagger: 0.1, ease: "power2.out" },
+        "-=0.45"
       );
     }, el);
 
@@ -91,9 +91,12 @@ export function Contact() {
                       href={l.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-display text-xl link-underline"
+                      className="font-display text-xl link-underline inline-flex items-center gap-2"
                     >
                       {l.label}
+                      <span aria-hidden="true" className="text-accent">
+                        ↗
+                      </span>
                     </a>
                   ))}
                 </dd>

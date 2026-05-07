@@ -56,7 +56,7 @@ export function About() {
         onComplete: clearWill,
       });
       if (ruleEl) {
-        tl.to(ruleEl, { scaleX: 1, duration: 0.5, ease: "power2.inOut" });
+        tl.to(ruleEl, { scaleX: 1, duration: 0.65, ease: "power2.inOut" });
       }
       if (headerEls.length) {
         tl.to(
@@ -64,12 +64,12 @@ export function About() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.4,
+            duration: 0.45,
             ease: "power3.out",
             stagger: 0.06,
             force3D: true,
           },
-          "-=0.25"
+          "-=0.32"
         );
       }
       if (lines.length) {
@@ -83,7 +83,7 @@ export function About() {
             ease: "power2.out",
             force3D: true,
           },
-          "-=0.2"
+          "-=0.25"
         );
       }
       if (tail) {
@@ -132,6 +132,9 @@ export function About() {
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
           <header className="section-header mb-[72px] md:mb-[88px]">
             <h2 className="gsap-fade-up font-display h-section">About</h2>
+            <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.55] text-muted-foreground mt-4 max-w-[60ch]">
+              A practice built on restraint: identities that age well, motion that clarifies, and sound-aware pacing.
+            </p>
           </header>
 
           <div className="grid grid-cols-12 gap-x-10 md:gap-x-20">

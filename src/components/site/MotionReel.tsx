@@ -97,7 +97,7 @@ export function MotionReel() {
       });
 
       if (ruleEl) {
-        tl.to(ruleEl, { scaleX: 1, duration: 0.5, ease: "power2.inOut" });
+        tl.to(ruleEl, { scaleX: 1, duration: 0.65, ease: "power2.inOut" });
       }
       if (headerEls.length) {
         tl.to(
@@ -105,12 +105,12 @@ export function MotionReel() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.4,
+            duration: 0.45,
             ease: "power3.out",
             stagger: 0.06,
             force3D: true,
           },
-          "-=0.25"
+          "-=0.34"
         );
       }
       if (video) {
@@ -119,11 +119,11 @@ export function MotionReel() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.4,
+            duration: 0.45,
             ease: "power3.out",
             force3D: true,
           },
-          "-=0.2"
+          "-=0.28"
         );
       }
     }, el);
@@ -163,6 +163,9 @@ export function MotionReel() {
           <header className="section-header flex items-end justify-between mb-[72px] md:mb-[86px]">
             <div>
               <h2 className="gsap-fade-up font-display h-section">Motion Reel</h2>
+              <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-4 max-w-[50ch]">
+                A dark-room loop of selected motion work—identity systems, UI rhythm, and editorial timing.
+              </p>
             </div>
             <p className="gsap-fade-up font-ui text-[10px] uppercase hidden md:block">
               00:00 — Loop
@@ -172,6 +175,11 @@ export function MotionReel() {
 
         <div className="reel-video mx-auto w-full max-w-full px-6 md:px-12 box-border min-w-0">
           <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden border border-border frame-panel">
+            <div className="pointer-events-none absolute top-4 left-4 z-10 frame-panel px-3 py-2">
+              <p className="font-ui text-[10px] uppercase text-muted-foreground">
+                Reel / 2024–2026
+              </p>
+            </div>
             <video
               ref={videoRef}
               className="absolute inset-0 w-full h-full object-cover"
