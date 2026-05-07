@@ -1,17 +1,20 @@
 /**
  * Put your reel in public/reel/. Browser tries sources in order (first playable wins).
- * AV1: prefer .webm (e.g. reel.webm). AV1-in-.mp4 also works in Chromium if named reel.mp4 / motion-reel.mp4.
- * poster: optional still image at poster.jpg or poster.webp (not .mp4 — poster= must be an image).
+ * For reliable mobile playback, include an H.264 MP4 named `reel-h264.mp4`.
  */
-/** Optional still before play; use .jpg or .webp — not .mp4 */
-const POSTER = "/reel/poster.jpg";
+const POSTER = "/reel/poster.png";
 
 const VIDEO_SOURCES: readonly { src: string; type: string }[] = [
-  { src: "/reel/reel.webm", type: "video/webm" },
-  { src: "/reel/motion-reel.webm", type: "video/webm" },
-  { src: "/reel/motion-reel.mp4", type: "video/mp4" },
-  { src: "/reel/reel.mp4", type: "video/mp4" },
+  // Prefer AV1 where supported.
+  { src: "/reel/reel.webm", type: 'video/webm; codecs="av01.0.08M.08"' },
+  { src: "/reel/motion-reel.webm", type: 'video/webm; codecs="av01.0.08M.08"' },
+  { src: "/reel/reel.mp4", type: 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"' },
+  { src: "/reel/motion-reel.mp4", type: 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"' },
   { src: "/reel/poster.mp4", type: "video/mp4" },
+  // Fallback for devices/browsers without AV1 decode support.
+  { src: "/reel/reel-h264.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
+  { src: "/reel/motion-reel-h264.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
+  // Last-resort legacy source.
   { src: "/reel/motion-reel.mov", type: "video/quicktime" },
 ];
 
