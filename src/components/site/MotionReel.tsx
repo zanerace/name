@@ -164,10 +164,6 @@ export function MotionReel() {
         <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border min-w-0">
           <header className="section-header flex items-start justify-between mb-10 md:mb-14">
             <div>
-              <div className="section-kicker gsap-fade-up">
-                <span className="section-num">02</span>
-                <span className="section-line" />
-              </div>
               <h2 className="gsap-fade-up font-display h-section">Featured Motion</h2>
               <p className="gsap-fade-up section-body mt-3 max-w-[52ch]">
                 {lunaCast?.desc}
@@ -180,9 +176,9 @@ export function MotionReel() {
         </div>
 
         <div className="reel-video mx-auto w-full max-w-full px-6 md:px-12 box-border min-w-0">
-          <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden border border-border frame-panel">
-            <div className="pointer-events-none absolute top-4 left-4 z-10 frame-panel px-3 py-2">
-              <p className="font-ui text-[12px] md:text-[13px] uppercase text-muted-foreground">
+          <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden">
+            <div className="pointer-events-none absolute top-5 left-5 z-10">
+              <p className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.2em] text-foreground [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
                 Featured Motion / LunaCast
               </p>
             </div>

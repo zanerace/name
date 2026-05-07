@@ -133,10 +133,6 @@ export function Work() {
       <div className="mx-auto max-w-[1440px] w-full max-w-full px-6 md:px-12 box-border">
         <header className="section-header flex items-start justify-between mb-12 md:mb-20">
           <div>
-            <div className="section-kicker gsap-fade-up">
-              <span className="section-num">01</span>
-              <span className="section-line" />
-            </div>
             <h2 className="gsap-fade-up font-display h-section">Selected Work</h2>
             <p className="gsap-fade-up meta-inline mt-4">2024 — 2026</p>
             <p className="gsap-fade-up section-body mt-5 max-w-[52ch]">
@@ -147,7 +143,7 @@ export function Work() {
 
         <div
           ref={gridRef}
-          className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-8 md:gap-x-10 gap-y-10 md:gap-y-14 w-full min-w-0"
+          className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-16 md:gap-y-24 w-full min-w-0"
         >
           {workProjects.map((p, index) => (
             <article
@@ -158,15 +154,7 @@ export function Work() {
                 ref={(el) => {
                   if (el) cardsRef.current[index] = el;
                 }}
-                className={`work-card-surface frame-panel p-5 md:p-7 ${index === 0 ? "work-theme-featured" : ""} ${
-                  p.id === "gradual-sans"
-                    ? "work-theme-gradual"
-                    : p.id === "climate-change"
-                      ? "work-theme-climate"
-                      : p.id === "lunacast"
-                        ? "work-theme-lunacast"
-                        : "work-theme-rwanda"
-                }`}
+                className="work-card-surface"
               >
                 <Link
                   to="/work/$projectId"
@@ -175,7 +163,7 @@ export function Work() {
                   className="work-image-link block w-full p-0 m-0 border-0 bg-transparent text-left max-w-full"
                 >
                   <div
-                    className="overflow-hidden border border-border max-w-full aspect-[16/10] md:aspect-[16/9.2]"
+                    className="overflow-hidden max-w-full aspect-[16/10] md:aspect-[16/9.2]"
                   >
                     <img
                       src={p.coverImage}
@@ -196,16 +184,18 @@ export function Work() {
                   </div>
                 </Link>
 
-                <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2.5">
-                  <span className="font-ui text-[14px] uppercase text-accent meta-chip">{p.num}</span>
-                  <span className="font-ui text-[14px] uppercase text-muted-foreground whitespace-nowrap meta-chip">
-                    {p.tag} <span className="text-accent">—</span> {p.year}
+                <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+                  <span className="font-ui text-[13px] uppercase tracking-[0.18em] text-accent">{p.num}</span>
+                  <span className="font-ui text-[13px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-muted-foreground break-words md:whitespace-nowrap">
+                    {p.tag} <span className="text-[color:var(--ink-hard)]">/</span> {p.year}
                   </span>
+                  {p.id === "lunacast" && (
+                    <span className="font-ui text-[13px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-[color:var(--text-soft)] break-words md:whitespace-nowrap">
+                      <span className="text-[color:var(--ink-hard)]">/</span> Featured Motion
+                    </span>
+                  )}
                 </div>
-                {p.id === "lunacast" && (
-                  <p className="meta-inline mt-3 text-accent">Featured Motion Highlight</p>
-                )}
-                <h3 className="work-title work-title-optic font-display text-[30px] md:text-[35px] mt-3.5 text-foreground max-w-[24ch]">
+                <h3 className="work-title work-title-optic font-display text-[32px] md:text-[40px] mt-3 text-foreground max-w-[24ch]">
                   {p.titleLines ? (
                     <>
                       <span className="block">{p.titleLines[0]}</span>
@@ -215,7 +205,7 @@ export function Work() {
                     p.title
                   )}
                 </h3>
-                <p className="section-body text-[19px] md:text-[20px] mt-3.5 max-w-[52ch]">
+                <p className="section-body text-[18px] md:text-[19px] mt-3 max-w-[52ch] text-[color:var(--text-soft)]">
                   {p.desc}
                 </p>
               </div>

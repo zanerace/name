@@ -22,21 +22,26 @@
 }
 
 :root {
-  --background: #101214;
-  --foreground: #f2ede4;
-  --muted: #17191b;
-  --muted-foreground: #beb5a9;
-  --accent: #c56a3a;
-  --border: rgba(242, 237, 228, 0.14);
-  --rule: rgba(242, 237, 228, 0.28);
-  --ink-soft: rgba(242, 237, 228, 0.06);
-  --ink-mid: rgba(242, 237, 228, 0.2);
-  --ink-hard: rgba(242, 237, 228, 0.54);
-  --secondary: #1b1a18;
+  --background: #0f1113;
+  --bg-soft: #121416;
+  --foreground: #f1eadf;
+  --text-soft: #c8bdb0;
+  --muted: #131518;
+  --muted-foreground: #9d9287;
+  --accent: #c46a3a;
+  --oxblood: #5a232a;
+  --border: rgba(241, 234, 223, 0.1);
+  --border-strong: rgba(241, 234, 223, 0.18);
+  --rule: rgba(241, 234, 223, 0.16);
+  --ink-soft: rgba(241, 234, 223, 0.05);
+  --ink-mid: rgba(241, 234, 223, 0.1);
+  --ink-hard: rgba(241, 234, 223, 0.4);
+  --secondary: #17181b;
+  --surface-warm: #1b1715;
   --radius-card: 0px;
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
-  --section-space-y-mobile: 76px;
-  --section-space-y-desktop: 108px;
+  --section-space-y-mobile: 80px;
+  --section-space-y-desktop: 116px;
 
   /* Interactive cursor — small oxblood dot, used only on hover of links/cards. Default cursor is the OS default. */
   --cursor-active: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="5" fill="%235c1a1f"/></svg>') 11 11;
@@ -147,18 +152,24 @@
   }
   .section-body {
     font-family: var(--font-serif);
-    font-size: clamp(19px, 1.35vw, 22px);
-    line-height: 1.7;
-    color: var(--color-muted-foreground);
+    font-size: clamp(18px, 1.3vw, 21px);
+    line-height: 1.72;
+    color: var(--text-soft);
     max-width: 62ch;
     text-wrap: pretty;
   }
   .meta-inline {
     font-family: var(--font-sans);
-    font-size: 16px;
-    letter-spacing: 0.1em;
+    font-size: 13px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--color-muted-foreground) 82%, var(--color-foreground) 18%);
+    color: var(--text-soft);
+  }
+  @media (min-width: 768px) {
+    .meta-inline {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+    }
   }
 
   /* Editorial type scale — mobile first, scaled up on >=768px. */
@@ -196,12 +207,17 @@
     }
   }
 
-  /* Brutalist framing helpers */
+  /* Editorial framing helpers — restrained, image-led, not dashboard-like. */
   .frame-panel {
-    border: 1px solid var(--ink-mid);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0.01));
+    border: 1px solid var(--border);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0.004));
     border-radius: var(--radius-card);
+  }
+  .editorial-block {
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 1.75rem;
   }
   .ink-rule-heavy {
     height: 2px;
@@ -214,7 +230,7 @@
     border: 1px solid var(--ink-mid);
     padding: 0.4rem 0.7rem;
     line-height: 1;
-    background: color-mix(in srgb, var(--color-background) 84%, var(--secondary) 16%);
+    background: color-mix(in srgb, var(--color-background) 90%, var(--secondary) 10%);
     transition: border-color 240ms var(--ease-premium), background-color 240ms var(--ease-premium), transform 240ms var(--ease-premium);
   }
   @media (max-width: 767px) {
@@ -232,6 +248,7 @@
     box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(12px);
   }
+
   .hero-wash {
     background:
       radial-gradient(1200px 520px at 92% -2%, rgba(197, 106, 58, 0.065), transparent 58%),
@@ -251,17 +268,19 @@
   }
 
   .hero-bio-panel {
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--secondary) 42%, var(--color-background)),
-      color-mix(in srgb, var(--secondary) 58%, var(--color-background))
-    );
-    border-color: var(--ink-mid);
+    background: transparent;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
   }
   .hero-feature-card {
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.012));
-    border-color: color-mix(in srgb, var(--color-accent) 26%, var(--ink-mid));
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    background: transparent;
+    border-top: 1px solid var(--border-strong);
+    padding-top: 1.25rem;
+    transition: border-color 240ms var(--ease-premium);
+  }
+  .hero-feature-card:hover,
+  .hero-feature-card:focus-visible {
+    border-color: var(--color-accent);
   }
   .hero-feature-title {
     line-height: 1.06;
@@ -269,17 +288,23 @@
   }
 
   .about-panel {
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--secondary) 44%, rgba(255, 255, 255, 0.08)),
-      color-mix(in srgb, var(--color-accent) 4%, rgba(255, 255, 255, 0.02))
-    );
-    border-color: color-mix(in srgb, var(--secondary) 22%, var(--ink-mid));
-    box-shadow: 0 1px 0 var(--ink-hard), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--border);
+    box-shadow: none;
+    padding-top: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .about-panel {
+      border-top: 0;
+      border-left: 1px solid var(--border);
+      padding-top: 0;
+      padding-left: 2.25rem;
+    }
   }
   .about-portrait-frame {
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-    background: color-mix(in srgb, var(--color-background) 90%, var(--secondary) 10%);
+    background: var(--surface-warm);
+    border-color: var(--border);
   }
 
   .nav-brand-chip {
@@ -293,25 +318,6 @@
     color: var(--color-foreground);
     text-decoration-color: var(--color-accent);
     text-decoration-thickness: 1.5px;
-  }
-
-  .section-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    margin-bottom: 0.9rem;
-  }
-  .section-num {
-    font-family: var(--font-sans);
-    letter-spacing: 0.13em;
-    font-size: 13px;
-    color: var(--color-accent);
-  }
-  .section-line {
-    display: block;
-    width: 56px;
-    height: 1px;
-    background: var(--ink-mid);
   }
 
   .hero-cta {
@@ -347,44 +353,16 @@
     max-width: 34ch;
   }
 
-  /* Per-card panel tints (Selected Work). These override only framing,
-     while GSAP still controls opacity + transform on mount. */
-  .work-theme-gradual {
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--secondary) 10%, var(--color-background)),
-      color-mix(in srgb, #5c2620 7%, var(--color-background))
-    );
-    border-color: color-mix(in srgb, var(--secondary) 28%, var(--ink-mid));
-    box-shadow: 0 1px 0 var(--ink-hard), inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  }
-  .work-theme-climate {
-    background: linear-gradient(
-      to bottom,
-      rgba(92, 26, 31, 0.08),
-      color-mix(in srgb, var(--secondary) 14%, var(--color-background))
-    );
-    border-color: color-mix(in srgb, var(--color-accent) 30%, var(--ink-mid));
-  }
-  .work-theme-lunacast {
-    background: linear-gradient(
-      to bottom,
-      rgba(26, 22, 18, 0.06),
-      color-mix(in srgb, var(--secondary) 18%, var(--color-background))
-    );
-    border-color: color-mix(in srgb, var(--secondary) 30%, var(--ink-mid));
-  }
-  .work-theme-rwanda {
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-accent) 12%, var(--color-background)),
-      color-mix(in srgb, var(--secondary) 10%, var(--color-background))
-    );
-    border-color: color-mix(in srgb, var(--color-accent) 26%, var(--secondary));
-  }
+  /* Project entries — image-led, editorial. No card tints; framing is just a top
+     hairline rule + spacing. Hover lifts the image, not the chrome. */
+  .work-theme-gradual,
+  .work-theme-climate,
+  .work-theme-lunacast,
+  .work-theme-rwanda,
   .work-theme-featured {
-    border-color: color-mix(in srgb, var(--color-accent) 32%, var(--ink-mid));
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    background: transparent;
+    border: 0;
+    box-shadow: none;
   }
 
   /* Section background variants */
@@ -510,8 +488,12 @@
     opacity: 0;
     transform: translate3d(0, 32px, 0);
     will-change: opacity, transform;
-    transition: box-shadow 320ms var(--ease-premium), border-color 280ms var(--ease-premium), background-color 280ms var(--ease-premium), transform 280ms var(--ease-premium);
+    transition: border-color 280ms var(--ease-premium), transform 280ms var(--ease-premium);
     position: relative;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
   }
   .work-card-surface::before {
     content: "";
@@ -537,9 +519,9 @@
       transform: translateY(-3px);
     }
     .work-card:hover .work-card-surface {
-      box-shadow: 0 16px 34px var(--ink-soft);
-      border-color: color-mix(in srgb, var(--color-accent) 34%, var(--ink-mid));
-      background-color: rgba(255, 255, 255, 0.022);
+      box-shadow: none;
+      border-color: transparent;
+      background-color: transparent;
     }
     .work-card:hover .work-card-surface::before {
       width: 100%;
@@ -587,16 +569,15 @@
     transition: opacity 240ms var(--ease-premium), color 240ms var(--ease-premium), border-color 240ms var(--ease-premium), background-color 240ms var(--ease-premium), transform 240ms var(--ease-premium);
   }
   .reel-stage {
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-    transition: border-color 260ms var(--ease-premium), box-shadow 260ms var(--ease-premium);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.32);
+    transition: box-shadow 260ms var(--ease-premium);
   }
   .reel-caption {
-    color: color-mix(in srgb, var(--color-muted-foreground) 74%, var(--color-foreground) 26%);
+    color: var(--text-soft);
   }
   @media (hover: hover) and (pointer: fine) {
     .reel-stage:hover {
-      border-color: color-mix(in srgb, var(--color-accent) 38%, var(--ink-mid));
-      box-shadow: 0 26px 54px rgba(0, 0, 0, 0.46), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.38);
     }
   }
   @media (min-width: 1024px) {
@@ -679,15 +660,11 @@
 
   @media (max-width: 900px) {
     .section-body {
-      font-size: clamp(18px, 4.4vw, 20px);
-      line-height: 1.62;
+      font-size: clamp(17px, 4.4vw, 19px);
+      line-height: 1.66;
     }
     .work-title {
-      font-size: clamp(32px, 8.6vw, 38px);
-    }
-    .meta-inline {
-      font-size: 15px;
-      letter-spacing: 0.09em;
+      font-size: clamp(30px, 8.4vw, 38px);
     }
   }
 

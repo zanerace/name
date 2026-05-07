@@ -117,8 +117,8 @@ export function About() {
 
   return (
     <div ref={root} className="w-full max-w-full overflow-x-hidden">
-      {/* 80px cream + cream rule + 80px cream — boundary between MR (dark) and About (cream) */}
-      <div className="bg-background pt-20 md:pt-[80px] pb-20 md:pb-[80px]">
+      {/* Quiet rule between Featured Motion and About — composition, not container. */}
+      <div className="bg-background pt-16 md:pt-20 pb-16 md:pb-20">
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
           <div aria-hidden className="section-rule rule-draw" />
         </div>
@@ -130,56 +130,54 @@ export function About() {
         className="pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-          <header className="section-header mb-10 md:mb-14">
-            <div className="section-kicker gsap-fade-up">
-              <span className="section-num">03</span>
-              <span className="section-line" />
-            </div>
+          <header className="section-header mb-10 md:mb-12">
             <h2 className="gsap-fade-up font-display h-section">About</h2>
-            <p className="gsap-fade-up section-body mt-4 max-w-[60ch]">
-              A practice built on restraint: identities that age well, motion that clarifies, and sound-aware pacing.
-            </p>
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-20 min-w-0">
-            <div className="md:col-span-7 min-w-0">
-              <p className="about-lead font-serif text-[30px] md:text-[2.25rem] leading-[1.32] text-foreground break-words">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-16 lg:gap-x-20 gap-y-12 md:gap-y-0 min-w-0">
+            <div className="md:col-span-7 min-w-0 md:order-1">
+              <p className="about-lead font-serif text-[28px] md:text-[2.25rem] leading-[1.32] text-foreground break-words">
                 Race Kipping is a media designer working across identity, motion, and sound. The practice
                 draws from a decade in professional kitchens and recording studios — disciplines built on
                 tempo, restraint, and{" "}
                 <span className="font-serif-i">the seriousness of small choices.</span>
               </p>
-              <p className="about-tail gsap-fade-up-sm section-body mt-6 md:mt-8 max-w-2xl break-words">
+              <p className="about-tail gsap-fade-up-sm section-body mt-6 md:mt-8 max-w-[60ch] break-words text-[color:var(--text-soft)]">
                 He holds an AFA in Graphic Communications from St. Louis Community College, May 2026.
                 Current work centers on type, broadcast graphics, and AI-augmented production systems for
                 independent studios and cultural clients.
               </p>
             </div>
 
-            <aside className="about-side md:col-start-8 md:col-span-5 mt-10 md:mt-0 frame-panel p-10 md:p-12 about-panel min-w-0">
-              <div className="gsap-fade-up-sm mb-10">
-                <div className="about-portrait-frame overflow-hidden border border-border aspect-[4/5] md:aspect-[7/8] max-w-[460px]">
+            <aside className="about-side md:col-span-5 about-panel min-w-0 md:order-2">
+              <div className="gsap-fade-up-sm">
+                <div className="about-portrait-frame overflow-hidden border aspect-[4/5] md:aspect-[5/6] max-w-[460px] md:ml-auto">
                   <img
                     src="/about-portrait.png"
                     alt="Portrait of Race Kipping"
                     width={820}
                     height={1024}
                     loading="lazy"
-                    className="block w-full h-full object-cover object-[center_24%]"
+                    className="block w-full h-full object-cover object-[center_22%]"
                   />
                 </div>
+                <p className="meta-inline mt-4 md:text-right text-[color:var(--text-soft)]">
+                  Race Kipping, 2026
+                </p>
               </div>
-              <p className="gsap-fade-up-sm meta-inline mb-8">
-                Capabilities
-              </p>
-              <ul className="gsap-fade-up-sm grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
-                {capabilities.map((c) => (
-                  <li key={c} className="flex items-start gap-2.5 min-w-0">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[color:var(--secondary)] mt-[0.58em]" />
-                    <span className="font-ui text-[1.15rem] leading-[1.55] text-foreground break-words">{c}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="gsap-fade-up-sm mt-10 md:mt-12">
+                <p className="meta-inline mb-5 text-[color:var(--text-soft)]">
+                  Capabilities
+                </p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+                  {capabilities.map((c) => (
+                    <li key={c} className="flex items-baseline gap-3 min-w-0">
+                      <span aria-hidden="true" className="font-ui text-[12px] text-[color:var(--accent)] tracking-[0.2em]">—</span>
+                      <span className="font-ui text-[1.02rem] leading-[1.5] text-foreground break-words">{c}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </aside>
           </div>
         </div>

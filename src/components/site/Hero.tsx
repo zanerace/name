@@ -84,7 +84,7 @@ export function Hero() {
       id="top"
       className="hero-wash relative flex flex-col min-h-[60vh] md:min-h-[76vh] w-full max-w-full overflow-x-hidden"
     >
-      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-20 md:pt-[162px] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] box-border">
+      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-16 md:pt-[162px] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] box-border">
         <div className="grid grid-cols-12 gap-x-6 md:gap-x-12 gap-y-8 md:gap-y-10 items-start w-full min-w-0">
           <div className="col-span-12 md:col-span-7 min-w-0">
             <h1
@@ -115,22 +115,22 @@ export function Hero() {
               </a>
             </div>
           </div>
-          <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0 md:pt-3">
+          <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0 md:pt-4">
             {lunaCast && (
               <Link
                 to="/work/$projectId"
                 params={{ projectId: lunaCast.id }}
-                className="hero-feature-card group block frame-panel p-5 md:p-6 mb-5 transition-colors duration-200 hover:border-[color:var(--color-accent)] focus-visible:outline-none focus-visible:border-[color:var(--color-accent)]"
+                className="hero-feature-card group block mb-8 focus-visible:outline-none"
               >
-                <p className="meta-inline mb-2 text-accent">Featured Motion</p>
-                <div className="overflow-hidden border border-border mb-3.5 aspect-[16/9]">
+                <p className="meta-inline mb-3 text-accent">Featured Motion</p>
+                <div className="overflow-hidden mb-4 aspect-[16/10] md:aspect-[16/9]">
                   <img
                     src={lunaCast.coverImage}
                     alt={lunaCast.alt}
                     width={1280}
                     height={800}
                     loading="eager"
-                    className="block w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.018]"
+                    className="block w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
                   />
                 </div>
                 <p className="hero-feature-title font-display text-[30px] md:text-[34px] text-foreground">
@@ -140,11 +140,11 @@ export function Hero() {
             )}
             <p
               ref={bioRef}
-              className="section-body text-foreground max-w-[38ch] text-left hero-bio-panel frame-panel p-5 md:p-7"
+              className="section-body text-[color:var(--text-soft)] max-w-[38ch] text-left hero-bio-panel"
             >
               I design at the intersection of identity, motion, and sound. Background in cooking and music
               shapes how I approach the work — simple ingredients, deliberate process,{" "}
-              <span className="font-serif-i">considered outcome.</span>
+              <span className="font-serif-i text-foreground">considered outcome.</span>
             </p>
           </div>
         </div>

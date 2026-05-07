@@ -70,14 +70,14 @@ export function Contact() {
             </h2>
           </header>
 
-          <div className="md:col-start-7 md:col-span-6 frame-panel p-8 md:p-10 min-w-0">
+          <div className="md:col-start-7 md:col-span-6 min-w-0 md:border-l md:border-[color:var(--border)] md:pl-10 lg:pl-12">
             <dl className="space-y-8">
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="meta-inline mb-3">Email</dt>
                 <dd className="min-w-0">
                   <a
                     href="mailto:info@racekipping.com"
-                    className="font-display text-[35px] md:text-[40px] link-underline break-all md:break-normal transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
+                    className="font-display text-[clamp(30px,8.6vw,35px)] md:text-[40px] leading-[1.05] link-underline break-all md:break-normal transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                   >
                     info@racekipping.com
                   </a>
@@ -88,7 +88,7 @@ export function Contact() {
                 <dd className="min-w-0">
                   <a
                     href="tel:+16187998495"
-                    className="font-display text-[35px] md:text-[40px] link-underline break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
+                    className="font-display text-[clamp(30px,8.4vw,35px)] md:text-[40px] leading-[1.05] link-underline break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                   >
                     +1 (618) 799 8495
                   </a>
@@ -103,7 +103,7 @@ export function Contact() {
                       href={l.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                    className="font-display text-[29px] md:text-[31px] link-underline inline-flex items-center gap-2 break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
+                    className="font-display text-[clamp(24px,7vw,29px)] md:text-[31px] leading-[1.1] link-underline inline-flex items-center gap-2 break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                     >
                       {l.label}
                       <span aria-hidden="true" className="text-accent">
