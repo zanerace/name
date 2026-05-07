@@ -120,7 +120,7 @@ export function Hero() {
               <Link
                 to="/work/$projectId"
                 params={{ projectId: lunaCast.id }}
-                className="hero-feature-card group block mb-8 focus-visible:outline-none"
+                className="hero-feature-card group block mb-7 md:mb-8 focus-visible:outline-none"
               >
                 <p className="meta-inline mb-3 text-accent">Featured Motion</p>
                 <div className="overflow-hidden mb-4 aspect-[16/10] md:aspect-[16/9]">

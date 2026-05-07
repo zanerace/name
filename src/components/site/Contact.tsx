@@ -96,7 +96,7 @@ export function Contact() {
               </div>
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="meta-inline mb-3">Elsewhere</dt>
-                <dd className="flex flex-wrap gap-x-8 gap-y-3 min-w-0">
+                <dd className="flex flex-wrap gap-x-5 md:gap-x-8 gap-y-3 min-w-0">
                   {links.map((l) => (
                     <a
                       key={l.label}

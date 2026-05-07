@@ -185,12 +185,12 @@ export function Work() {
                 </Link>
 
                 <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
-                  <span className="font-ui text-[13px] uppercase tracking-[0.18em] text-accent">{p.num}</span>
-                  <span className="font-ui text-[13px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-muted-foreground break-words md:whitespace-nowrap">
+                  <span className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.18em] text-accent">{p.num}</span>
+                  <span className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-muted-foreground break-words md:whitespace-nowrap">
                     {p.tag} <span className="text-[color:var(--ink-hard)]">/</span> {p.year}
                   </span>
                   {p.id === "lunacast" && (
-                    <span className="font-ui text-[13px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-[color:var(--text-soft)] break-words md:whitespace-nowrap">
+                    <span className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-[color:var(--text-soft)] break-words md:whitespace-nowrap">
                       <span className="text-[color:var(--ink-hard)]">/</span> Featured Motion
                     </span>
                   )}
