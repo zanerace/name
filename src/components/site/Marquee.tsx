@@ -33,14 +33,14 @@ const MarqueeRun = () => (
  * Two identical runs sit inside .marquee-track; CSS keyframes translate
  * the track 0% → -50%, so the loop is seamless.
  *
- * No scroll-driven entrance — the strip simply exists, looping at 60s.
+ * No scroll-driven entrance — the strip simply exists, looping at 90s.
  * Honors prefers-reduced-motion via the global media query in styles.css.
  */
 export function Marquee() {
   return (
     <section
       aria-hidden="true"
-      className="py-14 md:py-24 border-y border-border w-full max-w-full overflow-x-hidden"
+      className="work-wash py-[72px] md:py-[104px] border-y border-border w-full max-w-full overflow-x-hidden frame-panel"
     >
       <div className="marquee">
         <div className="marquee-track marquee-text font-serif-i text-muted-foreground leading-none whitespace-nowrap">

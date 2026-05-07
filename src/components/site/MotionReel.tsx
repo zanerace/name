@@ -157,15 +157,11 @@ export function MotionReel() {
       <section
         ref={sectionRef}
         id="motion"
-        className="section-dark pt-[120px] md:pt-[200px] pb-[120px] md:pb-[200px] w-full max-w-full overflow-x-hidden"
+        className="section-dark pt-[124px] md:pt-[184px] pb-[124px] md:pb-[184px] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border min-w-0">
-          <header className="section-header flex items-end justify-between mb-16 md:mb-[80px]">
+          <header className="section-header flex items-end justify-between mb-[72px] md:mb-[86px]">
             <div>
-              <div className="flex items-center gap-4 mb-4">
-                <span className="gsap-fade-up font-ui text-[10px] uppercase">§ 02</span>
-                <span className="gsap-fade-up font-ui text-[10px] uppercase">Motion</span>
-              </div>
               <h2 className="gsap-fade-up font-display h-section">Motion Reel</h2>
             </div>
             <p className="gsap-fade-up font-ui text-[10px] uppercase hidden md:block">
@@ -175,7 +171,7 @@ export function MotionReel() {
         </div>
 
         <div className="reel-video mx-auto w-full max-w-full px-6 md:px-12 box-border min-w-0">
-          <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden border border-border">
+          <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden border border-border frame-panel">
             <video
               ref={videoRef}
               className="absolute inset-0 w-full h-full object-cover"

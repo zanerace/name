@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "@tanstack/react-router";
 import type Lenis from "lenis";
 import { gsap, prefersReducedMotion } from "@/lib/motion";
 import { lockScroll } from "@/lib/scroll-lock";
+import { workProjects } from "./work-data";
 
 const items = [
   { href: "#work", label: "Work" },
@@ -69,8 +71,8 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-200 ease-out md:transition-colors ${
-        scrolled ? "md:bg-background md:border-b md:border-border" : ""
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-200 ease-out ${
+        scrolled ? "nav-plate is-scrolled" : "nav-plate"
       }`}
     >
       <nav className="mx-auto max-w-[1440px] w-full pt-5 pb-5 px-6 md:px-12 md:py-0 md:h-16 flex items-center justify-between box-border">
@@ -79,24 +81,43 @@ export function Nav() {
           onClick={(e) => handleNavClick(e, "#top")}
           className="text-foreground shrink-0 transition-colors duration-200 ease-out md:hover:text-accent"
         >
-          <span className="md:hidden font-sans text-[11px] uppercase tracking-[0.2em] font-medium">
+          <span className="md:hidden font-sans text-[11px] uppercase tracking-[0.2em] font-medium meta-chip">
             RK
           </span>
-          <span className="hidden md:inline font-ui text-[11px] uppercase">
+          <span className="hidden md:inline font-ui text-[11px] uppercase meta-chip">
             Race Kipping
           </span>
         </a>
 
-        <ul className="hidden min-[600px]:flex font-ui items-center gap-6 lg:gap-8 text-[11px] uppercase text-muted-foreground shrink-0">
+        <ul className="hidden min-[600px]:flex font-ui items-center gap-5 lg:gap-7 text-[11px] uppercase text-muted-foreground shrink-0">
           {items.map((it) => (
-            <li key={it.href}>
+            <li key={it.href} className="relative group">
               <a
                 href={it.href}
                 onClick={(e) => handleNavClick(e, it.href)}
-                className="link-underline transition-colors duration-200 ease-out whitespace-nowrap"
+                className="link-underline transition-colors duration-200 ease-out whitespace-nowrap font-ui uppercase"
               >
                 {it.label}
               </a>
+              {it.href === "#work" && (
+                <div className="absolute left-0 top-full pt-3 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-180">
+                  <div className="frame-panel bg-background/95 min-w-[230px] p-3">
+                    <ul className="space-y-2 normal-case">
+                      {workProjects.map((project) => (
+                        <li key={project.id}>
+                          <Link
+                            to="/work/$projectId"
+                            params={{ projectId: project.id }}
+                            className="block font-display text-[15px] leading-tight text-foreground/90 hover:text-accent transition-colors"
+                          >
+                            {project.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
             </li>
           ))}
         </ul>
@@ -182,6 +203,8 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
     });
   };
 
+  const handleCloseClick = () => close();
+
   if (typeof document === "undefined") return null;
 
   return createPortal(
@@ -199,7 +222,7 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
         <button
           ref={closeRef}
           type="button"
-          onClick={close}
+          onClick={handleCloseClick}
           aria-label="Close menu"
           className="lightbox-control"
         >
@@ -219,19 +242,35 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
       </div>
       <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6 overflow-x-hidden">
         {items.map((it) => (
-          <a
-            key={it.href}
-            href={it.href}
-            onClick={(e) => {
-              e.preventDefault();
-              const id = it.href.slice(1);
-              close(() => scrollToHash(id));
-            }}
-            className="font-display text-foreground link-underline text-center max-w-full"
-            style={{ fontSize: "clamp(36px, 9vw, 56px)" }}
-          >
-            {it.label}
-          </a>
+          <div key={it.href} className="flex flex-col items-center gap-4">
+            <a
+              href={it.href}
+              onClick={(e) => {
+                e.preventDefault();
+                const id = it.href.slice(1);
+                close(() => scrollToHash(id));
+              }}
+              className="font-display text-foreground link-underline text-center max-w-full"
+              style={{ fontSize: "clamp(36px, 9vw, 56px)" }}
+            >
+              {it.label}
+            </a>
+            {it.href === "#work" && (
+              <div className="flex flex-col items-center gap-2">
+                {workProjects.map((project) => (
+                  <Link
+                    key={project.id}
+                    to="/work/$projectId"
+                    params={{ projectId: project.id }}
+                    onClick={() => close()}
+                    className="font-display text-[18px] text-muted-foreground link-underline"
+                  >
+                    {project.title}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>,

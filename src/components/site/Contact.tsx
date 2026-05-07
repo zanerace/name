@@ -47,19 +47,18 @@ export function Contact() {
   }, []);
 
   return (
-    <section ref={root} id="contact" className="py-32 md:py-[240px]">
+    <section ref={root} id="contact" className="py-32 md:py-[220px]">
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
         <div aria-hidden className="rule-draw section-rule mb-32 md:mb-44" />
         <div className="grid grid-cols-12 gap-x-10 gap-y-16">
           <header className="section-header col-span-12 md:col-span-5">
-            <p className="gsap-fade-up font-ui text-[10px] uppercase text-accent mb-4">§ 04</p>
             <h2 className="gsap-fade-up font-display h-section">
               Currently taking on{" "}
               <span className="font-serif-i text-accent">new work.</span>
             </h2>
           </header>
 
-          <div className="col-span-12 md:col-start-7 md:col-span-6">
+          <div className="col-span-12 md:col-start-7 md:col-span-6 frame-panel p-6 md:p-8">
             <dl className="space-y-10">
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Email</dt>

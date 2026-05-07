@@ -127,24 +127,16 @@ export function About() {
       <section
         ref={sectionRef}
         id="about"
-        className="pt-20 md:pt-[120px] pb-20 md:pb-[80px]"
+        className="pt-24 md:pt-[136px] pb-24 md:pb-[104px]"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-          <header className="section-header mb-16 md:mb-[80px]">
-            <div className="flex items-center gap-4 mb-4">
-              <span className="gsap-fade-up font-ui text-[10px] uppercase text-accent">
-                § 03
-              </span>
-              <span className="gsap-fade-up font-ui text-[10px] uppercase text-accent">
-                About
-              </span>
-            </div>
+          <header className="section-header mb-[72px] md:mb-[88px]">
             <h2 className="gsap-fade-up font-display h-section">About</h2>
           </header>
 
           <div className="grid grid-cols-12 gap-x-10 md:gap-x-20">
             <div className="col-span-12 md:col-span-7">
-              <p className="about-lead font-serif text-lg md:text-2xl leading-[1.45] text-foreground">
+              <p className="about-lead font-serif text-xl md:text-[2.05rem] leading-[1.38] text-foreground">
                 Race Kipping is a media designer working across identity, motion, and sound. The practice
                 draws from a decade in professional kitchens and recording studios — disciplines built on
                 tempo, restraint, and{" "}
@@ -157,22 +149,15 @@ export function About() {
               </p>
             </div>
 
-            <aside className="about-side col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0">
+            <aside className="about-side col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8">
               <p className="gsap-fade-up-sm font-ui text-[10px] uppercase text-muted-foreground mb-6">
                 Capabilities
               </p>
-              <ul className="gsap-fade-up-sm">
-                {capabilities.map((c, i) => (
-                  <li
-                    key={c}
-                    className="flex items-baseline justify-between py-3 group"
-                  >
-                    <span className="font-display text-lg text-foreground transition-colors duration-200 ease-out group-hover:text-accent">
-                      {c}
-                    </span>
-                    <span className="font-ui text-[10px] uppercase text-accent">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+              <ul className="gsap-fade-up-sm grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+                {capabilities.map((c) => (
+                  <li key={c} className="flex items-start gap-2.5">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mt-[0.58em]" />
+                    <span className="font-serif text-[1.03rem] leading-[1.45] text-foreground">{c}</span>
                   </li>
                 ))}
               </ul>
