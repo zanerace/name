@@ -157,13 +157,13 @@ export function MotionReel() {
       <section
         ref={sectionRef}
         id="motion"
-        className="section-dark pt-[124px] md:pt-[184px] pb-[124px] md:pb-[184px] w-full max-w-full overflow-x-hidden"
+        className="section-dark pt-[96px] md:pt-[184px] pb-[96px] md:pb-[184px] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border min-w-0">
-          <header className="section-header flex items-end justify-between mb-[72px] md:mb-[86px]">
+          <header className="section-header flex items-start justify-between mb-[52px] md:mb-[82px]">
             <div>
               <h2 className="gsap-fade-up font-display h-section">Motion Reel</h2>
-              <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-4 max-w-[50ch]">
+              <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-3 max-w-[52ch]">
                 A dark-room loop of selected motion work—identity systems, UI rhythm, and editorial timing.
               </p>
             </div>

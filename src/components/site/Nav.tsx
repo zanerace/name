@@ -75,16 +75,16 @@ export function Nav() {
         scrolled ? "nav-plate is-scrolled" : "nav-plate"
       }`}
     >
-      <nav className="mx-auto max-w-[1440px] w-full pt-5 pb-5 px-6 md:px-12 md:py-0 md:h-16 flex items-center justify-between box-border">
+      <nav className="mx-auto max-w-[1440px] w-full py-4 md:py-0 px-6 md:px-12 md:h-16 flex items-center justify-between box-border">
         <a
           href="#top"
           onClick={(e) => handleNavClick(e, "#top")}
           className="text-foreground shrink-0 transition-colors duration-200 ease-out md:hover:text-accent nav-brand"
         >
-          <span className="md:hidden font-sans text-[11px] uppercase tracking-[0.2em] font-medium meta-chip">
+          <span className="md:hidden font-sans text-[11px] uppercase tracking-[0.2em] font-medium nav-brand-chip">
             RK
           </span>
-          <span className="hidden md:inline font-ui text-[11px] uppercase meta-chip">
+          <span className="hidden md:inline font-ui text-[11px] uppercase nav-brand-chip">
             Race Kipping
           </span>
         </a>
@@ -215,7 +215,7 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
       aria-label="Site navigation"
       className="fixed inset-0 z-[90] bg-background flex flex-col overflow-x-hidden"
     >
-      <div className="flex items-center justify-between pt-5 pb-5 px-6 box-border">
+      <div className="flex items-center justify-between py-4 px-6 box-border">
         <span className="font-sans text-[11px] uppercase tracking-[0.2em] font-medium text-foreground">
           RK
         </span>
@@ -240,9 +240,9 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
           </svg>
         </button>
       </div>
-      <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6 overflow-x-hidden">
+      <div className="flex-1 flex flex-col items-center justify-center gap-6 md:gap-8 px-6 pb-8 overflow-x-hidden overflow-y-auto">
         {items.map((it) => (
-          <div key={it.href} className="flex flex-col items-center gap-4">
+          <div key={it.href} className="flex flex-col items-center gap-3">
             <a
               href={it.href}
               onClick={(e) => {
@@ -251,19 +251,19 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
                 close(() => scrollToHash(id));
               }}
               className="font-display text-foreground link-underline text-center max-w-full"
-              style={{ fontSize: "clamp(36px, 9vw, 56px)" }}
+              style={{ fontSize: "clamp(32px, 8.5vw, 56px)" }}
             >
               {it.label}
             </a>
             {it.href === "#work" && (
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-1.5">
                 {workProjects.map((project) => (
                   <Link
                     key={project.id}
                     to="/work/$projectId"
                     params={{ projectId: project.id }}
                     onClick={() => close()}
-                    className="font-display text-[18px] text-muted-foreground link-underline"
+                    className="font-display text-[17px] text-muted-foreground link-underline"
                   >
                     {project.title}
                   </Link>

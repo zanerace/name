@@ -42,10 +42,10 @@ export function BreatherBand() {
         <div className="max-w-[760px]">
           <div aria-hidden className="ink-rule-heavy mb-6" />
           <p data-breather-head className="font-ui text-[10px] uppercase text-accent mb-4">
-            A studio practice across media
+            Case Studies
           </p>
           <p data-breather-sub className="font-serif text-[18px] md:text-[20px] leading-[1.6] text-muted-foreground">
-            Identity systems, motion grammar, and sound-aware pacing—composed as one continuous craft.
+            Identity systems, motion grammar, and sound-aware pacing—composed as one craft.
           </p>
         </div>
       </div>

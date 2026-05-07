@@ -32,6 +32,7 @@
   --ink-soft: rgba(26, 22, 18, 0.08);
   --ink-mid: rgba(26, 22, 18, 0.22);
   --ink-hard: rgba(26, 22, 18, 0.62);
+  --secondary: #2a4f63;
 
   /* Interactive cursor — small oxblood dot, used only on hover of links/cards. Default cursor is the OS default. */
   --cursor-active: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="5" fill="%235c1a1f"/></svg>') 11 11;
@@ -179,10 +180,15 @@
     display: inline-flex;
     align-items: center;
     border: 1px solid var(--ink-mid);
-    padding: 0.24rem 0.5rem;
+    padding: 0.26rem 0.52rem;
     line-height: 1;
-    background: rgba(255, 255, 255, 0.3);
+    background: color-mix(in srgb, var(--color-background) 72%, var(--secondary) 28%);
     transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  }
+  @media (max-width: 767px) {
+    .meta-chip {
+      letter-spacing: 0.14em;
+    }
   }
   .nav-plate {
     border: 1px solid transparent;
@@ -196,16 +202,83 @@
   }
   .hero-wash {
     background:
-      radial-gradient(1200px 560px at 92% -4%, rgba(92, 26, 31, 0.30), transparent 56%),
-      radial-gradient(900px 560px at -10% 24%, rgba(92, 26, 31, 0.23), transparent 61%),
-      radial-gradient(620px 340px at 38% 8%, rgba(92, 26, 31, 0.14), transparent 70%),
+      radial-gradient(1260px 600px at 92% -4%, rgba(92, 26, 31, 0.38), transparent 54%),
+      radial-gradient(950px 600px at -10% 24%, rgba(92, 26, 31, 0.29), transparent 60%),
+      radial-gradient(680px 360px at 38% 8%, rgba(92, 26, 31, 0.18), transparent 70%),
       var(--color-background);
   }
   .work-wash {
     background:
-      radial-gradient(1020px 600px at 100% -18%, rgba(92, 26, 31, 0.21), transparent 64%),
-      radial-gradient(620px 320px at 10% 18%, rgba(92, 26, 31, 0.12), transparent 74%),
+      radial-gradient(1080px 640px at 100% -18%, rgba(92, 26, 31, 0.27), transparent 62%),
+      radial-gradient(680px 340px at 10% 18%, rgba(92, 26, 31, 0.16), transparent 74%),
       var(--color-background);
+  }
+
+  .hero-kipping {
+    color: color-mix(in srgb, var(--color-accent) 68%, var(--color-foreground) 32%);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .hero-bio-panel {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--secondary) 14%, var(--color-background)),
+      color-mix(in srgb, var(--color-accent) 8%, var(--color-background))
+    );
+    border-color: color-mix(in srgb, var(--secondary) 26%, var(--color-border));
+  }
+
+  .about-panel {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--secondary) 18%, rgba(255, 255, 255, 0.22)),
+      color-mix(in srgb, var(--color-accent) 8%, rgba(255, 255, 255, 0.04))
+    );
+    border-color: color-mix(in srgb, var(--secondary) 28%, var(--ink-mid));
+    box-shadow: 0 1px 0 var(--ink-hard), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  .nav-brand-chip {
+    background: rgba(242, 235, 221, 0.35);
+    border-color: var(--ink-mid);
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Per-card panel tints (Selected Work). These override only framing,
+     while GSAP still controls opacity + transform on mount. */
+  .work-theme-gradual {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--secondary) 12%, var(--color-background)),
+      color-mix(in srgb, var(--color-accent) 8%, var(--color-background))
+    );
+    border-color: color-mix(in srgb, var(--secondary) 28%, var(--ink-mid));
+    box-shadow: 0 1px 0 var(--ink-hard), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .work-theme-climate {
+    background: linear-gradient(
+      to bottom,
+      rgba(92, 26, 31, 0.08),
+      color-mix(in srgb, var(--secondary) 14%, var(--color-background))
+    );
+    border-color: color-mix(in srgb, var(--color-accent) 30%, var(--ink-mid));
+  }
+  .work-theme-lunacast {
+    background: linear-gradient(
+      to bottom,
+      rgba(26, 22, 18, 0.06),
+      color-mix(in srgb, var(--secondary) 18%, var(--color-background))
+    );
+    border-color: color-mix(in srgb, var(--secondary) 30%, var(--ink-mid));
+  }
+  .work-theme-rwanda {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-accent) 12%, var(--color-background)),
+      color-mix(in srgb, var(--secondary) 10%, var(--color-background))
+    );
+    border-color: color-mix(in srgb, var(--color-accent) 26%, var(--secondary));
   }
 
   /* Section background variants */

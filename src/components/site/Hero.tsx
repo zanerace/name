@@ -72,9 +72,9 @@ export function Hero() {
     <section
       ref={root}
       id="top"
-      className="hero-wash relative flex flex-col min-h-[70vh] md:min-h-[80vh] w-full max-w-full overflow-x-hidden"
+      className="hero-wash relative flex flex-col min-h-[64vh] md:min-h-[80vh] w-full max-w-full overflow-x-hidden"
     >
-      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-20 md:pt-[196px] pb-24 md:pb-[136px] box-border">
+      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-16 md:pt-[196px] pb-20 md:pb-[136px] box-border">
         <div className="grid grid-cols-12 gap-x-6 md:gap-x-12 gap-y-8 md:gap-y-12 items-start w-full min-w-0">
           <div className="col-span-12 md:col-span-7 min-w-0">
             <h1
@@ -82,8 +82,8 @@ export function Hero() {
               className="font-display h-hero max-w-full leading-none md:pr-8"
               aria-label="Race Kipping"
             >
-              <span className="hero-line block">Race</span>
-              <span className="hero-line block md:pl-8">Kipping</span>
+              <span className="hero-line block hero-kipping">Race</span>
+              <span className="hero-line block hero-kipping">Kipping</span>
             </h1>
             <p
               ref={subRef}
@@ -95,7 +95,7 @@ export function Hero() {
           <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0 md:pt-2">
             <p
               ref={bioRef}
-              className="font-serif text-[1.06rem] md:text-[1.34rem] text-foreground max-w-[34ch] leading-[1.58] text-left frame-panel p-4 md:p-6"
+              className="font-serif text-[1rem] md:text-[1.34rem] text-foreground max-w-[34ch] leading-[1.58] text-left hero-bio-panel frame-panel p-4 md:p-6"
             >
               I design at the intersection of identity, motion, and sound. Background in cooking and music
               shapes how I approach the work — simple ingredients, deliberate process,{" "}

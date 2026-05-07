@@ -127,10 +127,10 @@ export function About() {
       <section
         ref={sectionRef}
         id="about"
-        className="pt-24 md:pt-[136px] pb-24 md:pb-[104px]"
+        className="pt-20 md:pt-[136px] pb-20 md:pb-[104px]"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-          <header className="section-header mb-[72px] md:mb-[88px]">
+          <header className="section-header mb-[56px] md:mb-[88px]">
             <h2 className="gsap-fade-up font-display h-section">About</h2>
             <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.55] text-muted-foreground mt-4 max-w-[60ch]">
               A practice built on restraint: identities that age well, motion that clarifies, and sound-aware pacing.
@@ -152,15 +152,15 @@ export function About() {
               </p>
             </div>
 
-            <aside className="about-side col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8">
+            <aside className="about-side col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8 about-panel">
               <p className="gsap-fade-up-sm font-ui text-[10px] uppercase text-muted-foreground mb-6">
                 Capabilities
               </p>
               <ul className="gsap-fade-up-sm grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                 {capabilities.map((c) => (
                   <li key={c} className="flex items-start gap-2.5">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mt-[0.58em]" />
-                    <span className="font-serif text-[1.03rem] leading-[1.45] text-foreground">{c}</span>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[color:var(--secondary)] mt-[0.58em]" />
+                    <span className="font-ui text-[1.03rem] leading-[1.45] text-foreground">{c}</span>
                   </li>
                 ))}
               </ul>

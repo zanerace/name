@@ -128,14 +128,14 @@ export function Work() {
     <section
       ref={root}
       id="work"
-      className="work-wash pt-24 md:pt-[136px] pb-24 md:pb-[104px] w-full max-w-full overflow-x-hidden"
+      className="work-wash pt-20 md:pt-[136px] pb-20 md:pb-[104px] w-full max-w-full overflow-x-hidden"
     >
       <div className="mx-auto max-w-[1440px] w-full max-w-full px-6 md:px-12 box-border">
-        <header className="section-header flex items-end justify-between mb-[72px] md:mb-24">
+        <header className="section-header flex items-start justify-between mb-[56px] md:mb-24">
           <div>
-              <h2 className="gsap-fade-up font-display h-section">Selected Work</h2>
-              <p className="gsap-fade-up font-ui text-[10px] uppercase text-muted-foreground mt-4">2024 — 2026</p>
-            <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-4 max-w-[52ch]">
+            <h2 className="gsap-fade-up font-display h-section">Selected Work</h2>
+            <p className="gsap-fade-up font-ui text-[10px] uppercase text-muted-foreground mt-4">2024 — 2026</p>
+            <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-5 max-w-[52ch]">
               A curated selection across identity, motion, and sound—built for real production contexts.
             </p>
           </div>
@@ -143,7 +143,7 @@ export function Work() {
 
         <div
           ref={gridRef}
-          className="work-grid grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-[72px] md:gap-y-[92px] w-full min-w-0"
+          className="work-grid grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-[56px] md:gap-y-[92px] w-full min-w-0"
         >
           {workProjects.map((p, index) => (
             <article key={p.id} className="work-card min-w-0">
@@ -151,7 +151,15 @@ export function Work() {
                 ref={(el) => {
                   if (el) cardsRef.current[index] = el;
                 }}
-                className="work-card-surface frame-panel p-4 md:p-5"
+                className={`work-card-surface frame-panel p-4 md:p-5 ${
+                  p.id === "gradual-sans"
+                    ? "work-theme-gradual"
+                    : p.id === "climate-change"
+                      ? "work-theme-climate"
+                      : p.id === "lunacast"
+                        ? "work-theme-lunacast"
+                        : "work-theme-rwanda"
+                }`}
               >
                 <Link
                   to="/work/$projectId"
