@@ -24,26 +24,28 @@ export function Hero() {
     const chars = headlineSplit.chars ?? [];
     const bioLines = bioSplit.lines ?? [];
 
-    gsap.set(chars, { y: 32, opacity: 0 });
-    gsap.set(sub, { y: 20, opacity: 0 });
-    gsap.set(bioLines, { y: 18, opacity: 0 });
+    gsap.set(chars, { y: 32, opacity: 0, force3D: true });
+    gsap.set(sub, { y: 20, opacity: 0, force3D: true });
+    gsap.set(bioLines, { y: 18, opacity: 0, force3D: true });
 
-    const tl = gsap.timeline();
+    const clearWillChange = () => {
+      [...chars, sub, ...bioLines].forEach((node) => {
+        if (node instanceof HTMLElement) node.style.willChange = "auto";
+      });
+    };
+
+    const tl = gsap.timeline({ onComplete: clearWillChange });
     tl.to(chars, {
       y: 0,
       opacity: 1,
       duration: 0.8,
       stagger: 0.04,
       ease: "power3.out",
+      force3D: true,
     });
     tl.to(
       sub,
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        ease: "power2.out",
-      },
+      { y: 0, opacity: 1, duration: 0.6, ease: "power2.out", force3D: true },
       0.8
     );
     tl.to(
@@ -54,6 +56,7 @@ export function Hero() {
         duration: 0.6,
         stagger: 0.08,
         ease: "power2.out",
+        force3D: true,
       },
       1.2
     );
@@ -66,33 +69,39 @@ export function Hero() {
   }, []);
 
   return (
-    <section ref={root} id="top" className="relative min-h-screen flex flex-col">
-      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-40 md:pt-56 pb-32 md:pb-40 grid grid-cols-12 gap-6">
-        <div className="col-span-12 md:col-span-10">
-          <h1
-            ref={headlineRef}
-            className="font-display h-hero"
-            aria-label="Race Kipping"
-          >
-            <span className="hero-line block">Race</span>
-            <span className="hero-line block">Kipping</span>
-          </h1>
-          <p
-            ref={subRef}
-            className="font-ui text-[10px] uppercase text-muted-foreground mt-12 md:mt-16"
-          >
-            Media Designer
-          </p>
-        </div>
-        <div className="col-span-12 md:col-start-6 md:col-span-7 mt-20 md:mt-28">
-          <p
-            ref={bioRef}
-            className="font-serif text-lg md:text-xl text-foreground max-w-[42ch] leading-[1.55]"
-          >
-            I design at the intersection of identity, motion, and sound. Background in cooking and music
-            shapes how I approach the work — simple ingredients, deliberate process,{" "}
-            <span className="font-serif-i">considered outcome.</span>
-          </p>
+    <section
+      ref={root}
+      id="top"
+      className="relative flex flex-col min-h-[70vh] md:min-h-[80vh] w-full max-w-full overflow-x-hidden"
+    >
+      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-16 md:pt-[180px] pb-20 md:pb-[120px] box-border">
+        <div className="grid grid-cols-12 gap-x-6 md:gap-x-12 gap-y-8 md:gap-y-12 items-start w-full min-w-0">
+          <div className="col-span-12 md:col-span-7 min-w-0">
+            <h1
+              ref={headlineRef}
+              className="font-display h-hero max-w-full"
+              aria-label="Race Kipping"
+            >
+              <span className="hero-line block">Race</span>
+              <span className="hero-line block">Kipping</span>
+            </h1>
+            <p
+              ref={subRef}
+              className="font-ui text-[10px] uppercase text-muted-foreground mt-8 md:mt-16 tracking-[0.18em] md:tracking-[0.22em]"
+            >
+              Media Designer
+            </p>
+          </div>
+          <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0">
+            <p
+              ref={bioRef}
+              className="font-serif text-base md:text-xl text-foreground max-w-[42ch] leading-[1.55] text-left"
+            >
+              I design at the intersection of identity, motion, and sound. Background in cooking and music
+              shapes how I approach the work — simple ingredients, deliberate process,{" "}
+              <span className="font-serif-i">considered outcome.</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>

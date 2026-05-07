@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Marquee } from "@/components/site/Marquee";
@@ -30,8 +29,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main className="min-h-screen">
-      <SmoothScroll />
+    <main className="min-h-screen w-full max-w-full overflow-x-hidden">
       <Nav />
       <Hero />
       <Marquee />

@@ -18,62 +18,27 @@ const VIDEO_SOURCES: readonly { src: string; type: string }[] = [
 ];
 
 const PlayIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    strokeLinejoin="miter"
-    aria-hidden="true"
-  >
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1" strokeLinejoin="miter" aria-hidden="true">
     <path d="M3.5 2 L11 7 L3.5 12 Z" />
   </svg>
 );
 
 const PauseIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    aria-hidden="true"
-  >
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1" aria-hidden="true">
     <line x1="5" y1="3" x2="5" y2="11" />
     <line x1="9" y1="3" x2="9" y2="11" />
   </svg>
 );
 
 const VolumeIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    strokeLinejoin="miter"
-    aria-hidden="true"
-  >
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1" strokeLinejoin="miter" aria-hidden="true">
     <path d="M2 5 H4.5 L8 2.5 V11.5 L4.5 9 H2 Z" />
     <path d="M10.5 5 Q11.6 7 10.5 9" strokeLinecap="round" />
   </svg>
 );
 
 const MuteIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1"
-    strokeLinejoin="miter"
-    aria-hidden="true"
-  >
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1" strokeLinejoin="miter" aria-hidden="true">
     <path d="M2 5 H4.5 L8 2.5 V11.5 L4.5 9 H2 Z" />
     <line x1="10" y1="5" x2="13" y2="9" />
     <line x1="13" y1="5" x2="10" y2="9" />
@@ -87,7 +52,6 @@ export function MotionReel() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
 
-  // Mirror video state into React so the toggle icons stay accurate
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -115,26 +79,52 @@ export function MotionReel() {
 
     const ctx = gsap.context(() => {
       const ruleEl = el.querySelector<HTMLElement>(".section-rule");
-      const headerEls = el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up");
+      const headerEls = Array.from(
+        el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up")
+      );
       const video = el.querySelector<HTMLElement>(".reel-video");
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionEl,
           start: "top 90%",
-          toggleActions: "play none none none",
+          once: true,
+        },
+        onComplete: () => {
+          headerEls.forEach((node) => (node.style.willChange = "auto"));
+          if (video) video.style.willChange = "auto";
         },
       });
+
       if (ruleEl) {
         tl.to(ruleEl, { scaleX: 1, duration: 0.5, ease: "power2.inOut" });
       }
-      tl.to(
-        headerEls,
-        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out", stagger: 0.06 },
-        "-=0.25"
-      );
+      if (headerEls.length) {
+        tl.to(
+          headerEls,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: "power3.out",
+            stagger: 0.06,
+            force3D: true,
+          },
+          "-=0.25"
+        );
+      }
       if (video) {
-        tl.to(video, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, "-=0.2");
+        tl.to(
+          video,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: "power3.out",
+            force3D: true,
+          },
+          "-=0.2"
+        );
       }
     }, el);
 
@@ -155,10 +145,11 @@ export function MotionReel() {
   };
 
   return (
-    <div ref={root}>
-      {/* Cream-side hairline that marks the boundary just before the dark section begins */}
-      <div className="bg-background">
-        <div className="mx-auto max-w-[1440px] px-6 md:px-12">
+    <div ref={root} className="w-full max-w-full overflow-x-hidden">
+      {/* Cream-side hairline rule + 80px cream cushion below the rule, before dark begins.
+          80px above the rule is provided by Selected Work's pb-[80px]. */}
+      <div className="bg-background pb-20 md:pb-[80px] w-full max-w-full overflow-x-hidden">
+        <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border">
           <div aria-hidden className="section-rule rule-draw" />
         </div>
       </div>
@@ -166,10 +157,10 @@ export function MotionReel() {
       <section
         ref={sectionRef}
         id="motion"
-        className="section-dark pt-32 md:pt-[200px] pb-32 md:pb-[200px]"
+        className="section-dark pt-[120px] md:pt-[200px] pb-[120px] md:pb-[200px] w-full max-w-full overflow-x-hidden"
       >
-        <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-          <header className="section-header flex items-end justify-between mb-20 md:mb-[80px]">
+        <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border min-w-0">
+          <header className="section-header flex items-end justify-between mb-16 md:mb-[80px]">
             <div>
               <div className="flex items-center gap-4 mb-4">
                 <span className="gsap-fade-up font-ui text-[10px] uppercase">§ 02</span>
@@ -183,7 +174,7 @@ export function MotionReel() {
           </header>
         </div>
 
-        <div className="reel-video mx-auto w-full max-w-[1720px] px-2 md:px-6">
+        <div className="reel-video mx-auto w-full max-w-full px-6 md:px-12 box-border min-w-0">
           <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden border border-border">
             <video
               ref={videoRef}
@@ -217,7 +208,7 @@ export function MotionReel() {
               {isMuted ? <MuteIcon /> : <VolumeIcon />}
             </button>
           </div>
-          <p className="font-serif-i mt-10 px-4 md:px-6">
+          <p className="font-serif-i mt-8 md:mt-10">
             Selected motion work, 2024–2026.
           </p>
         </div>

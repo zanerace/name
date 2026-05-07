@@ -35,14 +35,25 @@
 }
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
   * {
     border-color: var(--color-border);
   }
   html {
-    scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* Native smooth-scroll fights Lenis — Lenis drives smoothing on desktop. */
+    scroll-behavior: auto;
   }
+
   /* Lenis */
   html.lenis {
+    height: auto;
+  }
+  html.lenis body {
     height: auto;
   }
   .lenis.lenis-smooth {
@@ -52,9 +63,11 @@
     overscroll-behavior: contain;
   }
   .lenis.lenis-stopped {
-    overflow: clip;
+    overflow: hidden;
   }
+
   body {
+    overflow-x: hidden;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-serif);
@@ -76,11 +89,24 @@
     background: var(--color-accent);
     color: var(--color-background);
   }
-  a,
-  button,
-  [role="button"],
-  [data-cursor="active"] {
-    cursor: var(--cursor-active), pointer;
+
+  /* Custom oxblood-dot cursor — only on devices with hover + fine pointer (i.e. mouse).
+     On touch devices we drop straight to the platform pointer. */
+  @media (hover: hover) and (pointer: fine) {
+    a,
+    button,
+    [role="button"],
+    [data-cursor="active"] {
+      cursor: var(--cursor-active), pointer;
+    }
+  }
+  @media (hover: none), (pointer: coarse) {
+    a,
+    button,
+    [role="button"],
+    [data-cursor="active"] {
+      cursor: pointer;
+    }
   }
 }
 
@@ -94,24 +120,43 @@
   /* Mono — nav, all-caps labels, metadata, captions */
   .font-ui {
     font-family: var(--font-sans);
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .font-ui {
+      letter-spacing: 0.22em;
+    }
   }
   .font-serif-i {
     font-family: var(--font-serif);
     font-style: italic;
   }
 
-  /* Editorial type scale */
+  /* Editorial type scale — mobile first, scaled up on >=768px. */
   .h-hero {
-    font-size: clamp(80px, 11vw, 180px);
-    line-height: 0.9;
-    letter-spacing: -0.035em;
-  }
-  .h-section {
-    font-size: clamp(48px, 6vw, 88px);
+    font-size: clamp(56px, 12vw, 88px);
     line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  @media (min-width: 768px) {
+    .h-hero {
+      font-size: clamp(80px, 11vw, 180px);
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+    }
+  }
+
+  .h-section {
+    font-size: clamp(36px, 9vw, 56px);
+    line-height: 1;
     letter-spacing: -0.02em;
+  }
+  @media (min-width: 768px) {
+    .h-section {
+      font-size: clamp(48px, 6vw, 88px);
+      line-height: 0.95;
+    }
   }
 
   /* Section background variants */
@@ -140,6 +185,19 @@
     background-color: var(--color-background);
   }
 
+  /* GSAP entry primitives — initial state. Distance is intentionally small (20px)
+     so the entrance is felt, not noticed, and stays cheap on lower-end devices. */
+  .gsap-fade-up {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    will-change: opacity, transform;
+  }
+  .gsap-fade-up-sm {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    will-change: opacity, transform;
+  }
+
   /* Reveal — IO-driven fallback for any element that doesn't get a GSAP timeline */
   .reveal {
     opacity: 0;
@@ -152,19 +210,7 @@
     transform: none;
   }
 
-  /* GSAP entry primitives — components set initial state via classes, GSAP animates them in */
-  .gsap-fade-up {
-    opacity: 0;
-    transform: translate3d(0, 30px, 0);
-    will-change: opacity, transform;
-  }
-  .gsap-fade-up-sm {
-    opacity: 0;
-    transform: translate3d(0, 20px, 0);
-    will-change: opacity, transform;
-  }
-
-  /* Editorial link underline — text holds foreground; underline color shifts to accent on hover */
+  /* Editorial link underline — text holds foreground; underline color shifts to accent on hover. */
   .link-underline {
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
@@ -172,11 +218,17 @@
     text-decoration-color: currentColor;
     transition: text-decoration-color 200ms ease;
   }
-  .link-underline:hover {
-    text-decoration-color: var(--color-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .link-underline:hover {
+      text-decoration-color: var(--color-accent);
+    }
   }
 
-  /* Project title — invisible underline by default; accent color appears on card hover */
+  /* Project card — GSAP owns opacity/transform on `.work-card-surface` during the
+     entrance. To prevent the SSR-then-hydrate flash (server HTML paints opaque cards
+     before JS runs `gsap.set`), the hidden state is also expressed in CSS so server
+     HTML matches GSAP's pre-animation state byte for byte. The reduced-motion block
+     below resets to natural state. */
   .work-title {
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
@@ -184,18 +236,51 @@
     text-decoration-color: transparent;
     transition: text-decoration-color 200ms ease;
   }
-  .work-card:hover .work-title {
-    text-decoration-color: var(--color-accent);
+  .work-card-surface {
+    opacity: 0;
+    transform: translate3d(0, 32px, 0);
+    will-change: opacity, transform;
+  }
+  /* Hover lift lives on `.work-card` (the outer <article>) — never on
+     `.work-card-surface`, so the hover transition cannot collide with GSAP's
+     transform on the surface during entrance. */
+  @media (hover: hover) and (pointer: fine) {
+    .work-card {
+      transition: transform 200ms ease-out;
+    }
+    .work-card:hover {
+      transform: translateY(-2px);
+    }
+    .work-card:hover .work-title {
+      text-decoration-color: var(--color-accent);
+    }
+  }
+  /* Touch devices — substitute a tap-acknowledgement dimming. */
+  @media (hover: none) {
+    .work-image-link:active {
+      opacity: 0.85;
+      transition: opacity 200ms ease;
+    }
+  }
+  /* Image trigger — clearly an image you can open. */
+  button.work-image-link {
+    cursor: zoom-in;
+  }
+  @media (hover: none), (pointer: coarse) {
+    button.work-image-link {
+      cursor: pointer;
+    }
   }
 
-  /* Custom Motion Reel video controls — cream stroke, oxblood on hover, fade in on stage hover */
+  /* Custom Motion Reel video controls — cream stroke, oxblood on hover, fade in on stage hover.
+     44px tap targets on mobile (per iOS HIG), down to 32px on desktop where they're decorative. */
   .reel-control {
     position: absolute;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     border-radius: 9999px;
     border: 1px solid var(--color-background);
     color: var(--color-background);
@@ -203,26 +288,50 @@
     opacity: 0;
     transition: opacity 200ms ease, color 200ms ease, border-color 200ms ease;
   }
+  @media (min-width: 1024px) {
+    .reel-control {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  /* On touch devices, controls stay visible — there is no hover. */
+  @media (hover: none), (pointer: coarse) {
+    .reel-control {
+      opacity: 1;
+    }
+  }
   .reel-stage:hover .reel-control,
   .reel-stage:focus-within .reel-control,
   .reel-control:focus-visible {
     opacity: 1;
   }
-  .reel-control:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .reel-control:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
   }
 
   /* Marquee — horizontal infinite scroll. Inner row contains content duplicated 2x. */
   .marquee {
     overflow: hidden;
+    overflow-x: clip;
     width: 100%;
+    max-width: 100%;
   }
   .marquee-track {
     display: inline-flex;
     width: max-content;
     will-change: transform;
     animation: marquee-scroll 60s linear infinite;
+  }
+  .marquee-text {
+    font-size: clamp(28px, 8vw, 48px);
+  }
+  @media (min-width: 768px) {
+    .marquee-text {
+      font-size: clamp(40px, 5vw, 72px);
+    }
   }
   @keyframes marquee-scroll {
     from {
@@ -232,9 +341,63 @@
       transform: translate3d(-50%, 0, 0);
     }
   }
+
+  /* Lightbox */
+  .lightbox-overlay {
+    background-color: rgba(242, 235, 221, 0.98);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    cursor: zoom-out;
+  }
+  @media (hover: none), (pointer: coarse) {
+    .lightbox-overlay {
+      cursor: default;
+    }
+  }
+  .lightbox-frame {
+    max-width: 92vw;
+    max-height: 80vh;
+    border: 1px solid var(--color-rule);
+    background: var(--color-background);
+    will-change: transform, opacity;
+  }
+  .lightbox-image {
+    max-width: 92vw;
+    max-height: 80vh;
+    object-fit: contain;
+  }
+  @media (min-width: 768px) {
+    .lightbox-frame,
+    .lightbox-image {
+      max-width: 90vw;
+      max-height: 85vh;
+    }
+  }
+  .lightbox-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-rule);
+    color: var(--color-foreground);
+    background: var(--color-background);
+    transition: color 200ms ease, border-color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lightbox-control:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+  }
+  .lightbox-counter,
+  .lightbox-title {
+    user-select: none;
+  }
 }
 
-/* Reduced motion — kill smooth scroll, marquee, all entry animations */
+/* Reduced motion — kill smooth scroll, marquee, all entry animations. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -254,11 +417,15 @@
   }
   .reveal,
   .gsap-fade-up,
-  .gsap-fade-up-sm {
+  .gsap-fade-up-sm,
+  .work-card-surface {
     opacity: 1 !important;
     transform: none !important;
   }
   .rule-draw {
     transform: scaleX(1) !important;
+  }
+  .lightbox-frame {
+    transform: none !important;
   }
 }
