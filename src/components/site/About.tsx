@@ -139,13 +139,13 @@ export function About() {
 
           <div className="grid grid-cols-12 gap-x-10 md:gap-x-20 min-w-0">
             <div className="col-span-12 md:col-span-7 min-w-0">
-              <p className="about-lead font-serif text-xl md:text-[2.05rem] leading-[1.38] text-foreground">
+              <p className="about-lead font-serif text-xl md:text-[2.05rem] leading-[1.38] text-foreground break-words">
                 Race Kipping is a media designer working across identity, motion, and sound. The practice
                 draws from a decade in professional kitchens and recording studios — disciplines built on
                 tempo, restraint, and{" "}
                 <span className="font-serif-i">the seriousness of small choices.</span>
               </p>
-              <p className="about-tail gsap-fade-up-sm font-serif text-base md:text-lg leading-[1.55] text-muted-foreground mt-6 md:mt-8 max-w-2xl">
+              <p className="about-tail gsap-fade-up-sm font-serif text-base md:text-lg leading-[1.55] text-muted-foreground mt-6 md:mt-8 max-w-2xl break-words">
                 He holds an AFA in Graphic Communications from St. Louis Community College, May 2026.
                 Current work centers on type, broadcast graphics, and AI-augmented production systems for
                 independent studios and cultural clients.

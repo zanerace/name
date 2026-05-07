@@ -62,7 +62,7 @@ export function Contact() {
             <dl className="space-y-10">
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Email</dt>
-                <dd>
+                <dd className="min-w-0">
                   <a
                     href="mailto:info@racekipping.com"
                     className="font-display text-2xl md:text-3xl link-underline break-all md:break-normal"
@@ -73,10 +73,10 @@ export function Contact() {
               </div>
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Phone</dt>
-                <dd>
+                <dd className="min-w-0">
                   <a
                     href="tel:+16187998495"
-                    className="font-display text-2xl md:text-3xl link-underline"
+                    className="font-display text-2xl md:text-3xl link-underline break-words"
                   >
                     +1 (618) 799 8495
                   </a>
@@ -84,14 +84,14 @@ export function Contact() {
               </div>
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Elsewhere</dt>
-                <dd className="flex flex-wrap gap-x-8 gap-y-3">
+                <dd className="flex flex-wrap gap-x-8 gap-y-3 min-w-0">
                   {links.map((l) => (
                     <a
                       key={l.label}
                       href={l.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-display text-xl link-underline inline-flex items-center gap-2"
+                      className="font-display text-xl link-underline inline-flex items-center gap-2 break-words"
                     >
                       {l.label}
                       <span aria-hidden="true" className="text-accent">
