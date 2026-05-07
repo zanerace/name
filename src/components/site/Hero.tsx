@@ -49,7 +49,7 @@ export function Hero() {
     tl.to(
       sub,
       { y: 0, opacity: 1, duration: 0.7, ease: "cubic-bezier(0.22, 1, 0.36, 1)", force3D: true },
-      0.8
+      0.8,
     );
     tl.to(
       bioLines,
@@ -61,7 +61,7 @@ export function Hero() {
         ease: "cubic-bezier(0.22, 1, 0.36, 1)",
         force3D: true,
       },
-      1.2
+      1.2,
     );
 
     return () => {
@@ -95,14 +95,16 @@ export function Hero() {
               <span className="hero-line block hero-kipping">Race</span>
               <span className="hero-line block hero-kipping">Kipping</span>
             </h1>
-            <p
-              ref={subRef}
-              className="meta-inline mt-8 md:mt-14"
-            >
+            <p ref={subRef} className="meta-inline mt-8 md:mt-14">
               Media Designer
             </p>
             <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-3">
-              <a href="#work" onClick={(e) => scrollToSection(e, "work")} className="hero-cta" data-cursor="active">
+              <a
+                href="#work"
+                onClick={(e) => scrollToSection(e, "work")}
+                className="hero-cta"
+                data-cursor="active"
+              >
                 View Work
               </a>
               <a
@@ -142,8 +144,8 @@ export function Hero() {
               ref={bioRef}
               className="section-body text-[color:var(--text-soft)] max-w-[38ch] text-left hero-bio-panel"
             >
-              I design at the intersection of identity, motion, and sound. Background in cooking and music
-              shapes how I approach the work — simple ingredients, deliberate process,{" "}
+              I design at the intersection of identity, motion, and sound. Background in cooking and
+              music shapes how I approach the work — simple ingredients, deliberate process,{" "}
               <span className="font-serif-i text-foreground">considered outcome.</span>
             </p>
           </div>

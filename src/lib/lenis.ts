@@ -19,12 +19,9 @@ let lenisInstance: Lenis | null = null;
 let tickerHandle: ((time: number) => void) | null = null;
 let registered = false;
 
-export const lenisDefaultEasing = (t: number) =>
-  Math.min(1, 1.001 - Math.pow(2, -10 * t));
+export const lenisDefaultEasing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
 
-export function createLenisOptions(): NonNullable<
-  ConstructorParameters<typeof Lenis>[0]
-> {
+export function createLenisOptions(): NonNullable<ConstructorParameters<typeof Lenis>[0]> {
   return {
     duration: 1.2,
     easing: lenisDefaultEasing,
@@ -44,9 +41,6 @@ export function initLenis(): Lenis {
     throw new Error("[Lenis] initLenis called outside the browser.");
   }
   if (lenisInstance) {
-    console.warn(
-      "[Lenis] initLenis called more than once — returning existing instance."
-    );
     return lenisInstance;
   }
 
@@ -69,13 +63,6 @@ export function initLenis(): Lenis {
 
   lenisInstance = lenis;
   (window as LenisWindow).__lenis = lenis;
-
-  console.log(
-    "[Lenis] initialized — isSmooth:",
-    lenis.isSmooth,
-    "smoothWheel:",
-    lenis.options.smoothWheel
-  );
 
   return lenis;
 }

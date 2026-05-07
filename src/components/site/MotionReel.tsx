@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
 import { getWorkProjectById } from "./work-data";
@@ -38,6 +38,7 @@ function ReelVideoTile({
   poster?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoFailed, setVideoFailed] = useState(false);
 
   const onVideoClick = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.preventDefault();
@@ -55,22 +56,40 @@ function ReelVideoTile({
   return (
     <div className="reel-video reel-intro-reveal">
       <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden">
-        <video
-          ref={videoRef}
-          className="reel-video-el absolute inset-0 w-full h-full object-cover"
-          poster={poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          onClick={onVideoClick}
-        >
-          {sources.map(({ src, type }) => (
-            <source key={src} src={src} type={type} />
-          ))}
-          Your browser does not support embedded video.
-        </video>
+        {videoFailed ? (
+          <Link
+            to="/work/$projectId"
+            params={{ projectId }}
+            aria-label={`Open ${title} project`}
+            className="absolute inset-0 block"
+          >
+            <img
+              src={poster ?? ""}
+              alt=""
+              width={1280}
+              height={720}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+          </Link>
+        ) : (
+          <video
+            ref={videoRef}
+            className="reel-video-el absolute inset-0 w-full h-full object-cover"
+            poster={poster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onClick={onVideoClick}
+            onError={() => setVideoFailed(true)}
+          >
+            {sources.map(({ src, type }) => (
+              <source key={src} src={src} type={type} />
+            ))}
+          </video>
+        )}
       </div>
       <div className="mt-5">
         <Link
@@ -102,7 +121,7 @@ export function MotionReel() {
     const ctx = gsap.context(() => {
       const ruleEl = el.querySelector<HTMLElement>(".section-rule");
       const headerEls = Array.from(
-        el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up")
+        el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up"),
       );
       const videos = Array.from(el.querySelectorAll<HTMLElement>(".reel-intro-reveal"));
 
@@ -132,7 +151,7 @@ export function MotionReel() {
             stagger: 0.06,
             force3D: true,
           },
-          "-=0.34"
+          "-=0.34",
         );
       }
       if (videos.length) {
@@ -146,7 +165,7 @@ export function MotionReel() {
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             force3D: true,
           },
-          "-=0.28"
+          "-=0.28",
         );
       }
     }, el);
@@ -198,6 +217,7 @@ export function MotionReel() {
                 title={gradualSans.title}
                 desc={gradualSans.desc}
                 sources={GRADUAL_SANS_VIDEO_SOURCES}
+                poster={gradualSans.coverImage}
               />
             )}
           </div>

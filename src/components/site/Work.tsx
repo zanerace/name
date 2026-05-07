@@ -8,7 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function Work() {
   const root = useRef<HTMLElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
 
   useLayoutEffect(() => {
@@ -19,28 +18,30 @@ export function Work() {
 
     const ctx = gsap.context(() => {
       const headerEls = Array.from(
-        el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up")
+        el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up"),
       );
 
       if (headerEls.length) {
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-            once: true,
-          },
-        }).to(headerEls, {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-          stagger: 0.06,
-          force3D: true,
-          onComplete: () =>
-            headerEls.forEach((node) => {
-              node.style.willChange = "auto";
-            }),
-        });
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+              once: true,
+            },
+          })
+          .to(headerEls, {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+            stagger: 0.06,
+            force3D: true,
+            onComplete: () =>
+              headerEls.forEach((node) => {
+                node.style.willChange = "auto";
+              }),
+          });
       }
     }, el);
 
@@ -107,7 +108,7 @@ export function Work() {
           root: null,
           threshold: 0.08,
           rootMargin: "0px 0px -10% 0px",
-        }
+        },
       );
 
       cards.forEach((card) => {
@@ -136,15 +137,13 @@ export function Work() {
             <h2 className="gsap-fade-up font-display h-section">Selected Work</h2>
             <p className="gsap-fade-up meta-inline mt-4">2024 — 2026</p>
             <p className="gsap-fade-up section-body mt-5 max-w-[52ch]">
-              A curated selection across identity, motion, and sound—built for real production contexts.
+              A curated selection across identity, motion, and sound—built for real production
+              contexts.
             </p>
           </div>
         </header>
 
-        <div
-          ref={gridRef}
-          className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-16 md:gap-y-24 w-full min-w-0"
-        >
+        <div className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-16 md:gap-y-24 w-full min-w-0">
           {workProjects.map((p, index) => (
             <article
               key={p.id}
@@ -162,9 +161,7 @@ export function Work() {
                   aria-label={`Open ${p.title} project page`}
                   className="work-image-link block w-full p-0 m-0 border-0 bg-transparent text-left max-w-full"
                 >
-                  <div
-                    className="overflow-hidden max-w-full aspect-[16/10] md:aspect-[16/9.2]"
-                  >
+                  <div className="overflow-hidden max-w-full aspect-[16/10] md:aspect-[16/9.2]">
                     <img
                       src={p.coverImage}
                       alt={p.alt}
@@ -185,7 +182,9 @@ export function Work() {
                 </Link>
 
                 <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
-                  <span className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.18em] text-accent">{p.num}</span>
+                  <span className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.18em] text-accent">
+                    {p.num}
+                  </span>
                   <span className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-muted-foreground break-words md:whitespace-nowrap">
                     {p.tag} <span className="text-[color:var(--ink-hard)]">/</span> {p.year}
                   </span>

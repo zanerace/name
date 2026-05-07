@@ -73,19 +73,35 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Race Kipping — Media Designer" },
+      {
+        name: "description",
+        content:
+          "Race Kipping is a media designer working across identity, motion, and sound. Selected work, 2024–2026.",
+      },
+      { name: "author", content: "Race Kipping" },
+      { property: "og:title", content: "Race Kipping — Media Designer" },
+      {
+        property: "og:description",
+        content: "Identity, motion, and sound. Selected work, 2024–2026.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Race Kipping" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Race Kipping — Media Designer" },
+      {
+        name: "twitter:description",
+        content: "Identity, motion, and sound. Selected work, 2024–2026.",
+      },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "canonical",
+        href: "https://racekipping.com/",
       },
     ],
   }),
@@ -102,6 +118,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;document.documentElement.classList.add("js-scroll-reveal");}catch(e){}})();',
+          }}
+        />
         {children}
         <Scripts />
       </body>

@@ -44,7 +44,10 @@ export function BreatherBand() {
           <p data-breather-head className="font-ui text-[10px] uppercase text-accent mb-4">
             Case Studies
           </p>
-          <p data-breather-sub className="font-serif text-[18px] md:text-[20px] leading-[1.6] text-muted-foreground">
+          <p
+            data-breather-sub
+            className="font-serif text-[18px] md:text-[20px] leading-[1.6] text-muted-foreground"
+          >
             Identity systems, motion grammar, and sound-aware pacing—composed as one craft.
           </p>
         </div>
@@ -52,4 +55,3 @@ export function BreatherBand() {
     </section>
   );
 }
-

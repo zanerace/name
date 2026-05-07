@@ -29,22 +29,18 @@ export function About() {
     const ctx = gsap.context(() => {
       const ruleEl = el.querySelector<HTMLElement>(".section-rule");
       const headerEls = Array.from(
-        el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up")
+        el.querySelectorAll<HTMLElement>(".section-header .gsap-fade-up"),
       );
-      const sideEls = Array.from(
-        el.querySelectorAll<HTMLElement>(".about-side > *")
-      );
+      const sideEls = Array.from(el.querySelectorAll<HTMLElement>(".about-side > *"));
       const tail = el.querySelector<HTMLElement>(".about-tail");
       const lines = (split?.lines ?? []) as HTMLElement[];
 
       gsap.set(lines, { y: 18, opacity: 0, force3D: true });
 
       const clearWill = () => {
-        [...headerEls, ...sideEls, ...lines, ...(tail ? [tail] : [])].forEach(
-          (node) => {
-            node.style.willChange = "auto";
-          }
-        );
+        [...headerEls, ...sideEls, ...lines, ...(tail ? [tail] : [])].forEach((node) => {
+          node.style.willChange = "auto";
+        });
       };
 
       const tl = gsap.timeline({
@@ -69,7 +65,7 @@ export function About() {
             stagger: 0.06,
             force3D: true,
           },
-          "-=0.32"
+          "-=0.32",
         );
       }
       if (lines.length) {
@@ -83,14 +79,20 @@ export function About() {
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             force3D: true,
           },
-          "-=0.25"
+          "-=0.25",
         );
       }
       if (tail) {
         tl.to(
           tail,
-          { y: 0, opacity: 1, duration: 0.7, ease: "cubic-bezier(0.22, 1, 0.36, 1)", force3D: true },
-          "-=0.2"
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+            force3D: true,
+          },
+          "-=0.2",
         );
       }
       if (sideEls.length) {
@@ -104,7 +106,7 @@ export function About() {
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             force3D: true,
           },
-          "-=0.25"
+          "-=0.25",
         );
       }
     }, el);
@@ -137,15 +139,15 @@ export function About() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-16 lg:gap-x-20 gap-y-12 md:gap-y-0 min-w-0">
             <div className="md:col-span-7 min-w-0 md:order-1">
               <p className="about-lead font-serif text-[28px] md:text-[2.25rem] leading-[1.32] text-foreground break-words">
-                Race Kipping is a media designer working across identity, motion, and sound. The practice
-                draws from a decade in professional kitchens and recording studios — disciplines built on
-                tempo, restraint, and{" "}
+                Race Kipping is a media designer working across identity, motion, and sound. The
+                practice draws from a decade in professional kitchens and recording studios —
+                disciplines built on tempo, restraint, and{" "}
                 <span className="font-serif-i">the seriousness of small choices.</span>
               </p>
               <p className="about-tail gsap-fade-up-sm section-body mt-6 md:mt-8 max-w-[60ch] break-words text-[color:var(--text-soft)]">
-                He holds an AFA in Graphic Communications from St. Louis Community College, May 2026.
-                Current work centers on type, broadcast graphics, and AI-augmented production systems for
-                independent studios and cultural clients.
+                He holds an AFA in Graphic Communications from St. Louis Community College, May
+                2026. Current work centers on type, broadcast graphics, and AI-augmented production
+                systems for independent studios and cultural clients.
               </p>
             </div>
 
@@ -166,14 +168,19 @@ export function About() {
                 </p>
               </div>
               <div className="gsap-fade-up-sm mt-10 md:mt-12">
-                <p className="meta-inline mb-5 text-[color:var(--text-soft)]">
-                  Capabilities
-                </p>
+                <p className="meta-inline mb-5 text-[color:var(--text-soft)]">Capabilities</p>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                   {capabilities.map((c) => (
                     <li key={c} className="flex items-baseline gap-3 min-w-0">
-                      <span aria-hidden="true" className="font-ui text-[12px] text-[color:var(--accent)] tracking-[0.2em]">—</span>
-                      <span className="font-ui text-[1.02rem] leading-[1.5] text-foreground break-words">{c}</span>
+                      <span
+                        aria-hidden="true"
+                        className="font-ui text-[12px] text-[color:var(--accent)] tracking-[0.2em]"
+                      >
+                        —
+                      </span>
+                      <span className="font-ui text-[1.02rem] leading-[1.5] text-foreground break-words">
+                        {c}
+                      </span>
                     </li>
                   ))}
                 </ul>

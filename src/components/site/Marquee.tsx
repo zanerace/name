@@ -23,7 +23,7 @@ const MarqueeRun = () => (
           {token}
           <Separator />
         </span>
-      ))
+      )),
     )}
   </>
 );

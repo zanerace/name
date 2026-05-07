@@ -393,12 +393,17 @@
 
   /* GSAP entry primitives — initial state. Distance is intentionally small (20px)
      so the entrance is felt, not noticed, and stays cheap on lower-end devices. */
-  .gsap-fade-up {
+  .gsap-fade-up,
+  .gsap-fade-up-sm {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  .js-scroll-reveal .gsap-fade-up {
     opacity: 0;
     transform: translate3d(0, 24px, 0);
     will-change: opacity, transform;
   }
-  .gsap-fade-up-sm {
+  .js-scroll-reveal .gsap-fade-up-sm {
     opacity: 0;
     transform: translate3d(0, 16px, 0);
     will-change: opacity, transform;
@@ -406,6 +411,10 @@
 
   /* Reveal — IO-driven fallback for any element that doesn't get a GSAP timeline */
   .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .js-scroll-reveal .reveal {
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 200ms ease, transform 200ms ease;
@@ -485,15 +494,19 @@
     }
   }
   .work-card-surface {
-    opacity: 0;
-    transform: translate3d(0, 32px, 0);
-    will-change: opacity, transform;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
     transition: border-color 280ms var(--ease-premium), transform 280ms var(--ease-premium);
     position: relative;
     background: transparent;
     border: 0;
     box-shadow: none;
     padding: 0;
+  }
+  .js-scroll-reveal .work-card-surface {
+    opacity: 0;
+    transform: translate3d(0, 32px, 0);
+    will-change: opacity, transform;
   }
   .work-card-surface::before {
     content: "";
@@ -552,22 +565,6 @@
     }
   }
 
-  /* Custom Motion Reel video controls — cream stroke, oxblood on hover, fade in on stage hover.
-     44px tap targets on mobile (per iOS HIG), down to 32px on desktop where they're decorative. */
-  .reel-control {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 9999px;
-    border: 1px solid var(--color-background);
-    color: var(--color-background);
-    background: transparent;
-    opacity: 0;
-    transition: opacity 240ms var(--ease-premium), color 240ms var(--ease-premium), border-color 240ms var(--ease-premium), background-color 240ms var(--ease-premium), transform 240ms var(--ease-premium);
-  }
   .reel-stage {
     box-shadow: 0 16px 38px rgba(0, 0, 0, 0.32);
     transition: box-shadow 260ms var(--ease-premium);
@@ -583,31 +580,6 @@
       box-shadow: 0 20px 44px rgba(0, 0, 0, 0.38);
     }
   }
-  @media (min-width: 1024px) {
-    .reel-control {
-      width: 36px;
-      height: 36px;
-    }
-  }
-  /* On touch devices, controls stay visible — there is no hover. */
-  @media (hover: none), (pointer: coarse) {
-    .reel-control {
-      opacity: 1;
-    }
-  }
-  .reel-stage:hover .reel-control,
-  .reel-stage:focus-within .reel-control,
-  .reel-control:focus-visible {
-    opacity: 1;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .reel-control:hover {
-      border-color: var(--color-accent);
-      color: var(--color-accent);
-      transform: translateY(-1px);
-    }
-  }
-
   /* Marquee — horizontal infinite scroll. Inner row contains content duplicated 2x. */
   .marquee {
     overflow: hidden;

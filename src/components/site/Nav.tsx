@@ -27,10 +27,7 @@ function scrollToHash(targetId: string) {
   if (typeof document === "undefined") return;
   const el = document.getElementById(targetId);
   if (!el) return;
-  const lenis =
-    typeof window !== "undefined"
-      ? (window as LenisWindow).__lenis
-      : undefined;
+  const lenis = typeof window !== "undefined" ? (window as LenisWindow).__lenis : undefined;
   if (lenis) {
     lenis.scrollTo(el, { duration: 1.5, easing: SCROLL_EASING });
   } else {
@@ -86,7 +83,7 @@ export function Nav() {
         const id = visible[0].target.id;
         if (id) setActiveHref(`#${id}`);
       },
-      { rootMargin: "-35% 0px -45% 0px", threshold: [0.15, 0.35, 0.6] }
+      { rootMargin: "-35% 0px -45% 0px", threshold: [0.15, 0.35, 0.6] },
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -172,8 +169,7 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     if (typeof document === "undefined") return;
-    previouslyFocused.current =
-      (document.activeElement as HTMLElement | null) ?? null;
+    previouslyFocused.current = (document.activeElement as HTMLElement | null) ?? null;
     const unlock = lockScroll();
 
     const el = overlayRef.current;
@@ -212,9 +208,7 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
         // Two RAFs lets `lockScroll`'s unlock (which calls `window.scrollTo`
         // back to the captured Y and `lenis.start()`) fully settle before our
         // smooth scrollTo begins — otherwise the unlock would snap-cancel it.
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => afterClose())
-        );
+        requestAnimationFrame(() => requestAnimationFrame(() => afterClose()));
       }
     };
     if (!el || prefersReducedMotion()) {
@@ -300,6 +294,6 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
         ))}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

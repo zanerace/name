@@ -40,7 +40,7 @@ export function Contact() {
           ease: "cubic-bezier(0.22, 1, 0.36, 1)",
           stagger: 0.08,
         },
-        "-=0.6"
+        "-=0.6",
       );
       tl.to(
         detailEls,
@@ -51,7 +51,7 @@ export function Contact() {
           stagger: 0.1,
           ease: "cubic-bezier(0.22, 1, 0.36, 1)",
         },
-        "-=0.45"
+        "-=0.45",
       );
     }, el);
 
@@ -59,14 +59,17 @@ export function Contact() {
   }, []);
 
   return (
-    <section ref={root} id="contact" className="py-[var(--section-space-y-mobile)] md:py-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden">
+    <section
+      ref={root}
+      id="contact"
+      className="py-[var(--section-space-y-mobile)] md:py-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
+    >
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
         <div aria-hidden className="rule-draw section-rule mb-14 md:mb-20" />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-10 gap-y-10 md:gap-y-14 min-w-0">
           <header className="section-header md:col-span-5 min-w-0">
             <h2 className="gsap-fade-up font-display h-section">
-              Currently taking on{" "}
-              <span className="font-serif-i text-accent">new work.</span>
+              Currently taking on <span className="font-serif-i text-accent">new work.</span>
             </h2>
           </header>
 
@@ -103,7 +106,7 @@ export function Contact() {
                       href={l.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                    className="font-display text-[clamp(24px,7vw,29px)] md:text-[31px] leading-[1.1] link-underline inline-flex items-center gap-2 break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
+                      className="font-display text-[clamp(24px,7vw,29px)] md:text-[31px] leading-[1.1] link-underline inline-flex items-center gap-2 break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                     >
                       {l.label}
                       <span aria-hidden="true" className="text-accent">

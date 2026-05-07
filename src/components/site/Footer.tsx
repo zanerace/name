@@ -7,8 +7,12 @@ export function Footer() {
           <span className="font-display normal-case text-foreground text-base tracking-tight">
             Race Kipping
           </span>
-          <span className="w-full md:w-auto text-left whitespace-normal break-words">© 2026 — All rights reserved.</span>
-          <span className="w-full md:w-auto text-left whitespace-normal break-words">Built by Race Kipping, 2026.</span>
+          <span className="w-full md:w-auto text-left whitespace-normal break-words">
+            © 2026 — All rights reserved.
+          </span>
+          <span className="w-full md:w-auto text-left whitespace-normal break-words">
+            Built by Race Kipping, 2026.
+          </span>
         </div>
       </div>
     </footer>

@@ -15,9 +15,7 @@ type LightboxProps = {
 const SWIPE_THRESHOLD = 50;
 
 export function Lightbox({ images, startIndex, title, onClose }: LightboxProps) {
-  const [index, setIndex] = useState(() =>
-    Math.max(0, Math.min(images.length - 1, startIndex))
-  );
+  const [index, setIndex] = useState(() => Math.max(0, Math.min(images.length - 1, startIndex)));
   const dialogRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -30,8 +28,7 @@ export function Lightbox({ images, startIndex, title, onClose }: LightboxProps) 
   // Mount: capture focus origin, lock scroll, run entry animation, focus close button.
   useEffect(() => {
     if (typeof document === "undefined") return;
-    previouslyFocused.current =
-      (document.activeElement as HTMLElement | null) ?? null;
+    previouslyFocused.current = (document.activeElement as HTMLElement | null) ?? null;
     const unlock = lockScroll();
 
     const overlay = overlayRef.current;
@@ -69,11 +66,7 @@ export function Lightbox({ images, startIndex, title, onClose }: LightboxProps) 
   useEffect(() => {
     const img = imgRef.current;
     if (!img || prefersReducedMotion()) return;
-    gsap.fromTo(
-      img,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.2, ease: "power2.out" }
-    );
+    gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" });
   }, [index]);
 
   const close = useCallback(() => {
@@ -134,8 +127,8 @@ export function Lightbox({ images, startIndex, title, onClose }: LightboxProps) 
         if (!dlg) return;
         const focusables = Array.from(
           dlg.querySelectorAll<HTMLElement>(
-            'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
-          )
+            'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+          ),
         );
         if (!focusables.length) return;
         const first = focusables[0];
@@ -195,12 +188,7 @@ export function Lightbox({ images, startIndex, title, onClose }: LightboxProps) 
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          <img
-            ref={imgRef}
-            src={current.src}
-            alt={current.alt}
-            className="lightbox-image block"
-          />
+          <img ref={imgRef} src={current.src} alt={current.alt} className="lightbox-image block" />
         </div>
       </div>
 
