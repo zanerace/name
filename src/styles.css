@@ -49,6 +49,9 @@
   }
   html {
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    -webkit-text-size-adjust: 100%;
     /* Native smooth-scroll fights Lenis — Lenis drives smoothing on desktop. */
     scroll-behavior: auto;
   }
@@ -72,6 +75,8 @@
 
   body {
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-serif);
@@ -157,6 +162,13 @@
     line-height: 0.94;
     letter-spacing: -0.03em;
     text-wrap: balance;
+  }
+  @media (max-width: 767px) {
+    .h-section {
+      text-wrap: wrap;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
   }
   @media (min-width: 768px) {
     .h-section {

@@ -137,8 +137,8 @@ export function About() {
             </p>
           </header>
 
-          <div className="grid grid-cols-12 gap-x-10 md:gap-x-20 min-w-0">
-            <div className="col-span-12 md:col-span-7 min-w-0">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-20 min-w-0">
+            <div className="md:col-span-7 min-w-0">
               <p className="about-lead font-serif text-xl md:text-[2.05rem] leading-[1.38] text-foreground break-words">
                 Race Kipping is a media designer working across identity, motion, and sound. The practice
                 draws from a decade in professional kitchens and recording studios — disciplines built on
@@ -152,7 +152,7 @@ export function About() {
               </p>
             </div>
 
-            <aside className="about-side col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8 about-panel min-w-0">
+            <aside className="about-side md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8 about-panel min-w-0">
               <p className="gsap-fade-up-sm font-ui text-[10px] uppercase text-muted-foreground mb-6">
                 Capabilities
               </p>
