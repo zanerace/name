@@ -40,9 +40,9 @@ export function Marquee() {
   return (
     <section
       aria-hidden="true"
-      className="work-wash py-[72px] md:py-[104px] border-y border-border w-full max-w-full overflow-x-hidden frame-panel"
+      className="work-wash py-[56px] md:py-[104px] border-y border-border w-full max-w-full overflow-x-hidden frame-panel marquee-shell"
     >
-      <div className="marquee">
+      <div className="marquee hidden md:block">
         <div className="marquee-track marquee-text font-serif-i text-muted-foreground leading-none whitespace-nowrap">
           <span className="inline-block">
             <MarqueeRun />
@@ -50,6 +50,15 @@ export function Marquee() {
           <span className="inline-block" aria-hidden="true">
             <MarqueeRun />
           </span>
+        </div>
+      </div>
+      <div className="md:hidden px-6">
+        <div className="flex flex-wrap gap-2">
+          {MARQUEE_TOKENS.map((token) => (
+            <span key={token} className="meta-chip font-ui text-[10px] uppercase text-muted-foreground">
+              {token}
+            </span>
+          ))}
         </div>
       </div>
     </section>

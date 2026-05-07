@@ -64,8 +64,8 @@ export function About() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.45,
-            ease: "power3.out",
+            duration: 0.7,
+            ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             stagger: 0.06,
             force3D: true,
           },
@@ -78,9 +78,9 @@ export function About() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.4,
+            duration: 0.7,
             stagger: 0.06,
-            ease: "power2.out",
+            ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             force3D: true,
           },
           "-=0.25"
@@ -89,7 +89,7 @@ export function About() {
       if (tail) {
         tl.to(
           tail,
-          { y: 0, opacity: 1, duration: 0.4, ease: "power2.out", force3D: true },
+          { y: 0, opacity: 1, duration: 0.7, ease: "cubic-bezier(0.22, 1, 0.36, 1)", force3D: true },
           "-=0.2"
         );
       }
@@ -99,9 +99,9 @@ export function About() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.4,
+            duration: 0.7,
             stagger: 0.06,
-            ease: "power2.out",
+            ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             force3D: true,
           },
           "-=0.25"
@@ -127,40 +127,44 @@ export function About() {
       <section
         ref={sectionRef}
         id="about"
-        className="pt-20 md:pt-[136px] pb-20 md:pb-[104px] w-full max-w-full overflow-x-hidden"
+        className="pt-16 md:pt-[112px] pb-16 md:pb-[88px] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-          <header className="section-header mb-[56px] md:mb-[88px]">
+          <header className="section-header mb-[40px] md:mb-[64px]">
+            <div className="section-kicker gsap-fade-up">
+              <span className="section-num">03</span>
+              <span className="section-line" />
+            </div>
             <h2 className="gsap-fade-up font-display h-section">About</h2>
-            <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.55] text-muted-foreground mt-4 max-w-[60ch]">
+            <p className="gsap-fade-up section-body mt-4 max-w-[60ch]">
               A practice built on restraint: identities that age well, motion that clarifies, and sound-aware pacing.
             </p>
           </header>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-20 min-w-0">
             <div className="md:col-span-7 min-w-0">
-              <p className="about-lead font-serif text-xl md:text-[2.05rem] leading-[1.38] text-foreground break-words">
+              <p className="about-lead font-serif text-[30px] md:text-[2.25rem] leading-[1.32] text-foreground break-words">
                 Race Kipping is a media designer working across identity, motion, and sound. The practice
                 draws from a decade in professional kitchens and recording studios — disciplines built on
                 tempo, restraint, and{" "}
                 <span className="font-serif-i">the seriousness of small choices.</span>
               </p>
-              <p className="about-tail gsap-fade-up-sm font-serif text-base md:text-lg leading-[1.55] text-muted-foreground mt-6 md:mt-8 max-w-2xl break-words">
+              <p className="about-tail gsap-fade-up-sm section-body mt-6 md:mt-8 max-w-2xl break-words">
                 He holds an AFA in Graphic Communications from St. Louis Community College, May 2026.
                 Current work centers on type, broadcast graphics, and AI-augmented production systems for
                 independent studios and cultural clients.
               </p>
             </div>
 
-            <aside className="about-side md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8 about-panel min-w-0">
-              <p className="gsap-fade-up-sm font-ui text-[10px] uppercase text-muted-foreground mb-6">
+            <aside className="about-side md:col-start-8 md:col-span-5 mt-10 md:mt-0 frame-panel p-7 md:p-9 about-panel min-w-0">
+              <p className="gsap-fade-up-sm meta-inline mb-6">
                 Capabilities
               </p>
-              <ul className="gsap-fade-up-sm grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+              <ul className="gsap-fade-up-sm grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4">
                 {capabilities.map((c) => (
                   <li key={c} className="flex items-start gap-2.5 min-w-0">
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-[color:var(--secondary)] mt-[0.58em]" />
-                    <span className="font-ui text-[1.03rem] leading-[1.45] text-foreground break-words">{c}</span>
+                    <span className="font-ui text-[1.1rem] leading-[1.5] text-foreground break-words">{c}</span>
                   </li>
                 ))}
               </ul>

@@ -32,8 +32,8 @@ export function Work() {
         }).to(headerEls, {
           y: 0,
           opacity: 1,
-          duration: 0.4,
-          ease: "power3.out",
+          duration: 0.7,
+          ease: "cubic-bezier(0.22, 1, 0.36, 1)",
           stagger: 0.06,
           force3D: true,
           onComplete: () =>
@@ -73,12 +73,12 @@ export function Work() {
           return;
         }
         isRevealing = true;
-        gsap.delayedCall(0.22, runNext);
+        gsap.delayedCall(0.08, runNext);
         gsap.to(next, {
           opacity: 1,
           y: 0,
-          duration: 1.25,
-          ease: "power1.out",
+          duration: 0.7,
+          ease: "cubic-bezier(0.22, 1, 0.36, 1)",
           force3D: true,
           overwrite: true,
           onComplete: () => {
@@ -128,14 +128,18 @@ export function Work() {
     <section
       ref={root}
       id="work"
-      className="work-wash pt-20 md:pt-[136px] pb-20 md:pb-[104px] w-full max-w-full overflow-x-hidden"
+      className="work-wash pt-16 md:pt-[112px] pb-16 md:pb-[88px] w-full max-w-full overflow-x-hidden"
     >
       <div className="mx-auto max-w-[1440px] w-full max-w-full px-6 md:px-12 box-border">
         <header className="section-header flex items-start justify-between mb-[56px] md:mb-24">
           <div>
+            <div className="section-kicker gsap-fade-up">
+              <span className="section-num">01</span>
+              <span className="section-line" />
+            </div>
             <h2 className="gsap-fade-up font-display h-section">Selected Work</h2>
-            <p className="gsap-fade-up font-ui text-[10px] uppercase text-muted-foreground mt-4">2024 — 2026</p>
-            <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-5 max-w-[52ch]">
+            <p className="gsap-fade-up meta-inline mt-4">2024 — 2026</p>
+            <p className="gsap-fade-up section-body mt-5 max-w-[52ch]">
               A curated selection across identity, motion, and sound—built for real production contexts.
             </p>
           </div>
@@ -143,15 +147,18 @@ export function Work() {
 
         <div
           ref={gridRef}
-          className="work-grid grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-[56px] md:gap-y-[92px] w-full min-w-0"
+          className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-[48px] md:gap-y-[64px] w-full min-w-0"
         >
           {workProjects.map((p, index) => (
-            <article key={p.id} className="work-card min-w-0">
+            <article
+              key={p.id}
+              className={`work-card min-w-0 ${index === 0 ? "lg:col-span-2" : ""}`}
+            >
               <div
                 ref={(el) => {
                   if (el) cardsRef.current[index] = el;
                 }}
-                className={`work-card-surface frame-panel p-4 md:p-5 ${
+                className={`work-card-surface frame-panel p-5 md:p-6 ${
                   p.id === "gradual-sans"
                     ? "work-theme-gradual"
                     : p.id === "climate-change"
@@ -168,13 +175,7 @@ export function Work() {
                   className="work-image-link block w-full p-0 m-0 border-0 bg-transparent text-left max-w-full"
                 >
                   <div
-                    className={`overflow-hidden border border-border max-w-full ${
-                      p.id === "lunacast"
-                        ? "aspect-[4/3]"
-                        : p.id === "rwanda"
-                          ? "aspect-[5/4]"
-                          : "aspect-[16/10]"
-                    }`}
+                    className="overflow-hidden border border-border max-w-full aspect-[16/10]"
                   >
                     <img
                       src={p.coverImage}
@@ -196,12 +197,12 @@ export function Work() {
                 </Link>
 
                 <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-                  <span className="font-ui text-[10px] uppercase text-accent meta-chip">{p.num}</span>
-                  <span className="font-ui text-[10px] uppercase text-muted-foreground whitespace-nowrap meta-chip">
+                  <span className="font-ui text-[12px] uppercase text-accent meta-chip">{p.num}</span>
+                  <span className="font-ui text-[12px] uppercase text-muted-foreground whitespace-nowrap meta-chip">
                     {p.tag} <span className="text-accent">—</span> {p.year}
                   </span>
                 </div>
-                <h3 className="work-title work-title-optic font-display text-[21px] md:text-[24px] mt-3 text-foreground max-w-[24ch]">
+                <h3 className="work-title work-title-optic font-display text-[28px] md:text-[34px] mt-3 text-foreground max-w-[24ch]">
                   {p.titleLines ? (
                     <>
                       <span className="block">{p.titleLines[0]}</span>
@@ -211,7 +212,7 @@ export function Work() {
                     p.title
                   )}
                 </h3>
-                <p className="font-serif text-sm md:text-lg text-muted-foreground mt-3 max-w-md leading-[1.5] md:leading-[1.55]">
+                <p className="section-body text-[18px] md:text-[19px] mt-3 max-w-[52ch]">
                   {p.desc}
                 </p>
               </div>

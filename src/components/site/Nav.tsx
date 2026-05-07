@@ -61,6 +61,7 @@ const HamburgerIcon = () => (
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState<string>("#work");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -69,33 +70,58 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sections = items
+      .map((item) => document.querySelector<HTMLElement>(item.href))
+      .filter(Boolean) as HTMLElement[];
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (!visible.length) return;
+        const id = visible[0].target.id;
+        if (id) setActiveHref(`#${id}`);
+      },
+      { rootMargin: "-35% 0px -45% 0px", threshold: [0.15, 0.35, 0.6] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-200 ease-out ${
         scrolled ? "nav-plate is-scrolled" : "nav-plate"
       }`}
     >
-      <nav className="mx-auto max-w-[1440px] w-full py-4 md:py-0 px-6 md:px-12 md:h-16 flex items-center justify-between box-border">
+      <nav className="mx-auto max-w-[1440px] w-full py-4 md:py-0 px-6 md:px-12 md:h-[72px] flex items-center justify-between box-border">
         <a
           href="#top"
           onClick={(e) => handleNavClick(e, "#top")}
           className="text-foreground shrink-0 transition-colors duration-200 ease-out md:hover:text-accent nav-brand"
         >
-          <span className="md:hidden font-sans text-[11px] uppercase tracking-[0.2em] font-medium nav-brand-chip">
+          <span className="md:hidden font-sans text-[12px] uppercase tracking-[0.16em] font-medium nav-brand-chip">
             RK
           </span>
-          <span className="hidden md:inline font-ui text-[11px] uppercase nav-brand-chip">
+          <span className="hidden md:inline font-ui text-[12px] uppercase nav-brand-chip">
             Race Kipping
           </span>
         </a>
 
-        <ul className="hidden min-[600px]:flex font-ui items-center gap-5 lg:gap-7 text-[11px] uppercase text-muted-foreground shrink-0">
+        <ul className="hidden min-[600px]:flex font-ui items-center gap-5 lg:gap-7 text-[13px] uppercase text-muted-foreground shrink-0">
           {items.map((it) => (
             <li key={it.href} className="relative group">
               <a
                 href={it.href}
                 onClick={(e) => handleNavClick(e, it.href)}
-                className="link-underline transition-colors duration-200 ease-out whitespace-nowrap font-ui uppercase"
+                className={`link-underline transition-colors duration-200 ease-out whitespace-nowrap font-ui uppercase ${
+                  activeHref === it.href ? "text-foreground nav-active" : ""
+                }`}
               >
                 {it.label}
               </a>

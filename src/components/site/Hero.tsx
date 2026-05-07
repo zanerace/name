@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 import SplitType from "split-type";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
 
@@ -38,14 +38,14 @@ export function Hero() {
     tl.to(chars, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.7,
       stagger: 0.04,
-      ease: "power3.out",
+      ease: "cubic-bezier(0.22, 1, 0.36, 1)",
       force3D: true,
     });
     tl.to(
       sub,
-      { y: 0, opacity: 1, duration: 0.6, ease: "power2.out", force3D: true },
+      { y: 0, opacity: 1, duration: 0.7, ease: "cubic-bezier(0.22, 1, 0.36, 1)", force3D: true },
       0.8
     );
     tl.to(
@@ -53,9 +53,9 @@ export function Hero() {
       {
         y: 0,
         opacity: 1,
-        duration: 0.6,
+        duration: 0.7,
         stagger: 0.08,
-        ease: "power2.out",
+        ease: "cubic-bezier(0.22, 1, 0.36, 1)",
         force3D: true,
       },
       1.2
@@ -68,13 +68,20 @@ export function Hero() {
     };
   }, []);
 
+  const scrollToSection = (e: MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const section = document.getElementById(id);
+    if (!section) return;
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <section
       ref={root}
       id="top"
-      className="hero-wash relative flex flex-col min-h-[64vh] md:min-h-[80vh] w-full max-w-full overflow-x-hidden"
+      className="hero-wash relative flex flex-col min-h-[60vh] md:min-h-[76vh] w-full max-w-full overflow-x-hidden"
     >
-      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-16 md:pt-[196px] pb-20 md:pb-[136px] box-border">
+      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-20 md:pt-[168px] pb-16 md:pb-[104px] box-border">
         <div className="grid grid-cols-12 gap-x-6 md:gap-x-12 gap-y-8 md:gap-y-12 items-start w-full min-w-0">
           <div className="col-span-12 md:col-span-7 min-w-0">
             <h1
@@ -87,15 +94,28 @@ export function Hero() {
             </h1>
             <p
               ref={subRef}
-              className="font-ui text-[10px] uppercase text-muted-foreground mt-8 md:mt-14 tracking-[0.18em] md:tracking-[0.22em]"
+              className="meta-inline mt-8 md:mt-14"
             >
               Media Designer
             </p>
+            <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-3">
+              <a href="#work" onClick={(e) => scrollToSection(e, "work")} className="hero-cta" data-cursor="active">
+                View Work
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => scrollToSection(e, "contact")}
+                className="hero-cta hero-cta-ghost"
+                data-cursor="active"
+              >
+                Contact
+              </a>
+            </div>
           </div>
-          <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0 md:pt-2">
+          <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0 md:pt-4">
             <p
               ref={bioRef}
-              className="font-serif text-[1rem] md:text-[1.34rem] text-foreground max-w-[34ch] leading-[1.58] text-left hero-bio-panel frame-panel p-4 md:p-6"
+              className="section-body text-foreground max-w-[38ch] text-left hero-bio-panel frame-panel p-5 md:p-7"
             >
               I design at the intersection of identity, motion, and sound. Background in cooking and music
               shapes how I approach the work — simple ingredients, deliberate process,{" "}

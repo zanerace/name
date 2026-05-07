@@ -105,8 +105,8 @@ export function MotionReel() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.45,
-            ease: "power3.out",
+            duration: 0.7,
+            ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             stagger: 0.06,
             force3D: true,
           },
@@ -119,8 +119,8 @@ export function MotionReel() {
           {
             y: 0,
             opacity: 1,
-            duration: 0.45,
-            ease: "power3.out",
+            duration: 0.7,
+            ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             force3D: true,
           },
           "-=0.28"
@@ -157,17 +157,21 @@ export function MotionReel() {
       <section
         ref={sectionRef}
         id="motion"
-        className="section-dark pt-[96px] md:pt-[184px] pb-[96px] md:pb-[184px] w-full max-w-full overflow-x-hidden"
+        className="section-dark pt-[84px] md:pt-[140px] pb-[84px] md:pb-[128px] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border min-w-0">
-          <header className="section-header flex items-start justify-between mb-[52px] md:mb-[82px]">
+          <header className="section-header flex items-start justify-between mb-[40px] md:mb-[64px]">
             <div>
+              <div className="section-kicker gsap-fade-up">
+                <span className="section-num">02</span>
+                <span className="section-line" />
+              </div>
               <h2 className="gsap-fade-up font-display h-section">Motion Reel</h2>
-              <p className="gsap-fade-up font-serif text-[15px] md:text-[17px] leading-[1.5] text-muted-foreground mt-3 max-w-[52ch]">
+              <p className="gsap-fade-up section-body mt-3 max-w-[52ch]">
                 A dark-room loop of selected motion work—identity systems, UI rhythm, and editorial timing.
               </p>
             </div>
-            <p className="gsap-fade-up font-ui text-[10px] uppercase hidden md:block">
+            <p className="gsap-fade-up meta-inline hidden md:block">
               00:00 — Loop
             </p>
           </header>
@@ -212,7 +216,7 @@ export function MotionReel() {
               {isMuted ? <MuteIcon /> : <VolumeIcon />}
             </button>
           </div>
-          <p className="font-serif-i mt-8 md:mt-10">
+          <p className="font-serif-i text-[18px] md:text-[20px] text-muted-foreground mt-6 md:mt-8">
             Selected motion work, 2024–2026.
           </p>
         </div>

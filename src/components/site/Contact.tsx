@@ -33,12 +33,24 @@ export function Contact() {
       }
       tl.to(
         headerEls,
-        { y: 0, opacity: 1, duration: 0.85, ease: "power3.out", stagger: 0.08 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+          stagger: 0.08,
+        },
         "-=0.6"
       );
       tl.to(
         detailEls,
-        { y: 0, opacity: 1, duration: 0.65, stagger: 0.1, ease: "power2.out" },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+        },
         "-=0.45"
       );
     }, el);
@@ -47,43 +59,47 @@ export function Contact() {
   }, []);
 
   return (
-    <section ref={root} id="contact" className="py-32 md:py-[220px] w-full max-w-full overflow-x-hidden">
+    <section ref={root} id="contact" className="py-20 md:py-[132px] w-full max-w-full overflow-x-hidden">
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
-        <div aria-hidden className="rule-draw section-rule mb-32 md:mb-44" />
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-10 gap-y-16 min-w-0">
+        <div aria-hidden className="rule-draw section-rule mb-16 md:mb-24" />
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-10 gap-y-10 md:gap-y-14 min-w-0">
           <header className="section-header md:col-span-5 min-w-0">
+            <div className="section-kicker gsap-fade-up">
+              <span className="section-num">04</span>
+              <span className="section-line" />
+            </div>
             <h2 className="gsap-fade-up font-display h-section">
               Currently taking on{" "}
               <span className="font-serif-i text-accent">new work.</span>
             </h2>
           </header>
 
-          <div className="md:col-start-7 md:col-span-6 frame-panel p-6 md:p-8 min-w-0">
-            <dl className="space-y-10">
+          <div className="md:col-start-7 md:col-span-6 frame-panel p-7 md:p-9 min-w-0">
+            <dl className="space-y-8">
               <div className="contact-detail gsap-fade-up-sm">
-                <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Email</dt>
+                <dt className="meta-inline mb-3">Email</dt>
                 <dd className="min-w-0">
                   <a
                     href="mailto:info@racekipping.com"
-                    className="font-display text-2xl md:text-3xl link-underline break-all md:break-normal"
+                    className="font-display text-[34px] md:text-[38px] link-underline break-all md:break-normal"
                   >
                     info@racekipping.com
                   </a>
                 </dd>
               </div>
               <div className="contact-detail gsap-fade-up-sm">
-                <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Phone</dt>
+                <dt className="meta-inline mb-3">Phone</dt>
                 <dd className="min-w-0">
                   <a
                     href="tel:+16187998495"
-                    className="font-display text-2xl md:text-3xl link-underline break-words"
+                    className="font-display text-[34px] md:text-[38px] link-underline break-words"
                   >
                     +1 (618) 799 8495
                   </a>
                 </dd>
               </div>
               <div className="contact-detail gsap-fade-up-sm">
-                <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Elsewhere</dt>
+                <dt className="meta-inline mb-3">Elsewhere</dt>
                 <dd className="flex flex-wrap gap-x-8 gap-y-3 min-w-0">
                   {links.map((l) => (
                     <a
@@ -91,7 +107,7 @@ export function Contact() {
                       href={l.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-display text-xl link-underline inline-flex items-center gap-2 break-words"
+                    className="font-display text-[28px] md:text-[30px] link-underline inline-flex items-center gap-2 break-words"
                     >
                       {l.label}
                       <span aria-hidden="true" className="text-accent">
