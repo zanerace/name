@@ -156,16 +156,16 @@ export function About() {
               </p>
             </div>
 
-            <aside className="about-side md:col-start-8 md:col-span-5 mt-10 md:mt-0 frame-panel p-9 md:p-11 about-panel min-w-0">
-              <div className="gsap-fade-up-sm mb-9">
-                <div className="overflow-hidden border border-border frame-panel aspect-[4/5] md:aspect-[7/8] max-w-[440px]">
+            <aside className="about-side md:col-start-8 md:col-span-5 mt-10 md:mt-0 frame-panel p-10 md:p-12 about-panel min-w-0">
+              <div className="gsap-fade-up-sm mb-10">
+                <div className="about-portrait-frame overflow-hidden border border-border aspect-[4/5] md:aspect-[7/8] max-w-[460px]">
                   <img
                     src="/about-portrait.png"
                     alt="Portrait of Race Kipping"
                     width={820}
                     height={1024}
                     loading="lazy"
-                    className="block w-full h-full object-cover object-[center_28%]"
+                    className="block w-full h-full object-cover object-[center_24%]"
                   />
                 </div>
               </div>

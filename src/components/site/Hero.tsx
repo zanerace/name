@@ -115,12 +115,12 @@ export function Hero() {
               </a>
             </div>
           </div>
-          <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0 md:pt-1">
+          <div className="col-span-12 md:col-start-8 md:col-span-5 min-w-0 md:pt-3">
             {lunaCast && (
               <Link
                 to="/work/$projectId"
                 params={{ projectId: lunaCast.id }}
-                className="hero-feature-card group block frame-panel p-4 md:p-5 mb-4 transition-colors duration-200 hover:border-[color:var(--color-accent)] focus-visible:outline-none focus-visible:border-[color:var(--color-accent)]"
+                className="hero-feature-card group block frame-panel p-5 md:p-6 mb-5 transition-colors duration-200 hover:border-[color:var(--color-accent)] focus-visible:outline-none focus-visible:border-[color:var(--color-accent)]"
               >
                 <p className="meta-inline mb-2 text-accent">Featured Motion</p>
                 <div className="overflow-hidden border border-border mb-3.5 aspect-[16/9]">

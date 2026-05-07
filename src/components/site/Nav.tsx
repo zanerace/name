@@ -105,7 +105,7 @@ export function Nav() {
           onClick={(e) => handleNavClick(e, "#top")}
           className="text-foreground shrink-0 transition-colors duration-200 ease-out md:hover:text-accent nav-brand"
         >
-          <span className="md:hidden font-sans text-[13px] uppercase tracking-[0.14em] font-medium nav-brand-chip">
+          <span className="md:hidden font-sans text-[14px] uppercase tracking-[0.13em] font-medium nav-brand-chip">
             RK
           </span>
           <span className="hidden md:inline font-ui text-[13px] uppercase nav-brand-chip">
