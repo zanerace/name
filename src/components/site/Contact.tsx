@@ -47,25 +47,25 @@ export function Contact() {
   }, []);
 
   return (
-    <section ref={root} id="contact" className="py-32 md:py-[220px]">
+    <section ref={root} id="contact" className="py-32 md:py-[220px] w-full max-w-full overflow-x-hidden">
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
         <div aria-hidden className="rule-draw section-rule mb-32 md:mb-44" />
-        <div className="grid grid-cols-12 gap-x-10 gap-y-16">
-          <header className="section-header col-span-12 md:col-span-5">
+        <div className="grid grid-cols-12 gap-x-10 gap-y-16 min-w-0">
+          <header className="section-header col-span-12 md:col-span-5 min-w-0">
             <h2 className="gsap-fade-up font-display h-section">
               Currently taking on{" "}
               <span className="font-serif-i text-accent">new work.</span>
             </h2>
           </header>
 
-          <div className="col-span-12 md:col-start-7 md:col-span-6 frame-panel p-6 md:p-8">
+          <div className="col-span-12 md:col-start-7 md:col-span-6 frame-panel p-6 md:p-8 min-w-0">
             <dl className="space-y-10">
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="font-ui text-[10px] uppercase text-muted-foreground mb-3">Email</dt>
                 <dd>
                   <a
                     href="mailto:info@racekipping.com"
-                    className="font-display text-2xl md:text-3xl link-underline"
+                    className="font-display text-2xl md:text-3xl link-underline break-all md:break-normal"
                   >
                     info@racekipping.com
                   </a>

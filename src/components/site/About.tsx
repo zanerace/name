@@ -127,7 +127,7 @@ export function About() {
       <section
         ref={sectionRef}
         id="about"
-        className="pt-20 md:pt-[136px] pb-20 md:pb-[104px]"
+        className="pt-20 md:pt-[136px] pb-20 md:pb-[104px] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
           <header className="section-header mb-[56px] md:mb-[88px]">
@@ -137,8 +137,8 @@ export function About() {
             </p>
           </header>
 
-          <div className="grid grid-cols-12 gap-x-10 md:gap-x-20">
-            <div className="col-span-12 md:col-span-7">
+          <div className="grid grid-cols-12 gap-x-10 md:gap-x-20 min-w-0">
+            <div className="col-span-12 md:col-span-7 min-w-0">
               <p className="about-lead font-serif text-xl md:text-[2.05rem] leading-[1.38] text-foreground">
                 Race Kipping is a media designer working across identity, motion, and sound. The practice
                 draws from a decade in professional kitchens and recording studios — disciplines built on
@@ -152,15 +152,15 @@ export function About() {
               </p>
             </div>
 
-            <aside className="about-side col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8 about-panel">
+            <aside className="about-side col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0 frame-panel p-6 md:p-8 about-panel min-w-0">
               <p className="gsap-fade-up-sm font-ui text-[10px] uppercase text-muted-foreground mb-6">
                 Capabilities
               </p>
               <ul className="gsap-fade-up-sm grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                 {capabilities.map((c) => (
-                  <li key={c} className="flex items-start gap-2.5">
+                  <li key={c} className="flex items-start gap-2.5 min-w-0">
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-[color:var(--secondary)] mt-[0.58em]" />
-                    <span className="font-ui text-[1.03rem] leading-[1.45] text-foreground">{c}</span>
+                    <span className="font-ui text-[1.03rem] leading-[1.45] text-foreground break-words">{c}</span>
                   </li>
                 ))}
               </ul>
