@@ -196,14 +196,20 @@ export function Work() {
                   )}
                 </div>
                 <h3 className="work-title work-title-optic font-display text-[32px] md:text-[40px] mt-3 text-foreground max-w-[24ch]">
-                  {p.titleLines ? (
-                    <>
-                      <span className="block">{p.titleLines[0]}</span>
-                      <span className="block">{p.titleLines[1]}</span>
-                    </>
-                  ) : (
-                    p.title
-                  )}
+                  <Link
+                    to="/work/$projectId"
+                    params={{ projectId: p.id }}
+                    className="link-underline text-foreground hover:text-accent focus-visible:text-accent"
+                  >
+                    {p.titleLines ? (
+                      <>
+                        <span className="block">{p.titleLines[0]}</span>
+                        <span className="block">{p.titleLines[1]}</span>
+                      </>
+                    ) : (
+                      p.title
+                    )}
+                  </Link>
                 </h3>
                 <p className="section-body text-[18px] md:text-[19px] mt-3 max-w-[52ch] text-[color:var(--text-soft)]">
                   {p.desc}

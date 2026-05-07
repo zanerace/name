@@ -15,8 +15,8 @@ const VIDEO_SOURCES: readonly { src: string; type: string }[] = [
 ];
 
 const GRADUAL_SANS_VIDEO_SOURCES: readonly { src: string; type: string }[] = [
-  { src: "/work/gradual-sans.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
-  { src: "/work/gradual-sans.mp4.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
+  { src: "/work/gradual-sans.mp4", type: "video/mp4" },
+  { src: "/work/gradual-sans.mp4.mp4", type: "video/mp4" },
 ];
 
 export const Route = createFileRoute("/work/$projectId")({

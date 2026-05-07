@@ -575,6 +575,9 @@
   .reel-caption {
     color: var(--text-soft);
   }
+  .reel-video-el {
+    cursor: zoom-in;
+  }
   @media (hover: hover) and (pointer: fine) {
     .reel-stage:hover {
       box-shadow: 0 20px 44px rgba(0, 0, 0, 0.38);
