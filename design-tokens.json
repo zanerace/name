@@ -1,0 +1,102 @@
+{
+  "brand": {
+    "name": "Race Kipping",
+    "style": "dark-editorial"
+  },
+  "fonts": {
+    "display": {
+      "family": "Newsreader",
+      "weights": [400, 500, 600],
+      "styles": ["normal", "italic"]
+    },
+    "ui": {
+      "family": "JetBrains Mono",
+      "weights": [400, 500],
+      "styles": ["normal"]
+    },
+    "googleFontsImport": "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"
+  },
+  "colors": {
+    "background": "#0f1113",
+    "bgSoft": "#121416",
+    "foreground": "#f1eadf",
+    "textSoft": "#c8bdb0",
+    "muted": "#131518",
+    "mutedForeground": "#9d9287",
+    "accent": "#c46a3a",
+    "oxblood": "#5a232a",
+    "secondary": "#17181b",
+    "surfaceWarm": "#1b1715",
+    "border": "rgba(241, 234, 223, 0.1)",
+    "borderStrong": "rgba(241, 234, 223, 0.18)",
+    "rule": "rgba(241, 234, 223, 0.16)",
+    "inkSoft": "rgba(241, 234, 223, 0.05)",
+    "inkMid": "rgba(241, 234, 223, 0.1)",
+    "inkHard": "rgba(241, 234, 223, 0.4)"
+  },
+  "motion": {
+    "easePremium": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "sectionSpaceYMobile": "80px",
+    "sectionSpaceYDesktop": "116px"
+  },
+  "cursor": {
+    "activeDotColor": "#5c1a1f",
+    "hotspot": [11, 11]
+  },
+  "assets": {
+    "images": [
+      "/work/01.jpg",
+      "/work/02.png",
+      "/work/03.png",
+      "/work/04.jpg",
+      "/about-portrait.png",
+      "/reel/poster.png"
+    ],
+    "video": [
+      "/reel/reel.webm",
+      "/reel/motion-reel.webm",
+      "/reel/reel.mp4",
+      "/reel/motion-reel.mp4",
+      "/reel/poster.mp4",
+      "/reel/reel-h264.mp4",
+      "/reel/motion-reel-h264.mp4",
+      "/reel/motion-reel.mov",
+      "/work/gradual-sans.mp4",
+      "/work/gradual-sans.mp4.mp4"
+    ]
+  },
+  "projects": [
+    {
+      "id": "gradual-sans",
+      "num": "01",
+      "title": "Gradual Sans",
+      "tag": "Type Design",
+      "year": "2025",
+      "coverImage": "/work/01.jpg"
+    },
+    {
+      "id": "climate-change",
+      "num": "02",
+      "title": "Climate Change Exhibition",
+      "tag": "Identity / Campaign",
+      "year": "2025",
+      "coverImage": "/work/02.png"
+    },
+    {
+      "id": "lunacast",
+      "num": "03",
+      "title": "LunaCast",
+      "tag": "UX / Motion",
+      "year": "2024",
+      "coverImage": "/work/03.png"
+    },
+    {
+      "id": "rwanda",
+      "num": "04",
+      "title": "Rwanda",
+      "tag": "Identity",
+      "year": "2024",
+      "coverImage": "/work/04.jpg"
+    }
+  ]
+}
