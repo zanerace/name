@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
+import { Marquee } from "@/components/site/Marquee";
 import { Work } from "@/components/site/Work";
-import { Reel } from "@/components/site/Reel";
+import { MotionReel } from "@/components/site/MotionReel";
 import { About } from "@/components/site/About";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
-import { useReveal } from "@/hooks/use-reveal";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -28,13 +29,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  useReveal();
   return (
     <main className="min-h-screen">
+      <SmoothScroll />
       <Nav />
       <Hero />
+      <Marquee />
       <Work />
-      <Reel />
+      <MotionReel />
       <About />
       <Contact />
       <Footer />

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap");
 
 @import "tailwindcss" source(none);
 @source "../src";
@@ -17,19 +17,21 @@
   --color-accent: var(--accent);
   --color-border: var(--border);
   --color-rule: var(--rule);
-  --font-sans: "Syne", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: "Newsreader", Georgia, serif;
 }
 
 :root {
-  /* Deep ink background, warm paper text, coral accent — tweak these to re-theme the whole site */
-  --background: oklch(0.17 0.03 270);
-  --foreground: oklch(0.97 0.015 95);
-  --muted: oklch(0.26 0.028 270);
-  --muted-foreground: oklch(0.66 0.04 85);
-  --accent: oklch(0.72 0.17 28);
-  --border: oklch(0.97 0.015 95 / 0.12);
-  --rule: oklch(0.97 0.015 95 / 0.2);
+  --background: #f2ebdd;
+  --foreground: #1a1612;
+  --muted: #e8e0d0;
+  --muted-foreground: #6b5d4f;
+  --accent: #5c1a1f;
+  --border: #d4cab6;
+  --rule: #1a1612;
+
+  /* Interactive cursor — small oxblood dot, used only on hover of links/cards. Default cursor is the OS default. */
+  --cursor-active: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="5" fill="%235c1a1f"/></svg>') 11 11;
 }
 
 @layer base {
@@ -39,51 +41,224 @@
   html {
     scroll-behavior: smooth;
   }
+  /* Lenis */
+  html.lenis {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-serif);
-    font-feature-settings: "ss01", "kern";
+    font-size: 16px;
+    line-height: 1.55;
+    letter-spacing: 0;
+    font-feature-settings: "kern";
+    font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+  @media (min-width: 768px) {
+    body {
+      font-size: 17px;
+      line-height: 1.6;
+    }
   }
   ::selection {
     background: var(--color-accent);
     color: var(--color-background);
   }
+  a,
+  button,
+  [role="button"],
+  [data-cursor="active"] {
+    cursor: var(--cursor-active), pointer;
+  }
 }
 
 @layer utilities {
+  /* Editorial display — Hero, section titles, project titles, italics */
   .font-display {
-    font-family: var(--font-sans);
-    letter-spacing: -0.035em;
-    font-weight: 600;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: 0;
   }
+  /* Mono — nav, all-caps labels, metadata, captions */
   .font-ui {
     font-family: var(--font-sans);
+    letter-spacing: 0.22em;
+    font-weight: 500;
   }
   .font-serif-i {
     font-family: var(--font-serif);
     font-style: italic;
   }
+
+  /* Editorial type scale */
+  .h-hero {
+    font-size: clamp(80px, 11vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+  }
+  .h-section {
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  /* Section background variants */
+  .section-dark {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+  .section-dark .text-foreground {
+    color: var(--color-background);
+  }
+  .section-dark .text-muted-foreground {
+    color: var(--color-muted);
+  }
+
+  /* Hairline rule that draws left-to-right via GSAP. Initial state is hidden. */
+  .rule-draw {
+    display: block;
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-rule);
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;
+  }
+  .section-dark .rule-draw {
+    background-color: var(--color-background);
+  }
+
+  /* Reveal — IO-driven fallback for any element that doesn't get a GSAP timeline */
   .reveal {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 900ms cubic-bezier(0.2, 0.6, 0.2, 1), transform 900ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    transform: translateY(8px);
+    transition: opacity 200ms ease, transform 200ms ease;
     will-change: opacity, transform;
   }
   .reveal.is-visible {
     opacity: 1;
     transform: none;
   }
+
+  /* GSAP entry primitives — components set initial state via classes, GSAP animates them in */
+  .gsap-fade-up {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+    will-change: opacity, transform;
+  }
+  .gsap-fade-up-sm {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    will-change: opacity, transform;
+  }
+
+  /* Editorial link underline — text holds foreground; underline color shifts to accent on hover */
   .link-underline {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 100% 1px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size 400ms ease, color 200ms ease;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: currentColor;
+    transition: text-decoration-color 200ms ease;
   }
   .link-underline:hover {
+    text-decoration-color: var(--color-accent);
+  }
+
+  /* Project title — invisible underline by default; accent color appears on card hover */
+  .work-title {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 200ms ease;
+  }
+  .work-card:hover .work-title {
+    text-decoration-color: var(--color-accent);
+  }
+
+  /* Custom Motion Reel video controls — cream stroke, oxblood on hover, fade in on stage hover */
+  .reel-control {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-background);
+    color: var(--color-background);
+    background: transparent;
+    opacity: 0;
+    transition: opacity 200ms ease, color 200ms ease, border-color 200ms ease;
+  }
+  .reel-stage:hover .reel-control,
+  .reel-stage:focus-within .reel-control,
+  .reel-control:focus-visible {
+    opacity: 1;
+  }
+  .reel-control:hover {
+    border-color: var(--color-accent);
     color: var(--color-accent);
+  }
+
+  /* Marquee — horizontal infinite scroll. Inner row contains content duplicated 2x. */
+  .marquee {
+    overflow: hidden;
+    width: 100%;
+  }
+  .marquee-track {
+    display: inline-flex;
+    width: max-content;
+    will-change: transform;
+    animation: marquee-scroll 60s linear infinite;
+  }
+  @keyframes marquee-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}
+
+/* Reduced motion — kill smooth scroll, marquee, all entry animations */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  .reveal,
+  .gsap-fade-up,
+  .gsap-fade-up-sm {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .rule-draw {
+    transform: scaleX(1) !important;
   }
 }
