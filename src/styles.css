@@ -15,6 +15,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
   --color-rule: var(--rule);
   --font-sans: "JetBrains Mono", ui-monospace, monospace;
@@ -28,8 +29,10 @@
   --text-soft: #c8bdb0;
   --muted: #131518;
   --muted-foreground: #9d9287;
-  --accent: #c46a3a;
   --oxblood: #5a232a;
+  /* Accent matches oxblood / “oxtail” punctuation tone (replaces prior rust orange). */
+  --accent: var(--oxblood);
+  --accent-foreground: var(--foreground);
   --border: rgba(241, 234, 223, 0.1);
   --border-strong: rgba(241, 234, 223, 0.18);
   --rule: rgba(241, 234, 223, 0.16);
@@ -44,7 +47,7 @@
   --section-space-y-desktop: 116px;
 
   /* Interactive cursor — small oxblood dot, used only on hover of links/cards. Default cursor is the OS default. */
-  --cursor-active: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="5" fill="%235c1a1f"/></svg>') 11 11;
+  --cursor-active: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="5" fill="%235a232a"/></svg>') 11 11;
 }
 
 @layer base {
@@ -105,7 +108,7 @@
   }
   ::selection {
     background: var(--color-accent);
-    color: var(--color-background);
+    color: var(--color-foreground);
   }
 
   /* Custom oxblood-dot cursor — only on devices with hover + fine pointer (i.e. mouse).
