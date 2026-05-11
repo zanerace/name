@@ -117,7 +117,7 @@ export function About() {
     <div ref={root} className="w-full max-w-full overflow-x-hidden">
       {/* Quiet rule between Featured Motion and About — composition, not container. */}
       <div className="bg-background pt-16 md:pt-20 pb-16 md:pb-20">
-        <div className="mx-auto max-w-[1440px] px-6 md:px-12">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <div aria-hidden className="section-rule rule-draw" />
         </div>
       </div>
@@ -127,14 +127,14 @@ export function About() {
         id="about"
         className="cv-auto pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
       >
-        <div className="mx-auto max-w-[1440px] px-6 md:px-12">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <header className="section-header mb-10 md:mb-12">
             <h2 className="gsap-fade-up font-display h-section">About</h2>
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-16 lg:gap-x-20 gap-y-12 md:gap-y-0 min-w-0">
-            <div className="md:col-span-7 min-w-0 md:order-1">
-              <p className="about-lead font-serif text-[28px] md:text-[2.25rem] leading-[1.32] text-foreground break-words">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-0 lg:gap-x-16 xl:gap-x-20 gap-y-12 lg:gap-y-0 min-w-0">
+            <div className="lg:col-span-7 min-w-0 lg:order-1">
+              <p className="about-lead font-serif text-[24px] md:text-[2.25rem] leading-[1.32] text-foreground break-words">
                 Race Kipping is a media designer working across identity, motion, and sound. The
                 practice draws from a decade in professional kitchens and recording studios —
                 disciplines built on tempo, restraint, and{" "}
@@ -147,7 +147,7 @@ export function About() {
               </p>
             </div>
 
-            <aside className="about-side md:col-span-5 about-panel min-w-0 md:order-2">
+            <aside className="about-side lg:col-span-5 about-panel min-w-0 lg:order-2">
               <div className="gsap-fade-up-sm">
                 <div className="about-portrait-frame overflow-hidden border aspect-[4/5] md:aspect-[5/6] max-w-[460px] md:ml-auto">
                   <img

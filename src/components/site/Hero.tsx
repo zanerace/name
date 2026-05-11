@@ -101,9 +101,9 @@ export function Hero() {
     <section
       ref={root}
       id="top"
-      className="hero-wash relative flex flex-col min-h-[60vh] md:min-h-[76vh] w-full max-w-full overflow-x-hidden"
+      className="hero-wash relative flex flex-col min-h-[56vh] md:min-h-[74vh] xl:min-h-[78vh] w-full max-w-full overflow-x-hidden"
     >
-      <div className="flex-1 mx-auto w-full max-w-[1440px] px-6 md:px-12 pt-16 md:pt-[162px] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] box-border">
+      <div className="flex-1 mx-auto w-full max-w-[1440px] px-5 sm:px-6 md:px-12 pt-20 md:pt-[162px] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] box-border">
         <div className="grid grid-cols-12 gap-x-6 md:gap-x-12 gap-y-8 md:gap-y-10 items-start w-full min-w-0">
           <div className="col-span-12 md:col-span-7 min-w-0">
             <h1

@@ -50,6 +50,18 @@
   --cursor-active: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="5" fill="%235a232a"/></svg>') 11 11;
 }
 
+@media (max-width: 380px) {
+  :root {
+    --section-space-y-mobile: 68px;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --section-space-y-desktop: 132px;
+  }
+}
+
 @layer base {
   *,
   *::before,
@@ -107,6 +119,12 @@
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+  @media (max-width: 420px) {
+    body {
+      font-size: 16px;
+      line-height: 1.58;
+    }
   }
   @media (min-width: 768px) {
     body {
@@ -197,6 +215,11 @@
       letter-spacing: -0.041em;
     }
   }
+  @media (min-width: 1536px) {
+    .h-hero {
+      font-size: clamp(132px, 9.2vw, 212px);
+    }
+  }
 
   .h-section {
     font-size: clamp(46px, 10vw, 70px);
@@ -215,6 +238,11 @@
     .h-section {
       font-size: clamp(60px, 6.4vw, 96px);
       line-height: 0.9;
+    }
+  }
+  @media (min-width: 1536px) {
+    .h-section {
+      font-size: clamp(76px, 5vw, 116px);
     }
   }
 
@@ -367,6 +395,11 @@
   }
   .hero-cta-ghost {
     background: rgba(255, 255, 255, 0.02);
+  }
+  @media (max-width: 480px) {
+    .hero-cta {
+      width: 100%;
+    }
   }
   .hero-module {
     max-width: 34ch;
@@ -637,7 +670,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 110px;
+    width: 64px;
     pointer-events: none;
     z-index: 2;
   }
@@ -649,6 +682,12 @@
     right: 0;
     background: linear-gradient(to left, var(--color-background), transparent);
   }
+  @media (min-width: 768px) {
+    .marquee-shell .marquee::before,
+    .marquee-shell .marquee::after {
+      width: 110px;
+    }
+  }
 
   @media (max-width: 900px) {
     .section-body {
@@ -657,6 +696,12 @@
     }
     .work-title {
       font-size: clamp(30px, 8.4vw, 38px);
+    }
+  }
+  @media (min-width: 1536px) {
+    .section-body {
+      font-size: clamp(20px, 1.1vw, 23px);
+      max-width: 66ch;
     }
   }
 

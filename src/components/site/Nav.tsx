@@ -1,14 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import type Lenis from "lenis";
 import { gsap, prefersReducedMotion } from "@/lib/motion";
 import { lockScroll } from "@/lib/scroll-lock";
 import { workProjects } from "./work-data";
 
-const items = [
+type NavItem = {
+  label: string;
+  href?: string;
+  to?: string;
+};
+
+const items: readonly NavItem[] = [
   { href: "#work", label: "Work" },
-  { href: "#motion", label: "Motion" },
+  { to: "/motion", label: "Motion" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
@@ -26,7 +32,11 @@ type LenisWindow = typeof window & { __lenis?: Lenis };
 function scrollToHash(targetId: string) {
   if (typeof document === "undefined") return;
   const el = document.getElementById(targetId);
-  if (!el) return;
+  if (!el) {
+    const next = targetId === "top" ? "/" : `/#${targetId}`;
+    window.location.assign(next);
+    return;
+  }
   const lenis = typeof window !== "undefined" ? (window as LenisWindow).__lenis : undefined;
   if (lenis) {
     lenis.scrollTo(el, { duration: 1.5, easing: SCROLL_EASING });
@@ -39,6 +49,15 @@ function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
   if (!href.startsWith("#")) return;
   e.preventDefault();
   scrollToHash(href.slice(1));
+}
+
+function resolveActiveFromLocation(): string {
+  if (typeof window === "undefined") return "#work";
+  const hash = window.location.hash || "";
+  const isKnownSection = items.some((item) => item.href === hash);
+  if (isKnownSection) return hash;
+  if (window.location.pathname.startsWith("/motion")) return "/motion";
+  return window.location.pathname === "/" ? "#work" : "";
 }
 
 const HamburgerIcon = () => (
@@ -58,7 +77,8 @@ const HamburgerIcon = () => (
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [activeHref, setActiveHref] = useState<string>("#work");
+  const [activeHref, setActiveHref] = useState<string>(resolveActiveFromLocation);
+  const location = useRouterState({ select: (s) => s.location });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -69,8 +89,15 @@ export function Nav() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (location.pathname !== "/") {
+      setActiveHref(resolveActiveFromLocation());
+      return;
+    }
+
     const sections = items
-      .map((item) => document.querySelector<HTMLElement>(item.href))
+      .map((item) => item.href)
+      .filter(Boolean)
+      .map((href) => document.querySelector<HTMLElement>(href as string))
       .filter(Boolean) as HTMLElement[];
     if (!sections.length) return;
 
@@ -88,7 +115,11 @@ export function Nav() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    setActiveHref(resolveActiveFromLocation());
+  }, [location.pathname, location.hash]);
 
   return (
     <header
@@ -96,7 +127,7 @@ export function Nav() {
         scrolled ? "nav-plate is-scrolled" : "nav-plate"
       }`}
     >
-      <nav className="mx-auto max-w-[1440px] w-full py-4 md:py-0 px-6 md:px-12 md:h-[74px] flex items-center justify-between box-border">
+      <nav className="mx-auto max-w-[1440px] w-full py-4 md:py-0 px-5 sm:px-6 md:px-12 md:h-[74px] flex items-center justify-between box-border">
         <a
           href="#top"
           onClick={(e) => handleNavClick(e, "#top")}
@@ -110,18 +141,31 @@ export function Nav() {
           </span>
         </a>
 
-        <ul className="hidden min-[600px]:flex font-ui items-center gap-5 lg:gap-7 text-[15px] uppercase text-muted-foreground shrink-0">
+        <ul className="hidden md:flex font-ui items-center gap-5 lg:gap-7 text-[15px] uppercase text-muted-foreground shrink-0">
           {items.map((it) => (
-            <li key={it.href} className="relative group">
-              <a
-                href={it.href}
-                onClick={(e) => handleNavClick(e, it.href)}
-                className={`link-underline transition-colors duration-200 ease-out whitespace-nowrap font-ui uppercase ${
-                  activeHref === it.href ? "text-foreground nav-active" : ""
-                }`}
-              >
-                {it.label}
-              </a>
+            <li key={it.label} className="relative group">
+              {it.to ? (
+                <Link
+                  to={it.to}
+                  aria-current={activeHref === it.to ? "page" : undefined}
+                  className={`link-underline transition-colors duration-200 ease-out whitespace-nowrap font-ui uppercase ${
+                    activeHref === it.to ? "text-foreground nav-active" : ""
+                  }`}
+                >
+                  {it.label}
+                </Link>
+              ) : (
+                <a
+                  href={it.href}
+                  onClick={(e) => handleNavClick(e, it.href as string)}
+                  aria-current={activeHref === it.href ? "page" : undefined}
+                  className={`link-underline transition-colors duration-200 ease-out whitespace-nowrap font-ui uppercase ${
+                    activeHref === it.href ? "text-foreground nav-active" : ""
+                  }`}
+                >
+                  {it.label}
+                </a>
+              )}
               {it.href === "#work" && (
                 <div className="absolute left-0 top-full pt-3 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-180">
                   <div className="frame-panel bg-background/95 min-w-[230px] p-3">
@@ -150,7 +194,7 @@ export function Nav() {
           onClick={() => setOpen(true)}
           aria-label="Open menu"
           aria-expanded={open}
-          className="min-[600px]:hidden inline-flex items-center justify-center w-11 h-11 text-foreground shrink-0"
+          className="md:hidden inline-flex items-center justify-center w-11 h-11 text-foreground shrink-0"
         >
           <HamburgerIcon />
         </button>
@@ -262,19 +306,30 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
       </div>
       <div className="flex-1 flex flex-col items-center justify-center gap-6 md:gap-8 px-6 pb-8 overflow-x-hidden overflow-y-auto">
         {items.map((it) => (
-          <div key={it.href} className="flex flex-col items-center gap-3">
-            <a
-              href={it.href}
-              onClick={(e) => {
-                e.preventDefault();
-                const id = it.href.slice(1);
-                close(() => scrollToHash(id));
-              }}
-              className="font-display text-foreground link-underline text-center max-w-full"
-              style={{ fontSize: "clamp(32px, 8.5vw, 56px)" }}
-            >
-              {it.label}
-            </a>
+          <div key={it.label} className="flex flex-col items-center gap-3">
+            {it.to ? (
+              <Link
+                to={it.to}
+                onClick={() => close()}
+                className="font-display text-foreground link-underline text-center max-w-full"
+                style={{ fontSize: "clamp(32px, 8.5vw, 56px)" }}
+              >
+                {it.label}
+              </Link>
+            ) : (
+              <a
+                href={it.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const id = (it.href as string).slice(1);
+                  close(() => scrollToHash(id));
+                }}
+                className="font-display text-foreground link-underline text-center max-w-full"
+                style={{ fontSize: "clamp(32px, 8.5vw, 56px)" }}
+              >
+                {it.label}
+              </a>
+            )}
             {it.href === "#work" && (
               <div className="flex flex-col items-center gap-1.5">
                 {workProjects.map((project) => (

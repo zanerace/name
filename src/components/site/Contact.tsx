@@ -64,17 +64,17 @@ export function Contact() {
       id="contact"
       className="cv-auto py-[var(--section-space-y-mobile)] md:py-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
     >
-      <div className="mx-auto max-w-[1440px] px-6 md:px-12">
+      <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
         <div aria-hidden className="rule-draw section-rule mb-14 md:mb-20" />
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-10 gap-y-10 md:gap-y-14 min-w-0">
-          <header className="section-header md:col-span-5 min-w-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-0 lg:gap-x-10 gap-y-10 lg:gap-y-14 min-w-0">
+          <header className="section-header lg:col-span-5 min-w-0">
             <p className="gsap-fade-up section-kicker">§ 04</p>
-            <h2 className="gsap-fade-up font-display text-[clamp(48px,6vw,88px)] leading-[0.95] tracking-[-0.025em]">
+            <h2 className="gsap-fade-up font-display text-[clamp(38px,12vw,88px)] leading-[0.95] tracking-[-0.025em]">
               Currently taking on <span className="font-serif-i text-accent">new work.</span>
             </h2>
           </header>
 
-          <div className="md:col-start-7 md:col-span-6 min-w-0 md:border-l md:border-[color:var(--border)] md:pl-10 lg:pl-12 md:self-start">
+          <div className="lg:col-start-7 lg:col-span-6 min-w-0 lg:border-l lg:border-[color:var(--border)] lg:pl-10 xl:pl-12 lg:self-start">
             <dl className="space-y-8">
               <div className="contact-detail gsap-fade-up-sm">
                 <dt className="font-ui text-[9px] uppercase text-muted-foreground mb-3">Email</dt>

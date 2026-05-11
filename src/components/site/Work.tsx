@@ -84,7 +84,7 @@ export function Work() {
       id="work"
       className="cv-auto work-wash pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
     >
-      <div className="mx-auto max-w-[1440px] w-full max-w-full px-6 md:px-12 box-border">
+      <div className="mx-auto max-w-[1440px] w-full max-w-full px-5 sm:px-6 md:px-12 box-border">
         <header className="section-header flex items-start justify-between mb-12 md:mb-20">
           <div>
             <h2 className="gsap-fade-up font-display h-section">Selected Work</h2>
@@ -96,7 +96,7 @@ export function Work() {
           </div>
         </header>
 
-        <div className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-8 md:gap-x-12 gap-y-16 md:gap-y-24 w-full min-w-0">
+        <div className="work-grid grid grid-cols-1 lg:grid-cols-2 gap-x-8 md:gap-x-12 xl:gap-x-16 gap-y-14 md:gap-y-24 xl:gap-y-28 w-full min-w-0">
           {workProjects.map((p, index) => (
             <article
               key={p.id}
@@ -147,7 +147,7 @@ export function Work() {
                     </span>
                   )}
                 </div>
-                <h3 className="work-title work-title-optic font-display text-[32px] md:text-[40px] mt-3 text-foreground max-w-[24ch]">
+                <h3 className="work-title work-title-optic font-display text-[28px] md:text-[40px] mt-3 text-foreground max-w-[24ch]">
                   <Link
                     to="/work/$projectId"
                     params={{ projectId: p.id }}
@@ -163,7 +163,7 @@ export function Work() {
                     )}
                   </Link>
                 </h3>
-                <p className="section-body text-[18px] md:text-[19px] mt-3 max-w-[52ch] text-[color:var(--text-soft)]">
+                <p className="section-body text-[16px] md:text-[19px] mt-3 max-w-[52ch] text-[color:var(--text-soft)]">
                   {p.desc}
                 </p>
               </div>

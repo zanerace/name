@@ -1,26 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
+import { getMotionVideoBySlug } from "./motion-data";
 import { getWorkProjectById } from "./work-data";
-
-const POSTER = "/reel/poster.png";
-
-/** Broad `type` values + H.264 first so Windows/Chrome reliably picks a playable source (strict AV1 types can leave the poster stuck). */
-const VIDEO_SOURCES: readonly { src: string; type: string }[] = [
-  { src: "/reel/reel-h264.mp4", type: "video/mp4" },
-  { src: "/reel/motion-reel-h264.mp4", type: "video/mp4" },
-  { src: "/reel/reel.mp4", type: "video/mp4" },
-  { src: "/reel/motion-reel.mp4", type: "video/mp4" },
-  { src: "/reel/reel.webm", type: "video/webm" },
-  { src: "/reel/motion-reel.webm", type: "video/webm" },
-  { src: "/reel/poster.mp4", type: "video/mp4" },
-  { src: "/reel/motion-reel.mov", type: "video/quicktime" },
-];
-
-const GRADUAL_SANS_VIDEO_SOURCES: readonly { src: string; type: string }[] = [
-  { src: "/work/gradual-sans.mp4.mp4", type: "video/mp4" },
-  { src: "/work/gradual-sans.mp4", type: "video/mp4" },
-];
 
 function ReelVideoTile({
   projectId,
@@ -189,11 +171,11 @@ function ReelVideoTile({
         <Link
           to="/work/$projectId"
           params={{ projectId }}
-          className="font-display text-[29px] md:text-[34px] link-underline text-foreground hover:text-accent focus-visible:text-accent"
+          className="font-display text-[24px] md:text-[34px] link-underline text-foreground hover:text-accent focus-visible:text-accent"
         >
           {title}
         </Link>
-        <p className="reel-caption mt-2 text-[17px] md:text-[19px]">{desc}</p>
+        <p className="reel-caption mt-2 text-[15px] md:text-[19px]">{desc}</p>
       </div>
     </div>
   );
@@ -202,6 +184,8 @@ function ReelVideoTile({
 export function MotionReel() {
   const lunaCast = getWorkProjectById("lunacast");
   const gradualSans = getWorkProjectById("gradual-sans");
+  const lunaCatalogEntry = getMotionVideoBySlug("lunacast-channel-reel");
+  const gradualCatalogEntry = getMotionVideoBySlug("gradual-sans-motion-study");
   const root = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -268,7 +252,7 @@ export function MotionReel() {
   return (
     <div ref={root} className="w-full max-w-full overflow-x-hidden">
       <div className="bg-background pb-20 md:pb-[80px] w-full max-w-full overflow-x-hidden">
-        <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border">
+        <div className="mx-auto max-w-[1440px] w-full px-5 sm:px-6 md:px-12 box-border">
           <div aria-hidden className="section-rule rule-draw" />
         </div>
       </div>
@@ -292,15 +276,15 @@ export function MotionReel() {
           </header>
         </div>
 
-        <div className="mx-auto w-full max-w-full px-6 md:px-12 box-border min-w-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+        <div className="mx-auto w-full max-w-full px-5 sm:px-6 md:px-12 box-border min-w-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
             {lunaCast && (
               <ReelVideoTile
                 projectId={lunaCast.id}
                 title={lunaCast.title}
                 desc={lunaCast.desc}
-                sources={VIDEO_SOURCES}
-                poster={POSTER}
+                sources={lunaCatalogEntry?.sources ?? []}
+                poster={lunaCatalogEntry?.poster ?? "/reel/poster.png"}
               />
             )}
             {gradualSans && (
@@ -308,7 +292,7 @@ export function MotionReel() {
                 projectId={gradualSans.id}
                 title={gradualSans.title}
                 desc={gradualSans.desc}
-                sources={GRADUAL_SANS_VIDEO_SOURCES}
+                sources={gradualCatalogEntry?.sources ?? []}
                 poster={gradualSans.coverImage}
               />
             )}

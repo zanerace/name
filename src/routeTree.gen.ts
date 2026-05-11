@@ -9,54 +9,106 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MotionRouteImport } from './routes/motion'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MotionIndexRouteImport } from './routes/motion.index'
 import { Route as WorkProjectIdRouteImport } from './routes/work.$projectId'
+import { Route as MotionVideoSlugRouteImport } from './routes/motion.$videoSlug'
 
+const MotionRoute = MotionRouteImport.update({
+  id: '/motion',
+  path: '/motion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const MotionIndexRoute = MotionIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MotionRoute,
 } as any)
 const WorkProjectIdRoute = WorkProjectIdRouteImport.update({
   id: '/work/$projectId',
   path: '/work/$projectId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MotionVideoSlugRoute = MotionVideoSlugRouteImport.update({
+  id: '/$videoSlug',
+  path: '/$videoSlug',
+  getParentRoute: () => MotionRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/motion': typeof MotionRouteWithChildren
+  '/motion/$videoSlug': typeof MotionVideoSlugRoute
   '/work/$projectId': typeof WorkProjectIdRoute
+  '/motion/': typeof MotionIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/motion/$videoSlug': typeof MotionVideoSlugRoute
   '/work/$projectId': typeof WorkProjectIdRoute
+  '/motion': typeof MotionIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/motion': typeof MotionRouteWithChildren
+  '/motion/$videoSlug': typeof MotionVideoSlugRoute
   '/work/$projectId': typeof WorkProjectIdRoute
+  '/motion/': typeof MotionIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/work/$projectId'
+  fullPaths:
+    | '/'
+    | '/motion'
+    | '/motion/$videoSlug'
+    | '/work/$projectId'
+    | '/motion/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/work/$projectId'
-  id: '__root__' | '/' | '/work/$projectId'
+  to: '/' | '/motion/$videoSlug' | '/work/$projectId' | '/motion'
+  id:
+    | '__root__'
+    | '/'
+    | '/motion'
+    | '/motion/$videoSlug'
+    | '/work/$projectId'
+    | '/motion/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MotionRoute: typeof MotionRouteWithChildren
   WorkProjectIdRoute: typeof WorkProjectIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/motion': {
+      id: '/motion'
+      path: '/motion'
+      fullPath: '/motion'
+      preLoaderRoute: typeof MotionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/motion/': {
+      id: '/motion/'
+      path: '/'
+      fullPath: '/motion/'
+      preLoaderRoute: typeof MotionIndexRouteImport
+      parentRoute: typeof MotionRoute
     }
     '/work/$projectId': {
       id: '/work/$projectId'
@@ -65,11 +117,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkProjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/motion/$videoSlug': {
+      id: '/motion/$videoSlug'
+      path: '/$videoSlug'
+      fullPath: '/motion/$videoSlug'
+      preLoaderRoute: typeof MotionVideoSlugRouteImport
+      parentRoute: typeof MotionRoute
+    }
   }
 }
 
+interface MotionRouteChildren {
+  MotionVideoSlugRoute: typeof MotionVideoSlugRoute
+  MotionIndexRoute: typeof MotionIndexRoute
+}
+
+const MotionRouteChildren: MotionRouteChildren = {
+  MotionVideoSlugRoute: MotionVideoSlugRoute,
+  MotionIndexRoute: MotionIndexRoute,
+}
+
+const MotionRouteWithChildren =
+  MotionRoute._addFileChildren(MotionRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MotionRoute: MotionRouteWithChildren,
   WorkProjectIdRoute: WorkProjectIdRoute,
 }
 export const routeTree = rootRouteImport

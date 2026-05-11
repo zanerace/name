@@ -1,5 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { Footer } from "@/components/site/Footer";
+import { Nav } from "@/components/site/Nav";
 import { getWorkProjectById } from "@/components/site/work-data";
 import { gsap, prefersReducedMotion, registerMotion } from "@/lib/motion";
 
@@ -99,149 +101,157 @@ function WorkProjectPage() {
 
   if (!project) {
     return (
-      <main className="min-h-screen bg-background px-6 md:px-12 py-24 md:py-28">
-        <div className="mx-auto max-w-[900px]">
-          <p className="font-ui text-[10px] uppercase text-muted-foreground mb-4">Project</p>
-          <h1 className="font-display h-section mb-6">Not Found</h1>
-          <Link to="/" className="meta-chip font-ui text-[10px] uppercase">
-            Back to home
-          </Link>
-        </div>
-      </main>
+      <>
+        <Nav />
+        <main className="min-h-screen bg-background px-5 sm:px-6 md:px-12 pt-28 md:pt-32 pb-20 md:pb-24">
+          <div className="mx-auto max-w-[900px]">
+            <p className="font-ui text-[10px] uppercase text-muted-foreground mb-4">Project</p>
+            <h1 className="font-display h-section mb-6">Not Found</h1>
+            <Link to="/" className="meta-chip font-ui text-[10px] uppercase">
+              Back to home
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </>
     );
   }
 
   return (
-    <main ref={rootRef} className="min-h-screen bg-background px-6 md:px-12 py-24 md:py-28">
-      <article className="mx-auto max-w-[1200px]">
-        <div className="mb-8 md:mb-10">
-          <Link to="/" className="meta-chip font-ui text-[10px] uppercase">
-            Back to home
-          </Link>
-        </div>
-
-        <header className="mb-12 md:mb-14">
-          <div className="flex flex-wrap items-center gap-3 mb-5">
-            <span className="meta-chip font-ui text-[10px] uppercase text-accent">
-              {project.num}
-            </span>
-            <span className="meta-chip font-ui text-[10px] uppercase text-muted-foreground">
-              {project.tag} — {project.year}
-            </span>
+    <>
+      <Nav />
+      <main ref={rootRef} className="min-h-screen bg-background px-5 sm:px-6 md:px-12 pt-28 md:pt-32 pb-20 md:pb-24">
+        <article className="mx-auto max-w-[1200px]">
+          <div className="mb-8 md:mb-10">
+            <Link to="/" className="meta-chip font-ui text-[10px] uppercase">
+              Back to home
+            </Link>
           </div>
-          <h1 ref={titleRef} className="font-display h-section mb-4">
-            {project.title}
-          </h1>
-          <p className="font-serif text-lg md:text-2xl leading-[1.42] text-foreground max-w-[38ch]">
-            {project.desc}
-          </p>
-        </header>
 
-        <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
-          <div className="aspect-[16/9] overflow-hidden border border-border">
-            <img
-              src={project.coverImage}
-              alt={project.alt}
-              className="block w-full h-full object-cover"
-              width={1600}
-              height={900}
-              data-work-hero
-            />
-          </div>
-        </section>
-
-        {project.id === "lunacast" && (
-          <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
-            <div className="aspect-[16/9] overflow-hidden border border-border bg-foreground">
-              <ProjectInlineVideo sources={VIDEO_SOURCES} poster="/reel/poster.png" />
+          <header className="mb-12 md:mb-14">
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+              <span className="meta-chip font-ui text-[10px] uppercase text-accent">
+                {project.num}
+              </span>
+              <span className="meta-chip font-ui text-[10px] uppercase text-muted-foreground">
+                {project.tag} — {project.year}
+              </span>
             </div>
-          </section>
-        )}
-
-        {project.id === "gradual-sans" && (
-          <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
-            <div className="aspect-[16/9] overflow-hidden border border-border bg-foreground">
-              <ProjectInlineVideo
-                sources={GRADUAL_SANS_VIDEO_SOURCES}
-                poster={project.coverImage}
-              />
-            </div>
-          </section>
-        )}
-
-        <section className="grid grid-cols-12 gap-8 mb-10">
-          <div className="col-span-12 md:col-span-7">
-            <p
-              data-work-body
-              className="font-serif text-base md:text-xl leading-[1.56] text-foreground"
-            >
-              {project.body}
+            <h1 ref={titleRef} className="font-display h-section mb-4">
+              {project.title}
+            </h1>
+            <p className="font-serif text-base md:text-2xl leading-[1.42] text-foreground max-w-[38ch]">
+              {project.desc}
             </p>
-          </div>
-          <div className="col-span-12 md:col-span-5">
-            <div className="frame-panel p-4 md:p-6">
-              <p className="font-ui text-[10px] uppercase text-muted-foreground mb-4">
-                Case metadata
-              </p>
-              <dl className="space-y-3">
-                <div className="flex items-baseline justify-between gap-4">
-                  <dt className="font-ui text-[10px] uppercase text-muted-foreground">Role</dt>
-                  <dd className="font-display text-[16px] text-foreground">Media Designer</dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4">
-                  <dt className="font-ui text-[10px] uppercase text-muted-foreground">Year</dt>
-                  <dd className="font-display text-[16px] text-foreground">{project.year}</dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4">
-                  <dt className="font-ui text-[10px] uppercase text-muted-foreground">Client</dt>
-                  <dd className="font-display text-[16px] text-foreground">Selected work</dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4">
-                  <dt className="font-ui text-[10px] uppercase text-muted-foreground">
-                    Discipline
-                  </dt>
-                  <dd className="font-display text-[16px] text-foreground">{project.tag}</dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4">
-                  <dt className="font-ui text-[10px] uppercase text-muted-foreground">
-                    Deliverables
-                  </dt>
-                  <dd className="font-display text-[16px] text-foreground">
-                    Identity + motion assets
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </section>
+          </header>
 
-        <section className="grid grid-cols-12 gap-6 md:gap-8 mb-14">
-          <div className="col-span-12 md:col-span-7 frame-panel p-0 overflow-hidden border border-border">
-            <div className="aspect-[4/3] overflow-hidden">
+          <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
+            <div className="aspect-[16/9] overflow-hidden border border-border">
               <img
                 src={project.coverImage}
                 alt={project.alt}
                 className="block w-full h-full object-cover"
-                style={{ objectPosition: "left center" }}
-                width={1400}
-                height={1050}
+                width={1600}
+                height={900}
+                data-work-hero
               />
             </div>
-          </div>
-          <div className="col-span-12 md:col-span-5 frame-panel p-0 overflow-hidden border border-border">
-            <div className="aspect-[16/9] overflow-hidden">
-              <img
-                src={project.coverImage}
-                alt={project.alt}
-                className="block w-full h-full object-cover"
-                style={{ objectPosition: "right top" }}
-                width={1200}
-                height={675}
-              />
+          </section>
+
+          {project.id === "lunacast" && (
+            <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
+              <div className="aspect-[16/9] overflow-hidden border border-border bg-foreground">
+                <ProjectInlineVideo sources={VIDEO_SOURCES} poster="/reel/poster.png" />
+              </div>
+            </section>
+          )}
+
+          {project.id === "gradual-sans" && (
+            <section className="frame-panel p-4 md:p-6 mb-8 md:mb-10">
+              <div className="aspect-[16/9] overflow-hidden border border-border bg-foreground">
+                <ProjectInlineVideo
+                  sources={GRADUAL_SANS_VIDEO_SOURCES}
+                  poster={project.coverImage}
+                />
+              </div>
+            </section>
+          )}
+
+          <section className="grid grid-cols-12 gap-8 mb-10">
+            <div className="col-span-12 md:col-span-7">
+              <p
+                data-work-body
+                className="font-serif text-base md:text-xl leading-[1.56] text-foreground"
+              >
+                {project.body}
+              </p>
             </div>
-          </div>
-        </section>
-      </article>
-    </main>
+            <div className="col-span-12 md:col-span-5">
+              <div className="frame-panel p-4 md:p-6">
+                <p className="font-ui text-[10px] uppercase text-muted-foreground mb-4">
+                  Case metadata
+                </p>
+                <dl className="space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Role</dt>
+                    <dd className="font-display text-[16px] text-foreground sm:text-right">Media Designer</dd>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Year</dt>
+                    <dd className="font-display text-[16px] text-foreground sm:text-right">{project.year}</dd>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">Client</dt>
+                    <dd className="font-display text-[16px] text-foreground sm:text-right">Selected work</dd>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">
+                      Discipline
+                    </dt>
+                    <dd className="font-display text-[16px] text-foreground sm:text-right">{project.tag}</dd>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-4">
+                    <dt className="font-ui text-[10px] uppercase text-muted-foreground">
+                      Deliverables
+                    </dt>
+                    <dd className="font-display text-[16px] text-foreground sm:text-right">
+                      Identity + motion assets
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </section>
+
+          <section className="grid grid-cols-12 gap-6 md:gap-8 mb-14">
+            <div className="col-span-12 md:col-span-7 frame-panel p-0 overflow-hidden border border-border">
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={project.coverImage}
+                  alt={project.alt}
+                  className="block w-full h-full object-cover"
+                  style={{ objectPosition: "left center" }}
+                  width={1400}
+                  height={1050}
+                />
+              </div>
+            </div>
+            <div className="col-span-12 md:col-span-5 frame-panel p-0 overflow-hidden border border-border">
+              <div className="aspect-[16/9] overflow-hidden">
+                <img
+                  src={project.coverImage}
+                  alt={project.alt}
+                  className="block w-full h-full object-cover"
+                  style={{ objectPosition: "right top" }}
+                  width={1200}
+                  height={675}
+                />
+              </div>
+            </div>
+          </section>
+        </article>
+      </main>
+      <Footer />
+    </>
   );
 }
