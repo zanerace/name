@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { JsScrollRevealClass } from "@/components/site/JsScrollRevealClass";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
 
 function NotFoundComponent() {
@@ -118,12 +119,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              '(function(){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;document.documentElement.classList.add("js-scroll-reveal");}catch(e){}})();',
-          }}
-        />
         {children}
         <Scripts />
       </body>
@@ -136,6 +131,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <JsScrollRevealClass />
       <SmoothScroll />
       <Outlet />
     </QueryClientProvider>

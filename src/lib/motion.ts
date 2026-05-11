@@ -7,7 +7,7 @@ export function registerMotion(): boolean {
   if (typeof window === "undefined") return false;
   if (!registered) {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.config({ force3D: true });
+    gsap.config({ force3D: false });
     registered = true;
   }
   return !prefersReducedMotion();

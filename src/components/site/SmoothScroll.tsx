@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { initLenis, destroyLenis } from "@/lib/lenis";
-import { ScrollTrigger } from "@/lib/motion";
+import { scheduleScrollTriggerRefresh } from "@/lib/scroll-trigger-schedule";
 
 /**
  * Mount once near the top of the tree. Delegates Lenis lifecycle to the
@@ -14,7 +14,7 @@ export function SmoothScroll() {
 
     // Refresh ScrollTrigger after the next frame so any triggers registered
     // by sibling components on the same paint pass have correct positions.
-    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+    const raf = requestAnimationFrame(() => scheduleScrollTriggerRefresh());
 
     return () => {
       cancelAnimationFrame(raf);

@@ -23,8 +23,8 @@
     "textSoft": "#c8bdb0",
     "muted": "#131518",
     "mutedForeground": "#9d9287",
-    "accent": "#5a232a",
-    "oxblood": "#5a232a",
+    "accent": "#652a31",
+    "oxblood": "#652a31",
     "secondary": "#17181b",
     "surfaceWarm": "#1b1715",
     "border": "rgba(241, 234, 223, 0.1)",
@@ -40,7 +40,7 @@
     "sectionSpaceYDesktop": "116px"
   },
   "cursor": {
-    "activeDotColor": "#5c1a1f",
+    "activeDotColor": "#652a31",
     "hotspot": [11, 11]
   },
   "assets": {

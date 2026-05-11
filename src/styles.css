@@ -68,6 +68,14 @@
     scroll-behavior: auto;
   }
 
+  /* Homepage preload gate: no scroll under the overlay */
+  html.home-warm-pending {
+    overflow: hidden;
+  }
+  html.home-warm-pending body {
+    overflow: hidden;
+  }
+
   /* Lenis */
   html.lenis {
     height: auto;
@@ -249,7 +257,15 @@
     border-color: var(--ink-mid);
     background: color-mix(in srgb, var(--color-background) 94%, black 6%);
     box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(12px);
+    /* Backdrop blur is very expensive during scroll; solid mix above carries the look. */
+  }
+
+  /* Skip layout/paint for off-screen sections (Chrome); intrinsic height hint avoids scroll jump. */
+  @media (min-width: 768px) {
+    .cv-auto {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 720px;
+    }
   }
 
   .hero-wash {
@@ -522,7 +538,7 @@
     transition: width 360ms var(--ease-premium);
   }
   .work-image {
-    transition: transform 780ms var(--ease-premium), filter 320ms var(--ease-premium);
+    transition: transform 780ms var(--ease-premium);
   }
   /* Hover lift lives on `.work-card` (the outer <article>) — never on
      `.work-card-surface`, so the hover transition cannot collide with GSAP's
@@ -544,7 +560,6 @@
     }
     .work-card:hover .work-image {
       transform: scale(1.02);
-      filter: saturate(1.04) contrast(1.01);
     }
     .work-card:hover .work-title {
       text-decoration-color: var(--color-accent);
@@ -596,7 +611,6 @@
     will-change: transform;
     animation: marquee-scroll 130s linear infinite;
     opacity: 0.84;
-    filter: saturate(0.86) contrast(1.08);
   }
   .marquee-text {
     font-size: clamp(31px, 8vw, 52px);

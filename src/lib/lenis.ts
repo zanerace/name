@@ -1,6 +1,7 @@
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { scheduleScrollTriggerRefresh } from "@/lib/scroll-trigger-schedule";
 
 /**
  * Canonical Lenis lifecycle. All Lenis state lives here:
@@ -18,12 +19,14 @@ type LenisWindow = typeof window & { __lenis?: Lenis };
 let lenisInstance: Lenis | null = null;
 let tickerHandle: ((time: number) => void) | null = null;
 let registered = false;
+let scrollTriggerRafId = 0;
 
 export const lenisDefaultEasing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
 
 export function createLenisOptions(): NonNullable<ConstructorParameters<typeof Lenis>[0]> {
   return {
-    duration: 1.2,
+    /* Slightly snappier wheel smoothing = fewer interpolated frames per gesture (less main-thread work). */
+    duration: 0.95,
     easing: lenisDefaultEasing,
     orientation: "vertical",
     gestureOrientation: "vertical",
@@ -46,12 +49,20 @@ export function initLenis(): Lenis {
 
   if (!registered) {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.config({ force3D: true });
+    /* Avoid promoting every tween target to its own layer — big RAM win on Chrome during scroll. */
+    gsap.config({ force3D: false });
     registered = true;
   }
 
   const lenis = new Lenis(createLenisOptions());
-  lenis.on("scroll", ScrollTrigger.update);
+  /* Coalesce with rAF: Lenis can emit scroll more than once per frame; ScrollTrigger only needs one update per paint. */
+  lenis.on("scroll", () => {
+    if (scrollTriggerRafId) return;
+    scrollTriggerRafId = requestAnimationFrame(() => {
+      scrollTriggerRafId = 0;
+      ScrollTrigger.update();
+    });
+  });
 
   tickerHandle = (time) => {
     lenis.raf(time * 1000);
@@ -68,6 +79,10 @@ export function initLenis(): Lenis {
 }
 
 export function destroyLenis() {
+  if (scrollTriggerRafId) {
+    cancelAnimationFrame(scrollTriggerRafId);
+    scrollTriggerRafId = 0;
+  }
   if (tickerHandle) {
     gsap.ticker.remove(tickerHandle);
     tickerHandle = null;
@@ -79,7 +94,7 @@ export function destroyLenis() {
     lenisInstance.destroy();
     lenisInstance = null;
   }
-  ScrollTrigger.refresh();
+  scheduleScrollTriggerRefresh();
 }
 
 export function getLenisInstance(): Lenis | null {

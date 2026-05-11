@@ -35,7 +35,7 @@ export function About() {
       const tail = el.querySelector<HTMLElement>(".about-tail");
       const lines = (split?.lines ?? []) as HTMLElement[];
 
-      gsap.set(lines, { y: 18, opacity: 0, force3D: true });
+      gsap.set(lines, { y: 18, opacity: 0 });
 
       const clearWill = () => {
         [...headerEls, ...sideEls, ...lines, ...(tail ? [tail] : [])].forEach((node) => {
@@ -63,7 +63,6 @@ export function About() {
             duration: 0.7,
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             stagger: 0.06,
-            force3D: true,
           },
           "-=0.32",
         );
@@ -77,7 +76,6 @@ export function About() {
             duration: 0.7,
             stagger: 0.06,
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-            force3D: true,
           },
           "-=0.25",
         );
@@ -90,7 +88,6 @@ export function About() {
             opacity: 1,
             duration: 0.7,
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-            force3D: true,
           },
           "-=0.2",
         );
@@ -104,7 +101,6 @@ export function About() {
             duration: 0.7,
             stagger: 0.06,
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-            force3D: true,
           },
           "-=0.25",
         );
@@ -129,7 +125,7 @@ export function About() {
       <section
         ref={sectionRef}
         id="about"
-        className="pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
+        className="cv-auto pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
           <header className="section-header mb-10 md:mb-12">

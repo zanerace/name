@@ -5,23 +5,21 @@ import { getWorkProjectById } from "./work-data";
 
 const POSTER = "/reel/poster.png";
 
+/** Broad `type` values + H.264 first so Windows/Chrome reliably picks a playable source (strict AV1 types can leave the poster stuck). */
 const VIDEO_SOURCES: readonly { src: string; type: string }[] = [
-  // Prefer AV1 where supported.
-  { src: "/reel/reel.webm", type: 'video/webm; codecs="av01.0.08M.08"' },
-  { src: "/reel/motion-reel.webm", type: 'video/webm; codecs="av01.0.08M.08"' },
-  { src: "/reel/reel.mp4", type: 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"' },
-  { src: "/reel/motion-reel.mp4", type: 'video/mp4; codecs="av01.0.08M.08, mp4a.40.2"' },
+  { src: "/reel/reel-h264.mp4", type: "video/mp4" },
+  { src: "/reel/motion-reel-h264.mp4", type: "video/mp4" },
+  { src: "/reel/reel.mp4", type: "video/mp4" },
+  { src: "/reel/motion-reel.mp4", type: "video/mp4" },
+  { src: "/reel/reel.webm", type: "video/webm" },
+  { src: "/reel/motion-reel.webm", type: "video/webm" },
   { src: "/reel/poster.mp4", type: "video/mp4" },
-  // Fallback for devices/browsers without AV1 decode support.
-  { src: "/reel/reel-h264.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
-  { src: "/reel/motion-reel-h264.mp4", type: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"' },
-  // Last-resort legacy source.
   { src: "/reel/motion-reel.mov", type: "video/quicktime" },
 ];
 
 const GRADUAL_SANS_VIDEO_SOURCES: readonly { src: string; type: string }[] = [
-  { src: "/work/gradual-sans.mp4", type: "video/mp4" },
   { src: "/work/gradual-sans.mp4.mp4", type: "video/mp4" },
+  { src: "/work/gradual-sans.mp4", type: "video/mp4" },
 ];
 
 function ReelVideoTile({
@@ -37,25 +35,121 @@ function ReelVideoTile({
   sources: readonly { src: string; type: string }[];
   poster?: string;
 }) {
+  const stageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoFailed, setVideoFailed] = useState(false);
+  /** Inline preview stays muted (autoplay policy); fullscreen turns sound on, exit turns it off. */
+  const [muted, setMuted] = useState(true);
+  /** Avoid `preload="auto"` until the tile is near the viewport — major RAM savings while scrolling. */
+  const [mediaNear, setMediaNear] = useState(false);
+
+  useEffect(() => {
+    if (videoFailed) return;
+    const v = videoRef.current;
+    if (!v || !mediaNear) return;
+    v.load();
+  }, [mediaNear, videoFailed]);
+
+  useEffect(() => {
+    if (videoFailed) return;
+    const stage = stageRef.current;
+    const v = videoRef.current;
+    if (!stage || !v) return;
+
+    let playRaf = 0;
+    const schedulePlay = () => {
+      cancelAnimationFrame(playRaf);
+      playRaf = requestAnimationFrame(() => {
+        void v.play().catch(() => {});
+      });
+    };
+
+    const onReady = () => schedulePlay();
+    v.addEventListener("loadeddata", onReady);
+    v.addEventListener("canplay", onReady);
+
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e) return;
+        if (e.isIntersecting) setMediaNear(true);
+        const hit = e.isIntersecting && e.intersectionRatio >= 0.12;
+        if (hit) schedulePlay();
+        else if (!e.isIntersecting) v.pause();
+      },
+      { root: null, rootMargin: "200px 0px 200px 0px", threshold: [0, 0.12, 0.22] },
+    );
+    io.observe(stage);
+
+    return () => {
+      cancelAnimationFrame(playRaf);
+      io.disconnect();
+      v.removeEventListener("loadeddata", onReady);
+      v.removeEventListener("canplay", onReady);
+    };
+  }, [videoFailed, projectId, sources]);
+
+  useEffect(() => {
+    if (videoFailed) return;
+    const v = videoRef.current;
+    if (!v) return;
+
+    const isThisVideoFullscreen = () => {
+      const fs = document.fullscreenElement;
+      const wk = (document as Document & { webkitFullscreenElement?: Element | null })
+        .webkitFullscreenElement;
+      return fs === v || wk === v;
+    };
+
+    const syncMuteToFullscreen = () => {
+      if (isThisVideoFullscreen()) {
+        setMuted(false);
+        v.volume = 1;
+        void v.play().catch(() => {});
+      } else {
+        setMuted(true);
+      }
+    };
+
+    document.addEventListener("fullscreenchange", syncMuteToFullscreen);
+    document.addEventListener("webkitfullscreenchange", syncMuteToFullscreen);
+    /* iOS Safari: native fullscreen does not use Fullscreen API on `<video>`. */
+    const onWebkitEnd = () => {
+      setMuted(true);
+    };
+    v.addEventListener("webkitendfullscreen", onWebkitEnd);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", syncMuteToFullscreen);
+      document.removeEventListener("webkitfullscreenchange", syncMuteToFullscreen);
+      v.removeEventListener("webkitendfullscreen", onWebkitEnd);
+    };
+  }, [videoFailed]);
 
   const onVideoClick = (e: React.MouseEvent<HTMLVideoElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const v = videoRef.current;
     if (!v) return;
-    const el = v as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+    const el = v as HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+      webkitRequestFullscreen?: () => void;
+    };
     if (el.requestFullscreen) {
-      el.requestFullscreen().catch(() => {});
+      void el.requestFullscreen().catch(() => {});
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
     } else if (el.webkitEnterFullscreen) {
+      /* Same user gesture — unmute for native iOS fullscreen (no `fullscreenchange`). */
+      setMuted(false);
+      v.volume = 1;
       el.webkitEnterFullscreen();
+      void v.play().catch(() => {});
     }
   };
 
   return (
     <div className="reel-video reel-intro-reveal">
-      <div className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden">
+      <div ref={stageRef} className="reel-stage relative w-full aspect-video bg-foreground overflow-hidden">
         {videoFailed ? (
           <Link
             to="/work/$projectId"
@@ -78,10 +172,10 @@ function ReelVideoTile({
             className="reel-video-el absolute inset-0 w-full h-full object-cover"
             poster={poster}
             autoPlay
-            muted
+            muted={muted}
             loop
             playsInline
-            preload="metadata"
+            preload={mediaNear ? "metadata" : "none"}
             onClick={onVideoClick}
             onError={() => setVideoFailed(true)}
           >
@@ -149,7 +243,6 @@ export function MotionReel() {
             duration: 0.7,
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             stagger: 0.06,
-            force3D: true,
           },
           "-=0.34",
         );
@@ -163,7 +256,6 @@ export function MotionReel() {
             duration: 0.7,
             stagger: 0.12,
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-            force3D: true,
           },
           "-=0.28",
         );
@@ -184,7 +276,7 @@ export function MotionReel() {
       <section
         ref={sectionRef}
         id="motion"
-        className="section-dark pt-[var(--section-space-y-mobile)] md:pt-[128px] pb-[var(--section-space-y-mobile)] md:pb-[122px] w-full max-w-full overflow-x-hidden"
+        className="section-dark cv-auto pt-[var(--section-space-y-mobile)] md:pt-[128px] pb-[var(--section-space-y-mobile)] md:pb-[122px] w-full max-w-full overflow-x-hidden"
       >
         <div className="mx-auto max-w-[1440px] w-full px-6 md:px-12 box-border min-w-0">
           <header className="section-header flex items-start justify-between mb-10 md:mb-14">

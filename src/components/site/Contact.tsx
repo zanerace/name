@@ -62,57 +62,57 @@ export function Contact() {
     <section
       ref={root}
       id="contact"
-      className="py-[var(--section-space-y-mobile)] md:py-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
+      className="cv-auto py-[var(--section-space-y-mobile)] md:py-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
     >
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
         <div aria-hidden className="rule-draw section-rule mb-14 md:mb-20" />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-x-0 md:gap-x-10 gap-y-10 md:gap-y-14 min-w-0">
           <header className="section-header md:col-span-5 min-w-0">
-            <h2 className="gsap-fade-up font-display h-section">
+            <p className="gsap-fade-up section-kicker">§ 04</p>
+            <h2 className="gsap-fade-up font-display text-[clamp(48px,6vw,88px)] leading-[0.95] tracking-[-0.025em]">
               Currently taking on <span className="font-serif-i text-accent">new work.</span>
             </h2>
           </header>
 
-          <div className="md:col-start-7 md:col-span-6 min-w-0 md:border-l md:border-[color:var(--border)] md:pl-10 lg:pl-12">
+          <div className="md:col-start-7 md:col-span-6 min-w-0 md:border-l md:border-[color:var(--border)] md:pl-10 lg:pl-12 md:self-start">
             <dl className="space-y-8">
               <div className="contact-detail gsap-fade-up-sm">
-                <dt className="meta-inline mb-3">Email</dt>
+                <dt className="font-ui text-[9px] uppercase text-muted-foreground mb-3">Email</dt>
                 <dd className="min-w-0">
                   <a
                     href="mailto:info@racekipping.com"
-                    className="font-display text-[clamp(30px,8.6vw,35px)] md:text-[40px] leading-[1.05] link-underline break-all md:break-normal transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
+                    className="font-display text-[18px] leading-[1.35] link-underline break-all md:break-normal transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                   >
                     info@racekipping.com
                   </a>
                 </dd>
               </div>
               <div className="contact-detail gsap-fade-up-sm">
-                <dt className="meta-inline mb-3">Phone</dt>
+                <dt className="font-ui text-[9px] uppercase text-muted-foreground mb-3">Phone</dt>
                 <dd className="min-w-0">
                   <a
                     href="tel:+16187998495"
-                    className="font-display text-[clamp(30px,8.4vw,35px)] md:text-[40px] leading-[1.05] link-underline break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
+                    className="font-display text-[18px] leading-[1.35] link-underline break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
                   >
                     +1 (618) 799 8495
                   </a>
                 </dd>
               </div>
               <div className="contact-detail gsap-fade-up-sm">
-                <dt className="meta-inline mb-3">Elsewhere</dt>
-                <dd className="flex flex-wrap gap-x-5 md:gap-x-8 gap-y-3 min-w-0">
-                  {links.map((l) => (
-                    <a
-                      key={l.label}
-                      href={l.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-display text-[clamp(24px,7vw,29px)] md:text-[31px] leading-[1.1] link-underline inline-flex items-center gap-2 break-words transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
-                    >
-                      {l.label}
-                      <span aria-hidden="true" className="text-accent">
-                        ↗
-                      </span>
-                    </a>
+                <dt className="font-ui text-[9px] uppercase text-muted-foreground mb-3">Elsewhere</dt>
+                <dd className="flex flex-wrap items-center gap-y-2 min-w-0">
+                  {links.map((l, i) => (
+                    <span key={l.label} className="inline-flex items-center">
+                      {i > 0 && <span className="mx-2 text-muted-foreground">/</span>}
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-display text-[18px] leading-[1.35] transition-colors duration-200 ease-out hover:text-accent focus-visible:text-accent"
+                      >
+                        {l.label}
+                      </a>
+                    </span>
                   ))}
                 </dd>
               </div>

@@ -1,10 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
 import { workProjects } from "./work-data";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function Work() {
   const root = useRef<HTMLElement>(null);
@@ -12,7 +9,11 @@ export function Work() {
 
   useLayoutEffect(() => {
     registerMotion();
-    if (prefersReducedMotion()) return;
+    if (prefersReducedMotion()) {
+      gsap.set(cardsRef.current.filter(Boolean), { opacity: 1, y: 0 });
+      return;
+    }
+
     const el = root.current;
     if (!el) return;
 
@@ -36,100 +37,52 @@ export function Work() {
             duration: 0.7,
             ease: "cubic-bezier(0.22, 1, 0.36, 1)",
             stagger: 0.06,
-            force3D: true,
             onComplete: () =>
               headerEls.forEach((node) => {
                 node.style.willChange = "auto";
               }),
           });
       }
-    }, el);
 
-    return () => ctx.revert();
-  }, []);
-
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) {
-      gsap.set(cardsRef.current, { opacity: 1, y: 0 });
-      return;
-    }
-
-    const ctx = gsap.context(() => {
       const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
       if (!cards.length) return;
 
-      gsap.set(cards, { opacity: 0, y: 24, force3D: true });
+      gsap.set(cards, { opacity: 0, y: 24 });
       cards.forEach((card) => {
         card.style.willChange = "opacity, transform";
       });
 
-      const seen = new WeakSet<HTMLDivElement>();
-      const queue: HTMLDivElement[] = [];
-      let isRevealing = false;
-
-      const runNext = () => {
-        const next = queue.shift();
-        if (!next) {
-          isRevealing = false;
-          return;
-        }
-        isRevealing = true;
-        gsap.delayedCall(0.08, runNext);
-        gsap.to(next, {
+      const grid = el.querySelector<HTMLElement>(".work-grid");
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: grid ?? el,
+            start: "top 88%",
+            once: true,
+          },
+        })
+        .to(cards, {
           opacity: 1,
           y: 0,
           duration: 0.7,
+          stagger: 0.1,
           ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-          force3D: true,
-          overwrite: true,
           onComplete: () => {
-            next.style.willChange = "auto";
+            cards.forEach((card) => {
+              card.style.willChange = "auto";
+            });
           },
         });
-      };
+    }, el);
 
-      const enqueueReveal = (card: HTMLDivElement) => {
-        if (seen.has(card)) return;
-        seen.add(card);
-        queue.push(card);
-        if (!isRevealing) runNext();
-      };
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const card = entry.target as HTMLDivElement;
-            enqueueReveal(card);
-            observer.unobserve(card);
-          });
-        },
-        {
-          root: null,
-          threshold: 0.08,
-          rootMargin: "0px 0px -10% 0px",
-        },
-      );
-
-      cards.forEach((card) => {
-        observer.observe(card);
-      });
-
-      return () => {
-        observer.disconnect();
-      };
-    });
-
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
       ref={root}
       id="work"
-      className="work-wash pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
+      className="cv-auto work-wash pt-[var(--section-space-y-mobile)] md:pt-[var(--section-space-y-desktop)] pb-[var(--section-space-y-mobile)] md:pb-[var(--section-space-y-desktop)] w-full max-w-full overflow-x-hidden"
     >
       <div className="mx-auto max-w-[1440px] w-full max-w-full px-6 md:px-12 box-border">
         <header className="section-header flex items-start justify-between mb-12 md:mb-20">
@@ -150,8 +103,8 @@ export function Work() {
               className={`work-card min-w-0 ${index === 0 ? "lg:col-span-2" : ""}`}
             >
               <div
-                ref={(el) => {
-                  if (el) cardsRef.current[index] = el;
+                ref={(node) => {
+                  if (node) cardsRef.current[index] = node;
                 }}
                 className="work-card-surface"
               >

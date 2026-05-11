@@ -15,7 +15,7 @@ export function BreatherBand() {
       const sub = el.querySelector<HTMLElement>("[data-breather-sub]");
       if (!head || !sub) return;
 
-      gsap.set([head, sub], { opacity: 0, y: 16, force3D: true });
+      gsap.set([head, sub], { opacity: 0, y: 16 });
 
       gsap
         .timeline({

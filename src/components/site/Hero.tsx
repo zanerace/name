@@ -20,54 +20,73 @@ export function Hero() {
     const bio = bioRef.current;
     if (!headline || !sub || !bio) return;
 
-    const lines = headline.querySelectorAll<HTMLElement>(".hero-line");
-    const headlineSplit = new SplitType(Array.from(lines), { types: "chars" });
-    const bioSplit = new SplitType(bio, { types: "lines" });
+    let cancelled = false;
+    let headlineSplit: InstanceType<typeof SplitType> | null = null;
+    let bioSplit: InstanceType<typeof SplitType> | null = null;
+    let tl: gsap.core.Timeline | null = null;
 
-    const chars = headlineSplit.chars ?? [];
-    const bioLines = bioSplit.lines ?? [];
+    const schedule =
+      typeof window !== "undefined" && "requestIdleCallback" in window
+        ? window.requestIdleCallback.bind(window)
+        : (cb: () => void) => window.setTimeout(cb, 1);
+    const cancelSchedule =
+      typeof window !== "undefined" && "cancelIdleCallback" in window
+        ? window.cancelIdleCallback.bind(window)
+        : (id: number) => clearTimeout(id);
 
-    gsap.set(chars, { y: 32, opacity: 0, force3D: true });
-    gsap.set(sub, { y: 20, opacity: 0, force3D: true });
-    gsap.set(bioLines, { y: 18, opacity: 0, force3D: true });
+    const idleId = schedule(() => {
+      if (cancelled) return;
 
-    const clearWillChange = () => {
-      [...chars, sub, ...bioLines].forEach((node) => {
-        if (node instanceof HTMLElement) node.style.willChange = "auto";
-      });
-    };
+      const lines = headline.querySelectorAll<HTMLElement>(".hero-line");
+      /* Words (not chars) = far fewer DOM nodes + less layout work during scroll. */
+      headlineSplit = new SplitType(Array.from(lines), { types: "words" });
+      bioSplit = new SplitType(bio, { types: "lines" });
 
-    const tl = gsap.timeline({ onComplete: clearWillChange });
-    tl.to(chars, {
-      y: 0,
-      opacity: 1,
-      duration: 0.7,
-      stagger: 0.04,
-      ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-      force3D: true,
-    });
-    tl.to(
-      sub,
-      { y: 0, opacity: 1, duration: 0.7, ease: "cubic-bezier(0.22, 1, 0.36, 1)", force3D: true },
-      0.8,
-    );
-    tl.to(
-      bioLines,
-      {
+      const words = headlineSplit.words ?? [];
+      const bioLines = bioSplit.lines ?? [];
+
+      gsap.set(words, { y: 22, opacity: 0 });
+      gsap.set(sub, { y: 20, opacity: 0 });
+      gsap.set(bioLines, { y: 18, opacity: 0 });
+
+      const clearWillChange = () => {
+        [...words, sub, ...bioLines].forEach((node) => {
+          if (node instanceof HTMLElement) node.style.willChange = "auto";
+        });
+      };
+
+      tl = gsap.timeline({ onComplete: clearWillChange });
+      tl.to(words, {
         y: 0,
         opacity: 1,
-        duration: 0.7,
-        stagger: 0.08,
+        duration: 0.65,
+        stagger: 0.07,
         ease: "cubic-bezier(0.22, 1, 0.36, 1)",
-        force3D: true,
-      },
-      1.2,
-    );
+      });
+      tl.to(
+        sub,
+        { y: 0, opacity: 1, duration: 0.7, ease: "cubic-bezier(0.22, 1, 0.36, 1)" },
+        0.72,
+      );
+      tl.to(
+        bioLines,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+        },
+        1.05,
+      );
+    });
 
     return () => {
-      tl.kill();
-      bioSplit.revert();
-      headlineSplit.revert();
+      cancelled = true;
+      cancelSchedule(idleId as number);
+      tl?.kill();
+      headlineSplit?.revert();
+      bioSplit?.revert();
     };
   }, []);
 
@@ -132,6 +151,8 @@ export function Hero() {
                     width={1280}
                     height={800}
                     loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
                     className="block w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
                   />
                 </div>

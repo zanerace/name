@@ -85,18 +85,13 @@ function WorkProjectPage() {
       gsap.set([title, hero, text].filter(Boolean) as HTMLElement[], {
         opacity: 0,
         y: 18,
-        force3D: true,
       });
 
       gsap
         .timeline()
-        .to(title, { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", force3D: true })
-        .to(hero, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", force3D: true }, "-=0.35")
-        .to(
-          text,
-          { opacity: 1, y: 0, duration: 0.75, ease: "power2.out", force3D: true },
-          "-=0.45",
-        );
+        .to(title, { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" })
+        .to(hero, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.35")
+        .to(text, { opacity: 1, y: 0, duration: 0.75, ease: "power2.out" }, "-=0.45");
     }, scope);
 
     return () => ctx.revert();
