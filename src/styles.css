@@ -485,6 +485,9 @@
     text-decoration-color: currentColor;
     transition: text-decoration-color 260ms var(--ease-premium), color 260ms var(--ease-premium), opacity 260ms var(--ease-premium);
   }
+  .link-underline:focus-visible {
+    text-decoration-color: var(--color-accent);
+  }
 
   a:focus-visible,
   button:focus-visible,

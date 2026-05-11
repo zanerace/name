@@ -57,6 +57,7 @@ function resolveActiveFromLocation(): string {
   const isKnownSection = items.some((item) => item.href === hash);
   if (isKnownSection) return hash;
   if (window.location.pathname.startsWith("/motion")) return "/motion";
+  if (window.location.pathname.startsWith("/work/")) return "#work";
   return window.location.pathname === "/" ? "#work" : "";
 }
 
@@ -210,6 +211,8 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const closingRef = useRef(false);
+  const location = useRouterState({ select: (s) => s.location });
+  const activeHref = resolveActiveFromLocation();
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -279,7 +282,7 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
       aria-label="Site navigation"
       className="fixed inset-0 z-[90] bg-background flex flex-col overflow-x-hidden"
     >
-      <div className="flex items-center justify-between py-4 px-6 box-border">
+      <div className="flex items-center justify-between py-4 px-5 sm:px-6 box-border">
         <span className="font-sans text-[12px] uppercase tracking-[0.18em] font-medium text-foreground">
           RK
         </span>
@@ -304,14 +307,17 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
           </svg>
         </button>
       </div>
-      <div className="flex-1 flex flex-col items-center justify-center gap-6 md:gap-8 px-6 pb-8 overflow-x-hidden overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-center gap-6 md:gap-8 px-5 sm:px-6 pb-8 overflow-x-hidden overflow-y-auto">
         {items.map((it) => (
           <div key={it.label} className="flex flex-col items-center gap-3">
             {it.to ? (
               <Link
                 to={it.to}
                 onClick={() => close()}
-                className="font-display text-foreground link-underline text-center max-w-full"
+                aria-current={activeHref === it.to ? "page" : undefined}
+                className={`font-display link-underline text-center max-w-full ${
+                  activeHref === it.to ? "text-foreground nav-active" : "text-foreground"
+                }`}
                 style={{ fontSize: "clamp(32px, 8.5vw, 56px)" }}
               >
                 {it.label}
@@ -324,7 +330,10 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
                   const id = (it.href as string).slice(1);
                   close(() => scrollToHash(id));
                 }}
-                className="font-display text-foreground link-underline text-center max-w-full"
+                aria-current={activeHref === it.href ? "page" : undefined}
+                className={`font-display link-underline text-center max-w-full ${
+                  activeHref === it.href ? "text-foreground nav-active" : "text-foreground"
+                }`}
                 style={{ fontSize: "clamp(32px, 8.5vw, 56px)" }}
               >
                 {it.label}
@@ -338,7 +347,12 @@ function NavOverlay({ onClose }: { onClose: () => void }) {
                     to="/work/$projectId"
                     params={{ projectId: project.id }}
                     onClick={() => close()}
-                    className="font-display text-[18px] text-muted-foreground link-underline"
+                    aria-current={location.pathname === `/work/${project.id}` ? "page" : undefined}
+                    className={`font-display text-[18px] link-underline ${
+                      location.pathname === `/work/${project.id}`
+                        ? "text-foreground nav-active"
+                        : "text-muted-foreground"
+                    }`}
                   >
                     {project.title}
                   </Link>

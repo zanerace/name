@@ -42,7 +42,7 @@ function MotionCatalogPage() {
               <select
                 value={sortMode}
                 onChange={(e) => setSortMode(e.target.value as SortMode)}
-                className="meta-chip bg-background text-foreground font-ui text-[10px] uppercase"
+                className="meta-chip bg-background text-foreground font-ui text-[10px] uppercase min-h-[38px]"
                 aria-label="Sort videos"
               >
                 <option value="newest">Newest to oldest</option>
@@ -57,7 +57,7 @@ function MotionCatalogPage() {
                 <Link
                   to="/motion/$videoSlug"
                   params={{ videoSlug: video.slug }}
-                  className="block group"
+                  className="block group rounded-[2px] transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:-translate-y-[2px]"
                   aria-label={`Open ${video.title}`}
                 >
                   <div className="aspect-video overflow-hidden border border-[color:var(--border)] bg-foreground">
