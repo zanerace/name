@@ -288,11 +288,12 @@
     /* Backdrop blur is very expensive during scroll; solid mix above carries the look. */
   }
 
-  /* Skip layout/paint for off-screen sections (Chrome); intrinsic height hint avoids scroll jump. */
+  /* Skip layout/paint for off-screen sections (Chrome); intrinsic height avoids scroll jump.
+     900px is a closer average across Work, About, Contact, and Motion sections. */
   @media (min-width: 768px) {
     .cv-auto {
       content-visibility: auto;
-      contain-intrinsic-size: 1px 720px;
+      contain-intrinsic-size: 1px 900px;
     }
   }
 
@@ -446,7 +447,8 @@
   /* GSAP entry primitives — initial state. Distance is intentionally small (20px)
      so the entrance is felt, not noticed, and stays cheap on lower-end devices. */
   .gsap-fade-up,
-  .gsap-fade-up-sm {
+  .gsap-fade-up-sm,
+  .reel-intro-reveal {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
@@ -458,6 +460,12 @@
   .js-scroll-reveal .gsap-fade-up-sm {
     opacity: 0;
     transform: translate3d(0, 16px, 0);
+    will-change: opacity, transform;
+  }
+  /* Video tiles in MotionReel — hidden until the scroll-driven entrance fires. */
+  .js-scroll-reveal .reel-intro-reveal {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
     will-change: opacity, transform;
   }
 
@@ -575,12 +583,17 @@
   }
   .work-image {
     transition: transform 780ms var(--ease-premium);
+    /* Pre-promote to compositor so the GPU layer exists before the user hovers —
+       eliminates the first-frame jitter when the scale transition begins. */
+    will-change: transform;
   }
   /* Hover lift lives on `.work-card` (the outer <article>) — never on
      `.work-card-surface`, so the hover transition cannot collide with GSAP's
      transform on the surface during entrance. */
   @media (hover: hover) and (pointer: fine) {
     .work-card {
+      /* Pre-promote so the lift starts composited from frame 0. */
+      will-change: transform;
       transition: transform 240ms var(--ease-premium);
     }
     .work-card:hover {
@@ -645,6 +658,9 @@
     display: inline-flex;
     width: max-content;
     will-change: transform;
+    /* Force a dedicated compositor layer in Safari and older Chromium builds. */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     animation: marquee-scroll 130s linear infinite;
     opacity: 0.84;
   }
@@ -761,6 +777,170 @@
   .lightbox-title {
     user-select: none;
   }
+
+  /* ── Section kicker — small ordinal label above section headings ── */
+  .section-kicker {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+  }
+
+  /* ── Contact form ── */
+  .contact-form-panel {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  .js-scroll-reveal .contact-form-panel {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    will-change: opacity, transform;
+  }
+  .contact-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .contact-label {
+    font-family: var(--font-sans);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  .contact-input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-strong);
+    color: var(--foreground);
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.5;
+    padding: 0.62rem 0;
+    outline: none;
+    transition: border-color 220ms var(--ease-premium);
+    caret-color: var(--accent);
+  }
+  @media (min-width: 768px) {
+    .contact-input {
+      font-size: 18px;
+    }
+  }
+  .contact-input::placeholder {
+    color: var(--muted-foreground);
+    opacity: 0.55;
+  }
+  .contact-input:focus {
+    border-color: var(--foreground);
+  }
+  .contact-input.contact-input-error {
+    border-color: #8b3a3a;
+  }
+  .contact-textarea {
+    resize: none;
+    line-height: 1.65;
+  }
+  .contact-error-msg {
+    font-family: var(--font-sans);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8b3a3a;
+    margin-top: 0.25rem;
+  }
+  .contact-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.74rem 1.6rem;
+    border: 1px solid var(--ink-mid);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: transparent;
+    transition: color 220ms var(--ease-premium), border-color 220ms var(--ease-premium),
+      background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium),
+      box-shadow 220ms var(--ease-premium), opacity 220ms ease;
+    cursor: var(--cursor-active), pointer;
+  }
+  .contact-submit:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: rgba(90, 35, 42, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+  }
+  .contact-submit:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .contact-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ── Loading gate ── */
+  .gate-name {
+    font-size: clamp(28px, 5vw, 52px);
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+    opacity: 0.9;
+  }
+  .gate-track {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Work — "View case study" link ── */
+  .work-case-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    transition: color 220ms var(--ease-premium), gap 220ms var(--ease-premium);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .work-case-link:hover {
+      color: var(--color-accent);
+      gap: 0.65rem;
+    }
+  }
+}
+
+/* ── View Transitions API — page-level crossfade (Chrome 111+, Safari 18+).
+   Degrades to instant navigation on Firefox and older browsers — no breakage. ── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes vt-out {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to   { opacity: 0; transform: translateY(-10px) scale(0.992); }
+  }
+  @keyframes vt-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  ::view-transition-old(root) {
+    animation: vt-out 260ms var(--ease-premium) both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-in 380ms var(--ease-premium) both;
+    animation-delay: 40ms;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }
 
 /* Reduced motion — kill smooth scroll, marquee, all entry animations. */
@@ -784,6 +964,8 @@
   .reveal,
   .gsap-fade-up,
   .gsap-fade-up-sm,
+  .reel-intro-reveal,
+  .contact-form-panel,
   .work-card-surface {
     opacity: 1 !important;
     transform: none !important;

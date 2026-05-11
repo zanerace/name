@@ -1,11 +1,14 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
 import { workProjects } from "./work-data";
+import { Lightbox } from "./Lightbox";
+import type { WorkProject } from "./work-data";
 
 export function Work() {
   const root = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
+  const [lightboxProject, setLightboxProject] = useState<WorkProject | null>(null);
 
   useLayoutEffect(() => {
     registerMotion();
@@ -108,10 +111,10 @@ export function Work() {
                 }}
                 className="work-card-surface"
               >
-                <Link
-                  to="/work/$projectId"
-                  params={{ projectId: p.id }}
-                  aria-label={`Open ${p.title} project page`}
+                <button
+                  type="button"
+                  onClick={() => setLightboxProject(p)}
+                  aria-label={`View ${p.title} image fullscreen`}
                   className="work-image-link block w-full p-0 m-0 border-0 bg-transparent text-left max-w-full"
                 >
                   <div className="overflow-hidden max-w-full aspect-[16/10] md:aspect-[16/9.2]">
@@ -121,6 +124,7 @@ export function Work() {
                       width={1280}
                       height={800}
                       loading="lazy"
+                      decoding="async"
                       className="work-image block w-full h-full object-cover"
                       style={{
                         objectPosition:
@@ -132,7 +136,7 @@ export function Work() {
                       }}
                     />
                   </div>
-                </Link>
+                </button>
 
                 <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
                   <span className="font-ui text-[12px] md:text-[13px] uppercase tracking-[0.18em] text-accent">
@@ -166,11 +170,30 @@ export function Work() {
                 <p className="section-body text-[16px] md:text-[19px] mt-3 max-w-[52ch] text-[color:var(--text-soft)]">
                   {p.desc}
                 </p>
+                <Link
+                  to="/work/$projectId"
+                  params={{ projectId: p.id }}
+                  className="work-case-link font-ui text-[11px] uppercase tracking-[0.18em] mt-5 inline-flex items-center gap-2 text-[color:var(--muted-foreground)] hover:text-accent transition-colors duration-200"
+                >
+                  View case study
+                  <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
+                    <path d="M7 1L11 5M11 5L7 9M11 5H1" stroke="currentColor" strokeWidth="1" strokeLinecap="square" strokeLinejoin="miter"/>
+                  </svg>
+                </Link>
               </div>
             </article>
           ))}
         </div>
       </div>
+
+      {lightboxProject && (
+        <Lightbox
+          images={[{ src: lightboxProject.coverImage, alt: lightboxProject.alt }]}
+          startIndex={0}
+          title={lightboxProject.title}
+          onClose={() => setLightboxProject(null)}
+        />
+      )}
     </section>
   );
 }

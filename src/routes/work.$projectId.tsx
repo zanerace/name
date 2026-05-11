@@ -223,32 +223,65 @@ function WorkProjectPage() {
             </div>
           </section>
 
-          <section className="grid grid-cols-12 gap-6 md:gap-8 mb-14">
-            <div className="col-span-12 md:col-span-7 frame-panel p-0 overflow-hidden border border-border">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={project.coverImage}
-                  alt={project.alt}
-                  className="block w-full h-full object-cover"
-                  style={{ objectPosition: "left center" }}
-                  width={1400}
-                  height={1050}
-                />
+          {project.id === "lunacast" ? (
+            <section className="mb-14">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div className="frame-panel p-0 overflow-hidden border border-border">
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img
+                      src="/work/lunacast-weather-1.png"
+                      alt="LunaCast weather interface visual one"
+                      className="block w-full h-full object-cover"
+                      width={1600}
+                      height={1000}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <div className="frame-panel p-0 overflow-hidden border border-border">
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img
+                      src="/work/lunacast-weather-2.png"
+                      alt="LunaCast weather interface visual two"
+                      className="block w-full h-full object-cover"
+                      width={1600}
+                      height={1000}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="col-span-12 md:col-span-5 frame-panel p-0 overflow-hidden border border-border">
-              <div className="aspect-[16/9] overflow-hidden">
-                <img
-                  src={project.coverImage}
-                  alt={project.alt}
-                  className="block w-full h-full object-cover"
-                  style={{ objectPosition: "right top" }}
-                  width={1200}
-                  height={675}
-                />
+            </section>
+          ) : (
+            <section className="grid grid-cols-12 gap-6 md:gap-8 mb-14">
+              <div className="col-span-12 md:col-span-7 frame-panel p-0 overflow-hidden border border-border">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={project.coverImage}
+                    alt={project.alt}
+                    className="block w-full h-full object-cover"
+                    style={{ objectPosition: "left center" }}
+                    width={1400}
+                    height={1050}
+                    loading="lazy"
+                  />
+                </div>
               </div>
-            </div>
-          </section>
+              <div className="col-span-12 md:col-span-5 frame-panel p-0 overflow-hidden border border-border">
+                <div className="aspect-[16/9] overflow-hidden">
+                  <img
+                    src={project.coverImage}
+                    alt={project.alt}
+                    className="block w-full h-full object-cover"
+                    style={{ objectPosition: "right top" }}
+                    width={1200}
+                    height={675}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </section>
+          )}
         </article>
       </main>
       <Footer />

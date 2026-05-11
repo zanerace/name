@@ -25,13 +25,14 @@ export const lenisDefaultEasing = (t: number) => Math.min(1, 1.001 - Math.pow(2,
 
 export function createLenisOptions(): NonNullable<ConstructorParameters<typeof Lenis>[0]> {
   return {
-    /* Slightly snappier wheel smoothing = fewer interpolated frames per gesture (less main-thread work). */
-    duration: 0.95,
+    /* Premium decel: 1.1 feels cinematic without being sluggish (Netflix/HBO range). */
+    duration: 1.1,
     easing: lenisDefaultEasing,
     orientation: "vertical",
     gestureOrientation: "vertical",
     smoothWheel: true,
-    wheelMultiplier: 1,
+    /* Slightly less aggressive wheel = more controlled, intentional feel. */
+    wheelMultiplier: 0.92,
     touchMultiplier: 2,
     syncTouch: false,
     infinite: false,

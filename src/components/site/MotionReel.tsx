@@ -203,6 +203,12 @@ export function MotionReel() {
       );
       const videos = Array.from(el.querySelectorAll<HTMLElement>(".reel-intro-reveal"));
 
+      /* Set initial hidden state — CSS does this via .js-scroll-reveal but GSAP
+         also needs it here so the timeline actually animates from hidden → visible. */
+      if (videos.length) {
+        gsap.set(videos, { y: 24, opacity: 0, willChange: "opacity, transform" });
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionEl,

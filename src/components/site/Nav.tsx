@@ -82,8 +82,15 @@ export function Nav() {
   const location = useRouterState({ select: (s) => s.location });
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    let scrolledState = window.scrollY > 24;
+    setScrolled(scrolledState);
+    const onScroll = () => {
+      const next = window.scrollY > 24;
+      if (next !== scrolledState) {
+        scrolledState = next;
+        setScrolled(next);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

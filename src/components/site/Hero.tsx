@@ -2,6 +2,7 @@ import { useEffect, useRef, type MouseEvent } from "react";
 import SplitType from "split-type";
 import { Link } from "@tanstack/react-router";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
+import { getLenisInstance } from "@/lib/lenis";
 import { getWorkProjectById } from "./work-data";
 
 export function Hero() {
@@ -92,9 +93,14 @@ export function Hero() {
 
   const scrollToSection = (e: MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-    const section = document.getElementById(id);
-    if (!section) return;
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    const el = document.getElementById(id);
+    if (!el) return;
+    const lenis = getLenisInstance();
+    if (lenis) {
+      lenis.scrollTo(el, { duration: 1.5, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    } else {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   return (

@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { ready, progress, showGate } = useHomeScrollWarmup();
+  const { ready, progress, showGate, dismissGate } = useHomeScrollWarmup();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -54,9 +54,9 @@ function Index() {
   return (
     <main
       className="min-h-screen w-full max-w-full overflow-x-hidden"
-      inert={showGate ? true : undefined}
+      inert={!ready ? true : undefined}
     >
-      {showGate ? <HomeReadyGate progress={progress} /> : null}
+      {showGate ? <HomeReadyGate progress={progress} onExited={dismissGate} /> : null}
       <Nav />
       <Hero />
       <Marquee />

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SplitType from "split-type";
 import { gsap, registerMotion, prefersReducedMotion } from "@/lib/motion";
 
@@ -15,6 +15,7 @@ const capabilities = [
 export function About() {
   const root = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const [portraitFailed, setPortraitFailed] = useState(false);
 
   useEffect(() => {
     registerMotion();
@@ -149,15 +150,31 @@ export function About() {
 
             <aside className="about-side lg:col-span-5 about-panel min-w-0 lg:order-2">
               <div className="gsap-fade-up-sm">
-                <div className="about-portrait-frame overflow-hidden border aspect-[4/5] md:aspect-[5/6] max-w-[460px] md:ml-auto">
-                  <img
-                    src="/about-portrait.png"
-                    alt="Portrait of Race Kipping"
-                    width={820}
-                    height={1024}
-                    loading="lazy"
-                    className="block w-full h-full object-cover object-[center_22%]"
-                  />
+                <div className="about-portrait-frame overflow-hidden border aspect-[4/5] md:aspect-[5/6] max-w-[460px] md:ml-auto relative">
+                  {portraitFailed ? (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[color:var(--surface-warm)]">
+                      <span
+                        className="font-display text-[80px] md:text-[96px] leading-none select-none"
+                        style={{ color: "var(--ink-hard)" }}
+                      >
+                        RK
+                      </span>
+                      <span className="font-ui text-[9px] uppercase tracking-[0.22em] text-[color:var(--muted-foreground)]">
+                        Portrait forthcoming
+                      </span>
+                    </div>
+                  ) : (
+                    <img
+                      src="/about-portrait.png"
+                      alt="Portrait of Race Kipping"
+                      width={820}
+                      height={1024}
+                      loading="lazy"
+                      decoding="async"
+                      className="block w-full h-full object-cover object-[center_22%]"
+                      onError={() => setPortraitFailed(true)}
+                    />
+                  )}
                 </div>
                 <p className="meta-inline mt-4 md:text-right text-[color:var(--text-soft)]">
                   Race Kipping, 2026

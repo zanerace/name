@@ -11,6 +11,7 @@ import {
 import appCss from "../styles.css?url";
 import { JsScrollRevealClass } from "@/components/site/JsScrollRevealClass";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { NavigationProgress } from "@/components/site/NavigationProgress";
 
 function NotFoundComponent() {
   return (
@@ -96,6 +97,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: appCss,
@@ -133,6 +136,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <JsScrollRevealClass />
       <SmoothScroll />
+      <NavigationProgress />
       <Outlet />
     </QueryClientProvider>
   );

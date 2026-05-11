@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { warmHomeScrollAssets } from "@/lib/home-readiness";
 
-/** Minimum time the loading gate stays up so navigation feels intentional (~1–2s). */
-const MIN_GATE_MS = 1400;
-/** Safety cap if decode or fonts hang on slow networks. */
+/** Minimum time the loading gate stays up so it feels intentional. */
+const MIN_GATE_MS = 800;
+/** Safety cap if decode hangs on a slow network. */
 const MAX_GATE_MS = 12000;
 
 export type HomeWarmupState = {
   ready: boolean;
   progress: number;
-  /** Full-screen preload overlay; true until warmup + minimum dwell complete. */
   showGate: boolean;
+  dismissGate: () => void;
 };
 
-/**
- * Homepage-only: full-screen gate on every visit while fonts + images decode and
- * ScrollTrigger refreshes in the background. Dismisses after `MIN_GATE_MS` and when
- * `warmHomeScrollAssets` has finished (whichever is later), or `MAX_GATE_MS` at latest.
- */
 export function useHomeScrollWarmup(): HomeWarmupState {
   const [ready, setReady] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -58,7 +54,6 @@ export function useHomeScrollWarmup(): HomeWarmupState {
         });
     };
 
-    // One frame so the gate paints before decode / font work runs.
     const raf = requestAnimationFrame(run);
 
     return () => {
@@ -69,5 +64,7 @@ export function useHomeScrollWarmup(): HomeWarmupState {
     };
   }, []);
 
-  return { ready, progress, showGate: !ready };
+  const dismissGate = useCallback(() => setDismissed(true), []);
+
+  return { ready, progress, showGate: !dismissed, dismissGate };
 }
