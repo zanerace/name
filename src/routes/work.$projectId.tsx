@@ -252,6 +252,21 @@ function WorkProjectPage() {
                 </div>
               </div>
             </section>
+          ) : project.id === "rwanda" ? (
+            <section className="mb-14">
+              <div className="frame-panel p-0 overflow-hidden border border-border">
+                <div className="aspect-[16/9] overflow-hidden">
+                  <img
+                    src="/work/rwanda-mug.png"
+                    alt="Rwanda branded mug mockup"
+                    className="block w-full h-full object-cover"
+                    width={1600}
+                    height={900}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </section>
           ) : (
             <section className="grid grid-cols-12 gap-6 md:gap-8 mb-14">
               <div className="col-span-12 md:col-span-7 frame-panel p-0 overflow-hidden border border-border">

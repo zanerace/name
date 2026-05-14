@@ -53,8 +53,8 @@ export const workProjects: WorkProject[] = [
     desc: "Visual identity rooted in Imigongo geometry for a hospitality brand.",
     tag: "Identity",
     year: "2024",
-    coverImage: "/work/04.jpg",
-    alt: "Rwanda brand stationery",
+    coverImage: "/work/rwanda-cover.png",
+    alt: "Rwanda identity mark on textured paper",
     body: "The brand system translates Imigongo-inspired structure into contemporary hospitality touchpoints, from stationery to environmental graphics, with careful attention to cultural reference and craft.",
   },
 ];
